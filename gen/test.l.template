@@ -1,0 +1,24 @@
+/*-*- Mode: Flex; coding: utf-8 -*- */
+%option outfile="test.yy.c"
+%option main
+%option noyywrap
+%option 8bit
+%option full
+
+%{
+#define MAPTO(str,len) fwrite((str),1,(len),yyout)
+%}
+
+%%
+
+ /*-- clobber rules --*/
+<<EOF>> { return 0; }
+
+ /*-- auto-generated rules --*/
+__RULES__
+
+ /*-- default rules --*/
+ /*. { MAPTO(yytext,1); }*/ /*-- default: identity --*/
+. { ; } /*-- default: truncate --*/
+
+%%

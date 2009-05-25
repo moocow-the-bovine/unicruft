@@ -1,0 +1,85 @@
+# -*- Mode: Shell-Script -*-
+#
+# Getopt::Gen specification
+#-----------------------------------------------------------------------------
+program "unicruft"
+#program_version "0.01"
+
+purpose	"UTF-8 approximator"
+author  "Bryan Jurish <jurish@bbaw.de>"
+#on_reparse "error"
+#on_reparse "warn"
+on_reparse "clobber"
+
+#-----------------------------------------------------------------------------
+# Details
+#-----------------------------------------------------------------------------
+details ""
+
+#-----------------------------------------------------------------------------
+# Files
+#-----------------------------------------------------------------------------
+#rcfile "/etc/mootrc"
+#rcfile "~/.mootrc"
+
+#-----------------------------------------------------------------------------
+# Arguments
+#-----------------------------------------------------------------------------
+argument "FILE(s)" "Input text file(s)" \
+    details="
+If unspecified, standard input will be read.
+"
+
+#-----------------------------------------------------------------------------
+# Options
+#-----------------------------------------------------------------------------
+#group "Basic Options"
+
+string "mode" m "Conversion mode (ua|ul|ud|udpp|lu)" \
+    default="ua" \
+    details=""
+
+funct "utf8-to-ascii" a "Convert UTF-8 input to 7-bit ASCII (default)" \
+    code="'args_info->mode_arg=\"ua\";'" \
+    details=""
+
+funct "utf8-to-latin1" l "Convert UTF-8 input to 8-bit Latin-1" \
+    code="'args_info->mode_arg=\"ul\";'" \
+    details=""
+
+funct "utf8-to-latin1-de" d "Convert UTF-8 input to de_DE.Latin-1-'safe' UTF-8" \
+    code="'args_info->mode_arg=\"ud\";'" \
+    details=""
+
+funct "utf8-to-latin1-de-pp" p "Preprocess UTF-8 input to UTF-8 output (debug)" \
+    code="'args_info->mode_arg=\"udpp\";'" \
+    details=""
+
+funct "latin1-to-utf8" u "Convert Latin-1 input to UTF-8 output" \
+    code="'args_info->mode_arg=\"lu\";'" \
+    details=""
+
+string "output" o "Output file (default=stdout)." \
+    arg="FILE" \
+    default="-"
+
+#-----------------------------------------------------------------------------
+# Addenda
+#-----------------------------------------------------------------------------
+#addenda ""
+
+#-----------------------------------------------------------------------------
+# Bugs
+#-----------------------------------------------------------------------------
+bugs "
+
+... arthropods, having a hard exoskeleton, a three-part body (head, thorax, and abdomen), three pairs of jointed legs, compound eyes, and two antennae; cf. http://en.wikipedia.org/wiki/Insect
+
+"
+
+#-----------------------------------------------------------------------------
+# Footer
+#-----------------------------------------------------------------------------
+#acknowledge `cat acknowledge.pod`
+
+#seealso "L<gfsmutils>"

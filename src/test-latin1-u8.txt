@@ -1,0 +1,8 @@
+##-*- Mode: Text; coding: latin-1 -*-
+föö bär
+BÜZ BÖNK
+(O+,o+slash):  Ø,ø
+(THORN,thorn): Þ,þ
+(ETH,eth):     Ð,ð
+(A++):         ÀÁÂÃÄÅ
+(AElig,C+cdl): Æ,Ç

@@ -1,0 +1,201 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>unicruft - UTF-8 approximator</title>
+<link rel="stylesheet" href="moopod.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#arguments">ARGUMENTS</a></li>
+	<li><a href="#options">OPTIONS</a></li>
+	<li><a href="#configuration_files">CONFIGURATION FILES</a></li>
+	<li><a href="#addenda">ADDENDA</a></li>
+	<ul>
+
+		<li><a href="#about_this_document">About this Document</a></li>
+	</ul>
+
+	<li><a href="#bugs_and_limitations">BUGS AND LIMITATIONS</a></li>
+	<li><a href="#acknowledgements">ACKNOWLEDGEMENTS</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#see_also">SEE ALSO</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<hr />
+<h1><a name="name">NAME</a></h1>
+<p>unicruft - UTF-8 approximator</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<p>unicruft [OPTIONS] FILE(s)</p>
+<pre>
+ Arguments:
+    FILE(s)  Input text file(s)</pre>
+<pre>
+ Options
+    -h        --help                  Print help and exit.
+    -V        --version               Print version and exit.
+    -cFILE    --rcfile=FILE           Read an alternate configuration file.
+    -mSTRING  --mode=STRING           Conversion mode (ua|ul|ud|udpp|lu)
+    -a        --utf8-to-ascii         Convert UTF-8 input to 7-bit ASCII (default)
+    -l        --utf8-to-latin1        Convert UTF-8 input to 8-bit Latin-1
+    -d        --utf8-to-latin1-de     Convert UTF-8 input to de_DE.Latin-1-'safe' UTF-8
+    -p        --utf8-to-latin1-de-pp  Preprocess UTF-8 input to UTF-8 output (debug)
+    -u        --latin1-to-utf8        Convert Latin-1 input to UTF-8 output
+    -oFILE    --output=FILE           Output file (default=stdout).</pre>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>UTF-8 approximator</p>
+<p>
+</p>
+<hr />
+<h1><a name="arguments">ARGUMENTS</a></h1>
+<dl>
+<dt><strong><a name="file" class="item"><code>FILE(s)</code></a></strong></dt>
+
+<dd>
+<p>Input text file(s)</p>
+<p>If unspecified, standard input will be read.</p>
+</dd>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="options">OPTIONS</a></h1>
+<dl>
+<dt><strong><a name="help_h" class="item"><code>--help</code> , <code>-h</code></a></strong></dt>
+
+<dd>
+<p>Print help and exit.</p>
+<p>Default: '0'</p>
+</dd>
+<dt><strong><a name="version_v" class="item"><code>--version</code> , <code>-V</code></a></strong></dt>
+
+<dd>
+<p>Print version and exit.</p>
+<p>Default: '0'</p>
+</dd>
+<dt><strong><a name="rcfile_file_cfile" class="item"><code>--rcfile=FILE</code> , <code>-cFILE</code></a></strong></dt>
+
+<dd>
+<p>Read an alternate configuration file.</p>
+<p>Default: 'NULL'</p>
+<p>See also: <a href="#configuration_files">CONFIGURATION FILES</a>.</p>
+</dd>
+<dt><strong><a name="mode_string_mstring" class="item"><code>--mode=STRING</code> , <code>-mSTRING</code></a></strong></dt>
+
+<dd>
+<p>Conversion mode (ua|ul|ud|udpp|lu)</p>
+<p>Default: 'ua'</p>
+</dd>
+<dt><strong><a name="utf8_to_ascii_a" class="item"><code>--utf8-to-ascii</code> , <code>-a</code></a></strong></dt>
+
+<dd>
+<p>Convert UTF-8 input to 7-bit ASCII (default)</p>
+<p>Default: '0'</p>
+</dd>
+<dt><strong><a name="utf8_to_latin1_l" class="item"><code>--utf8-to-latin1</code> , <code>-l</code></a></strong></dt>
+
+<dd>
+<p>Convert UTF-8 input to 8-bit Latin-1</p>
+<p>Default: '0'</p>
+</dd>
+<dt><strong><a name="utf8_to_latin1_de_d" class="item"><code>--utf8-to-latin1-de</code> , <code>-d</code></a></strong></dt>
+
+<dd>
+<p>Convert UTF-8 input to de_DE.Latin-1-'safe' UTF-8</p>
+<p>Default: '0'</p>
+</dd>
+<dt><strong><a name="utf8_to_latin1_de_pp_p" class="item"><code>--utf8-to-latin1-de-pp</code> , <code>-p</code></a></strong></dt>
+
+<dd>
+<p>Preprocess UTF-8 input to UTF-8 output (debug)</p>
+<p>Default: '0'</p>
+</dd>
+<dt><strong><a name="latin1_to_utf8_u" class="item"><code>--latin1-to-utf8</code> , <code>-u</code></a></strong></dt>
+
+<dd>
+<p>Convert Latin-1 input to UTF-8 output</p>
+<p>Default: '0'</p>
+</dd>
+<dt><strong><a name="output_file_ofile" class="item"><code>--output=FILE</code> , <code>-oFILE</code></a></strong></dt>
+
+<dd>
+<p>Output file (default=stdout).</p>
+<p>Default: '-'</p>
+</dd>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="configuration_files">CONFIGURATION FILES</a></h1>
+<p>Configuration files are expected to contain lines of the form:</p>
+<pre>
+    LONG_OPTION_NAME    OPTION_VALUE</pre>
+<p>where LONG_OPTION_NAME is the long name of some option,
+without the leading '--', and OPTION_VALUE is the value for
+that option, if any.  Fields are whitespace-separated.
+Blank lines and comments (lines beginning with '#')
+are ignored.</p>
+<p>No configuration files are read by default.</p>
+<p>
+</p>
+<hr />
+<h1><a name="addenda">ADDENDA</a></h1>
+<p>
+</p>
+<h2><a name="about_this_document">About this Document</a></h2>
+<p>Documentation file auto-generated by optgen.perl version 0.06
+using Getopt::Gen version 0.13.
+Translation was initiated
+as:</p>
+<pre>
+   optgen.perl -l --nocfile --nohfile --notimestamp -F unicruft unicruft.gog</pre>
+<p>
+</p>
+<hr />
+<h1><a name="bugs_and_limitations">BUGS AND LIMITATIONS</a></h1>
+<p>... arthropods, having a hard exoskeleton, a three-part body (head, thorax, and abdomen), three pairs of jointed legs, compound eyes, and two antennae; cf. <a href="http://en.wikipedia.org/wiki/Insect">http://en.wikipedia.org/wiki/Insect</a></p>
+<p>
+</p>
+<hr />
+<h1><a name="acknowledgements">ACKNOWLEDGEMENTS</a></h1>
+<p>Perl by Larry Wall.</p>
+<p>Getopt::Gen by Bryan Jurish.</p>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Bryan Jurish &lt;<a href="mailto:jurish@bbaw.de">jurish@bbaw.de</a>&gt;</p>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p><em>perl</em>, <a href="./Getopt/Gen.html">the Getopt::Gen manpage</a>.</p>
+
+</body>
+
+</html>

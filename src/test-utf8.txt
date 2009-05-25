@@ -1,0 +1,20 @@
+Auml: Ä
+Auml/l1: A¨
+Auml/u8: Ä
+
+auml: ä
+auml/l1: a¨
+auml/u8: ä
+
+acirc: â
+acirc/l1: a^
+acirc/u8: â
+ucirc: û
+ucirc/l1: u^
+ucirc/u8: û
+
+a+^e: aͤ
+a+^x: aͯ
+
+oelig/latin2: œ
+pi+varepsilon: πε
