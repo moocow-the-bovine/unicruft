@@ -18,7 +18,7 @@
 
 /** \brief unicode codepoint lookup table */
 typedef struct {
-  size_t      len;     ///< \details number of entries
+  const size_t   len;  ///< \details number of entries
   const char *data[];  ///< \details translation strings indexed by unicode codepoint
 } uxLookupTable;
 

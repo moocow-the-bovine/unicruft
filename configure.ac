@@ -129,6 +129,21 @@ AX_CHECK_DEBUG()
 ###-- restore user FLAGS
 AX_RESTORE_USERFLAGS()
 
+##----------------------------------------------------------------------
+## compiler characteristics
+AC_C_INLINE
+AC_C_CONST
+AX_CHECK_COMPILER_FLAGS([-fPIC],[CFLAGS="$CFLAGS -fPIC"],[])
+AX_CHECK_COMPILER_FLAGS([-DPIC],[CFLAGS="$CFLAGS -DPIC"],[])
+
+dnl make a couple of jokes for user's amusement.
+dnl cf. http://www.gnu.org/fun/jokes/gcc.html
+AX_CHECK_COMPILER_FLAGS([-fkeep-programmers-inline],[],[])
+AX_CHECK_COMPILER_FLAGS([-vomit-frame-pointer],[],[])
+## /compiler stuff
+##----------------------------------------------------------------------
+
+
 ##vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 ## Documentation
 ##
