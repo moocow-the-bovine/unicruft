@@ -72,7 +72,7 @@ cmdline_parser_print_help (void)
   cmdline_parser_print_version ();
   printf("\n");
   printf("Purpose:\n");
-  printf("  UTF-8 approximator\n");
+  printf("  Approximating UTF-8 transliteration & recoding\n");
   printf("\n");
   
   printf("Usage: %s [OPTIONS]... FILE(s)\n", "unicruft");
@@ -83,15 +83,17 @@ cmdline_parser_print_help (void)
   
   printf("\n");
   printf(" Options:\n");
-  printf("   -h        --help                  Print help and exit.\n");
-  printf("   -V        --version               Print version and exit.\n");
-  printf("   -mSTRING  --mode=STRING           Conversion mode (ua|ul|ud|udpp|lu)\n");
-  printf("   -a        --utf8-to-ascii         Convert UTF-8 input to 7-bit ASCII (default)\n");
-  printf("   -l        --utf8-to-latin1        Convert UTF-8 input to 8-bit Latin-1\n");
-  printf("   -d        --utf8-to-latin1-de     Convert UTF-8 input to de_DE.Latin-1-'safe' UTF-8\n");
-  printf("   -p        --utf8-to-latin1-de-pp  Preprocess UTF-8 input to UTF-8 output (debug)\n");
-  printf("   -u        --latin1-to-utf8        Convert Latin-1 input to UTF-8 output\n");
-  printf("   -oFILE    --output=FILE           Output file (default=stdout).\n");
+  printf("   -h      --help                 Print help and exit.\n");
+  printf("   -V      --version              Print version and exit.\n");
+  printf("   -mMODE  --mode=MODE            Conversion mode (lu|ua|ul|ud|uL|uD|uDpp)\n");
+  printf("   -u      --latin1-to-utf8       Convert Latin-1 to UTF-8\n");
+  printf("   -a      --utf8-to-ascii        Convert UTF-8 to ASCII (default)\n");
+  printf("   -l      --utf8-to-latin1       Convert UTF-8 to Latin-1\n");
+  printf("   -d      --utf8-to-latin1-de    Convert UTF-8 to Latin-1/DE\n");
+  printf("   -L      --utf8-to-utf8-latin1  Convert UTF-8 to UTF-8/Latin-1\n");
+  printf("   -D      --utf8-to-utf8-de      Convert UTF-8 to UTF-8/DE\n");
+  printf("   -P      --utf8-to-utf8-de-pp   (debug) run only the UTF-8/DE preprocessor\n");
+  printf("   -oFILE  --output=FILE          Output file (default=stdout).\n");
 }
 
 #if defined(HAVE_STRDUP) || defined(strdup)
@@ -128,11 +130,13 @@ cmdline_parser (int argc, char * const *argv, struct gengetopt_args_info *args_i
   args_info->help_given = 0;
   args_info->version_given = 0;
   args_info->mode_given = 0;
+  args_info->latin1_to_utf8_given = 0;
   args_info->utf8_to_ascii_given = 0;
   args_info->utf8_to_latin1_given = 0;
   args_info->utf8_to_latin1_de_given = 0;
-  args_info->utf8_to_latin1_de_pp_given = 0;
-  args_info->latin1_to_utf8_given = 0;
+  args_info->utf8_to_utf8_latin1_given = 0;
+  args_info->utf8_to_utf8_de_given = 0;
+  args_info->utf8_to_utf8_de_pp_given = 0;
   args_info->output_given = 0;
 
   clear_args(args_info);
@@ -153,11 +157,13 @@ cmdline_parser (int argc, char * const *argv, struct gengetopt_args_info *args_i
 	{ "help", 0, NULL, 'h' },
 	{ "version", 0, NULL, 'V' },
 	{ "mode", 1, NULL, 'm' },
+	{ "latin1-to-utf8", 0, NULL, 'u' },
 	{ "utf8-to-ascii", 0, NULL, 'a' },
 	{ "utf8-to-latin1", 0, NULL, 'l' },
 	{ "utf8-to-latin1-de", 0, NULL, 'd' },
-	{ "utf8-to-latin1-de-pp", 0, NULL, 'p' },
-	{ "latin1-to-utf8", 0, NULL, 'u' },
+	{ "utf8-to-utf8-latin1", 0, NULL, 'L' },
+	{ "utf8-to-utf8-de", 0, NULL, 'D' },
+	{ "utf8-to-utf8-de-pp", 0, NULL, 'P' },
 	{ "output", 1, NULL, 'o' },
         { NULL,	0, NULL, 0 }
       };
@@ -165,11 +171,13 @@ cmdline_parser (int argc, char * const *argv, struct gengetopt_args_info *args_i
 	'h',
 	'V',
 	'm', ':',
+	'u',
 	'a',
 	'l',
 	'd',
-	'p',
-	'u',
+	'L',
+	'D',
+	'P',
 	'o', ':',
 	'\0'
       };
@@ -228,40 +236,52 @@ cmdline_parser_parse_option(char oshort, const char *olong, const char *val,
         
           break;
         
-        case 'm':	 /* Conversion mode (ua|ul|ud|udpp|lu) */
+        case 'm':	 /* Conversion mode (lu|ua|ul|ud|uL|uD|uDpp) */
           args_info->mode_given++;
           if (args_info->mode_arg) free(args_info->mode_arg);
           args_info->mode_arg = gog_strdup(val);
           break;
         
-        case 'a':	 /* Convert UTF-8 input to 7-bit ASCII (default) */
+        case 'u':	 /* Convert Latin-1 to UTF-8 */
+          args_info->latin1_to_utf8_given++;
+          /* user code */
+          args_info->mode_arg="lu";
+          break;
+        
+        case 'a':	 /* Convert UTF-8 to ASCII (default) */
           args_info->utf8_to_ascii_given++;
           /* user code */
           args_info->mode_arg="ua";
           break;
         
-        case 'l':	 /* Convert UTF-8 input to 8-bit Latin-1 */
+        case 'l':	 /* Convert UTF-8 to Latin-1 */
           args_info->utf8_to_latin1_given++;
           /* user code */
           args_info->mode_arg="ul";
           break;
         
-        case 'd':	 /* Convert UTF-8 input to de_DE.Latin-1-'safe' UTF-8 */
+        case 'd':	 /* Convert UTF-8 to Latin-1/DE */
           args_info->utf8_to_latin1_de_given++;
           /* user code */
           args_info->mode_arg="ud";
           break;
         
-        case 'p':	 /* Preprocess UTF-8 input to UTF-8 output (debug) */
-          args_info->utf8_to_latin1_de_pp_given++;
+        case 'L':	 /* Convert UTF-8 to UTF-8/Latin-1 */
+          args_info->utf8_to_utf8_latin1_given++;
           /* user code */
-          args_info->mode_arg="udpp";
+          args_info->mode_arg="uL";
           break;
         
-        case 'u':	 /* Convert Latin-1 input to UTF-8 output */
-          args_info->latin1_to_utf8_given++;
+        case 'D':	 /* Convert UTF-8 to UTF-8/DE */
+          args_info->utf8_to_utf8_de_given++;
           /* user code */
-          args_info->mode_arg="lu";
+          args_info->mode_arg="uD";
+          break;
+        
+        case 'P':	 /* (debug) run only the UTF-8/DE preprocessor */
+          args_info->utf8_to_utf8_de_pp_given++;
+          /* user code */
+          args_info->mode_arg="uDpp";
           break;
         
         case 'o':	 /* Output file (default=stdout). */
@@ -287,46 +307,60 @@ cmdline_parser_parse_option(char oshort, const char *olong, const char *val,
           
           }
           
-          /* Conversion mode (ua|ul|ud|udpp|lu) */
+          /* Conversion mode (lu|ua|ul|ud|uL|uD|uDpp) */
           else if (strcmp(olong, "mode") == 0) {
             args_info->mode_given++;
             if (args_info->mode_arg) free(args_info->mode_arg);
             args_info->mode_arg = gog_strdup(val);
           }
           
-          /* Convert UTF-8 input to 7-bit ASCII (default) */
+          /* Convert Latin-1 to UTF-8 */
+          else if (strcmp(olong, "latin1-to-utf8") == 0) {
+            args_info->latin1_to_utf8_given++;
+            /* user code */
+            args_info->mode_arg="lu";
+          }
+          
+          /* Convert UTF-8 to ASCII (default) */
           else if (strcmp(olong, "utf8-to-ascii") == 0) {
             args_info->utf8_to_ascii_given++;
             /* user code */
             args_info->mode_arg="ua";
           }
           
-          /* Convert UTF-8 input to 8-bit Latin-1 */
+          /* Convert UTF-8 to Latin-1 */
           else if (strcmp(olong, "utf8-to-latin1") == 0) {
             args_info->utf8_to_latin1_given++;
             /* user code */
             args_info->mode_arg="ul";
           }
           
-          /* Convert UTF-8 input to de_DE.Latin-1-'safe' UTF-8 */
+          /* Convert UTF-8 to Latin-1/DE */
           else if (strcmp(olong, "utf8-to-latin1-de") == 0) {
             args_info->utf8_to_latin1_de_given++;
             /* user code */
             args_info->mode_arg="ud";
           }
           
-          /* Preprocess UTF-8 input to UTF-8 output (debug) */
-          else if (strcmp(olong, "utf8-to-latin1-de-pp") == 0) {
-            args_info->utf8_to_latin1_de_pp_given++;
+          /* Convert UTF-8 to UTF-8/Latin-1 */
+          else if (strcmp(olong, "utf8-to-utf8-latin1") == 0) {
+            args_info->utf8_to_utf8_latin1_given++;
             /* user code */
-            args_info->mode_arg="udpp";
+            args_info->mode_arg="uL";
           }
           
-          /* Convert Latin-1 input to UTF-8 output */
-          else if (strcmp(olong, "latin1-to-utf8") == 0) {
-            args_info->latin1_to_utf8_given++;
+          /* Convert UTF-8 to UTF-8/DE */
+          else if (strcmp(olong, "utf8-to-utf8-de") == 0) {
+            args_info->utf8_to_utf8_de_given++;
             /* user code */
-            args_info->mode_arg="lu";
+            args_info->mode_arg="uD";
+          }
+          
+          /* (debug) run only the UTF-8/DE preprocessor */
+          else if (strcmp(olong, "utf8-to-utf8-de-pp") == 0) {
+            args_info->utf8_to_utf8_de_pp_given++;
+            /* user code */
+            args_info->mode_arg="uDpp";
           }
           
           /* Output file (default=stdout). */

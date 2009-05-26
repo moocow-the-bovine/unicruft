@@ -67,6 +67,14 @@ void ux_buffer_append_char(uxBuffer *buf, char c)
   if (buf->len < buf->alloc) buf->str[buf->len]='\0';
 }
 
+/** append a terminator character to a buffer (does not modify buf->len) */
+static inline
+void ux_buffer_append_delim(uxBuffer *buf, char delim)
+{
+  ux_buffer_reserve(buf, buf->len+1);
+  buf->str[buf->len] = delim;
+}
+
 /** append the contents of \a buf2 onto the end of \a buf1 */
 static inline
 void ux_buffer_append_buf(uxBuffer *buf1, const uxBuffer *buf2)
@@ -138,6 +146,14 @@ void ux_wbuffer_append_char(uxWBuffer *buf, ucs4 c)
   ux_wbuffer_reserve(buf, buf->len+1);
   buf->wstr[buf->len++] = c;
   if (buf->len < buf->alloc) buf->wstr[buf->len]=0;
+}
+
+/** append a terminator character to a wide characte4r buffer (does not modify buf->len) */
+static inline
+void ux_wbuffer_append_delim(uxWBuffer *buf, ucs4 delim)
+{
+  ux_wbuffer_reserve(buf, buf->len+1);
+  buf->wstr[buf->len] = delim;
 }
 
 /** append the contents of \a wbuf2 onto the end of \a wbuf1 */

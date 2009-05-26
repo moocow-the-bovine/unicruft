@@ -19,17 +19,19 @@ extern "C" {
  */
 
 struct gengetopt_args_info {
-  char * mode_arg;	 /* Conversion mode (ua|ul|ud|udpp|lu) (default=ua). */
+  char * mode_arg;	 /* Conversion mode (lu|ua|ul|ud|uL|uD|uDpp) (default=ua). */
   char * output_arg;	 /* Output file (default=stdout). (default=-). */
 
   int help_given;	 /* Whether help was given */
   int version_given;	 /* Whether version was given */
   int mode_given;	 /* Whether mode was given */
+  int latin1_to_utf8_given;	 /* Whether latin1-to-utf8 was given */
   int utf8_to_ascii_given;	 /* Whether utf8-to-ascii was given */
   int utf8_to_latin1_given;	 /* Whether utf8-to-latin1 was given */
   int utf8_to_latin1_de_given;	 /* Whether utf8-to-latin1-de was given */
-  int utf8_to_latin1_de_pp_given;	 /* Whether utf8-to-latin1-de-pp was given */
-  int latin1_to_utf8_given;	 /* Whether latin1-to-utf8 was given */
+  int utf8_to_utf8_latin1_given;	 /* Whether utf8-to-utf8-latin1 was given */
+  int utf8_to_utf8_de_given;	 /* Whether utf8-to-utf8-de was given */
+  int utf8_to_utf8_de_pp_given;	 /* Whether utf8-to-utf8-de-pp was given */
   int output_given;	 /* Whether output was given */
   
   char **inputs;         /* unnamed arguments */

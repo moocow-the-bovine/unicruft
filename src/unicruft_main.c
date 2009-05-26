@@ -18,18 +18,20 @@
  */
 
 typedef enum {
-  uxmUtf8ToAscii,
-  uxmUtf8ToLatin1,
-  uxmUtf8DEpp,
-  uxmUtf8ToLatin1DE,
-  uxmLatin1ToUtf8
+  uxmLatin1ToUtf8,      //-- "lu"   : latin1 -> utf8
+  uxmUtf8ToAscii,       //-- "ua"   : utf8   -> ascii
+  uxmUtf8ToLatin1,      //-- "ul"   : utf8   -> latin1
+  uxmUtf8ToLatin1_DE,   //-- "ud"   : utf8   -> latin1/de
+  uxmUtf8ToUtf8_Latin1, //-- "uL"   : utf8   -> utf8/latin1
+  uxmUtf8ToUtf8_DE,     //-- "uD"   : utf8   -> utf8/de
+  uxmUtf8ToUtf8_DE_pp   //-- "uDpp" : utf8   -> utf8/de-pp
   /*, ... more here */
 } uxMode;
 
 /*--------------------------------------------------------------------------
  * Globals
  */
-char *progname = "gfsmintersect";
+const char *progname = "unicruft";
 
 //-- options
 struct gengetopt_args_info args;
@@ -60,11 +62,13 @@ void get_my_options(int argc, char **argv)
     exit(1);
 
   //-- conversion mode
-  if      (strcmp(args.mode_arg, "ua")==0) mode=uxmUtf8ToAscii;
+  if      (strcmp(args.mode_arg, "lu")==0) mode=uxmLatin1ToUtf8;
+  else if (strcmp(args.mode_arg, "ua")==0) mode=uxmUtf8ToAscii;
   else if (strcmp(args.mode_arg, "ul")==0) mode=uxmUtf8ToLatin1;
-  else if (strcmp(args.mode_arg, "ud")==0) mode=uxmUtf8ToLatin1DE;
-  else if (strcmp(args.mode_arg, "udpp")==0) mode=uxmUtf8DEpp;
-  else if (strcmp(args.mode_arg, "lu")==0)  mode=uxmLatin1ToUtf8;
+  else if (strcmp(args.mode_arg, "ud")==0) mode=uxmUtf8ToLatin1_DE;
+  else if (strcmp(args.mode_arg, "uL")==0) mode=uxmUtf8ToUtf8_Latin1;
+  else if (strcmp(args.mode_arg, "uD")==0) mode=uxmUtf8ToUtf8_DE;
+  else if (strcmp(args.mode_arg, "uDpp")==0) mode=uxmUtf8ToUtf8_DE_pp;
   else {
     fprintf(stderr, "%s: Error: unknown conversion mode '%s'!\n", progname, args.mode_arg);
     exit(2);
@@ -101,11 +105,21 @@ void unicruft_cleanup(void)
 }
 
 /*--------------------------------------------------------------------------
- * MODE_process_file()
+ * MODE_main()
  */
 
 //--------------------------------------------------------------
-void utf8_to_ascii_process_file(void)
+void latin1_to_utf8_main(void)
+{
+  while ( ux_buffer_getline(ibuf,f_in) >= 0 ) {
+    obuf->len = 0;
+    ux_buffer_latin1_to_utf8(ibuf, obuf);
+    ux_buffer_fwrite(obuf, f_out);
+  }
+}
+
+//--------------------------------------------------------------
+void utf8_to_ascii_main(void)
 {
   while ( ux_buffer_getline(ibuf,f_in) >= 0 ) {
     obuf->len=0;
@@ -115,7 +129,7 @@ void utf8_to_ascii_process_file(void)
 }
 
 //--------------------------------------------------------------
-void utf8_to_latin1_process_file(void)
+void utf8_to_latin1_main(void)
 {
   while ( ux_buffer_getline(ibuf,f_in) >= 0 ) {
     obuf->len=0;
@@ -124,8 +138,23 @@ void utf8_to_latin1_process_file(void)
   }
 }
 
+
 //--------------------------------------------------------------
-void utf8_de_pp_process_file(void)
+void utf8_to_utf8_latin1_main(void)
+{
+  while ( ux_buffer_getline(ibuf,f_in) >= 0 ) {
+    obuf->len=0;
+    ux_unidecode_us(&UNIDECODE_LATIN1, ibuf, obuf);
+    ux_buffer_append_delim(obuf,'\0'); //-- we need this because uxUtf8.c scans to next char to find sequence lengths
+
+    ibuf->len=0;
+    ux_buffer_latin1_to_utf8(obuf,ibuf);
+    ux_buffer_fwrite(ibuf, f_out);
+  }
+}
+
+//--------------------------------------------------------------
+void utf8_to_utf8_de_pp_main(void)
 {
   while ( ux_buffer_getline(ibuf,f_in) >= 0 ) {
     obuf->len=0;
@@ -135,30 +164,37 @@ void utf8_de_pp_process_file(void)
 }
 
 //--------------------------------------------------------------
-void utf8_to_latin1_de_process_file(void)
+void utf8_to_latin1_de_main(void)
 {
   while ( ux_buffer_getline(ibuf,f_in) >= 0 ) {
     obuf->len=0;
     ux_depp_scan_buffer(pp,ibuf,obuf);
-    ux_buffer_append_char(obuf,'\0');
-    obuf->len--;
+    ux_buffer_append_delim(obuf,'\0'); //-- we need this because uxUtf8.c scans to next char to find sequence lengths
 
     ibuf->len=0;
     ux_unidecode_us(&UNIDECODE_LATIN1, obuf, ibuf);
-
     ux_buffer_fwrite(ibuf, f_out);
   }
 }
 
 //--------------------------------------------------------------
-void latin1_to_utf8_process_file(void)
+void utf8_to_utf8_de_main(void)
 {
   while ( ux_buffer_getline(ibuf,f_in) >= 0 ) {
-    obuf->len = 0;
-    ux_buffer_latin1_to_utf8(ibuf, obuf);
+    obuf->len=0;
+    ux_depp_scan_buffer(pp,ibuf,obuf);
+    ux_buffer_append_delim(obuf,'\0'); //-- we need this because uxUtf8.c scans to next char to find sequence lengths
+
+    ibuf->len=0;
+    ux_unidecode_us(&UNIDECODE_LATIN1, obuf, ibuf);
+    ux_buffer_append_delim(ibuf,'\0'); //-- ... again
+
+    obuf->len=0;
+    ux_buffer_latin1_to_utf8(ibuf,obuf);
     ux_buffer_fwrite(obuf, f_out);
   }
 }
+
 
 /*--------------------------------------------------------------------------
  * process_file()
@@ -177,20 +213,26 @@ void unicruft_process_file(const char *filename)
   
   //-- process
   switch (mode) {
+  case uxmLatin1ToUtf8:
+    latin1_to_utf8_main();
+    break;
   case uxmUtf8ToAscii:
-    utf8_to_ascii_process_file();
+    utf8_to_ascii_main();
     break;
   case uxmUtf8ToLatin1:
-    utf8_to_latin1_process_file();
+    utf8_to_latin1_main();
     break;
-  case uxmUtf8DEpp:
-    utf8_de_pp_process_file();
+  case uxmUtf8ToLatin1_DE:
+    utf8_to_latin1_de_main();
     break;
-  case uxmUtf8ToLatin1DE:
-    utf8_to_latin1_de_process_file();
+  case uxmUtf8ToUtf8_Latin1:
+    utf8_to_utf8_latin1_main();
     break;
-  case uxmLatin1ToUtf8:
-    latin1_to_utf8_process_file();
+  case uxmUtf8ToUtf8_DE:
+    utf8_to_utf8_de_main();
+    break;
+  case uxmUtf8ToUtf8_DE_pp:
+    utf8_to_utf8_de_pp_main();
     break;
   //... more here ...
   default:
