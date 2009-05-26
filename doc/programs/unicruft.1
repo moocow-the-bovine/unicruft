@@ -142,7 +142,6 @@ unicruft [\s-1OPTIONS\s0] \s-1FILE\s0(s)
 \& Options
 \&    \-h      \-\-help                 Print help and exit.
 \&    \-V      \-\-version              Print version and exit.
-\&    \-cFILE  \-\-rcfile=FILE          Read an alternate configuration file.
 \&    \-mMODE  \-\-mode=MODE            Conversion mode (lu|ua|ul|ud|uL|uD|uDpp)
 \&    \-u      \-\-latin1\-to\-utf8       Convert Latin\-1 to UTF\-8
 \&    \-a      \-\-utf8\-to\-ascii        Convert UTF\-8 to ASCII (default)
@@ -178,14 +177,6 @@ Default: '0'
 Print version and exit.
 .Sp
 Default: '0'
-.ie n .IP """\-\-rcfile=FILE"" , ""\-cFILE""" 4
-.el .IP "\f(CW\-\-rcfile=FILE\fR , \f(CW\-cFILE\fR" 4
-.IX Item "--rcfile=FILE , -cFILE"
-Read an alternate configuration file.
-.Sp
-Default: '\s-1NULL\s0'
-.Sp
-See also: \*(L"\s-1CONFIGURATION\s0 \s-1FILES\s0\*(R".
 .ie n .IP """\-\-mode=MODE"" , ""\-mMODE""" 4
 .el .IP "\f(CW\-\-mode=MODE\fR , \f(CW\-mMODE\fR" 4
 .IX Item "--mode=MODE , -mMODE"
@@ -290,21 +281,6 @@ Useful for debugging or complex processing pipelines.
 Output file (default=stdout).
 .Sp
 Default: '\-'
-.SH "CONFIGURATION FILES"
-.IX Header "CONFIGURATION FILES"
-Configuration files are expected to contain lines of the form:
-.PP
-.Vb 1
-\&    LONG_OPTION_NAME    OPTION_VALUE
-.Ve
-.PP
-where \s-1LONG_OPTION_NAME\s0 is the long name of some option,
-without the leading '\-\-', and \s-1OPTION_VALUE\s0 is the value for
-that option, if any.  Fields are whitespace-separated.
-Blank lines and comments (lines beginning with '#')
-are ignored.
-.PP
-No configuration files are read by default.
 .SH "ADDENDA"
 .IX Header "ADDENDA"
 .SS "About this Document"
@@ -315,11 +291,11 @@ Translation was initiated
 as:
 .PP
 .Vb 1
-\&   optgen.perl \-l \-\-nocfile \-\-nohfile \-\-notimestamp \-F unicruft unicruft.gog
+\&   optgen.perl \-l \-\-nocfile \-\-nohfile \-\-notimestamp \-\-no\-handle\-rcfile \-F unicruft unicruft.gog
 .Ve
 .SH "BUGS AND LIMITATIONS"
 .IX Header "BUGS AND LIMITATIONS"
-\&... arthropods, having a hard exoskeleton, a three-part body (head, thorax, and abdomen), three pairs of jointed legs, compound eyes, and two antennae; cf. http://en.wikipedia.org/wiki/Insect
+Too much copying in the underlying library makes things a tad slow.
 .SH "ACKNOWLEDGEMENTS"
 .IX Header "ACKNOWLEDGEMENTS"
 Perl by Larry Wall.
@@ -333,3 +309,9 @@ Bryan Jurish <jurish@bbaw.de>
 \&\fIText::Unidecode\fR\|(3pm),
 \&\fIrecode\fR\|(1),
 \&\fIiconv\fR\|(1)
+.SH "POD ERRORS"
+.IX Header "POD ERRORS"
+Hey! \fBThe above document had some coding errors, which are explained below:\fR
+.IP "Around line 253:" 4
+.IX Item "Around line 253:"
+=cut found outside a pod block.  Skipping to next block.

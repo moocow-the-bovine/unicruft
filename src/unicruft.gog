@@ -75,7 +75,7 @@ Equivalent to C<--mode=ul>.
 Converts arbitrary UTF-8 input to an 8-bit ISO-8859-1 (Latin-1) approximation.
 Input characters in the Unicode Latin-1 supplement are identity-mapped
 onto the 8-bit Latin-1 character set, other input characters are transliterated
-as for the L<--utf8-to-ascii|/\"C<--utf8-to-ascii> , C<-a>\"> mode.
+as for the L<--utf8-to-ascii|/\"--utf8-to-ascii , -a\"> mode.
 "
 
 funct "utf8-to-latin1-de" d "Convert UTF-8 to Latin-1/DE" \
@@ -86,7 +86,7 @@ Equivalent to C<--mode=ud>.
 Converts arbitrary UTF-8 input to an 8-bit ISO-8859-1 (Latin-1) approximation using only characters
 active in contemporary German orthography.  Performs some
 context-sensitive replacements (e.g. of combining I<Umlaute> and superscript letters),
-and otherwise transliterates as for the L<--utf8-to-latin1|/\"C<--utf8-to-latin1> , C<-a>\">
+and otherwise transliterates as for the L<--utf8-to-latin1|/\"--utf8-to-latin1 , -l\">
 mode.
 "
 
@@ -96,7 +96,7 @@ funct "utf8-to-utf8-latin1" L "Convert UTF-8 to UTF-8/Latin-1" \
     details="
 Equivalent to C<--mode=uL>.
 
-Just like L<--utf8-to-latin1|/\"C<--utf8-to-latin1> , C<-l>\"> mode,
+Just like L<--utf8-to-latin1|/\"--utf8-to-latin1 , -l\"> mode,
 but output is encoded in UTF-8 which is guaranteed to contain only Unicode
 characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.
 "
@@ -107,7 +107,7 @@ funct "utf8-to-utf8-de" D "Convert UTF-8 to UTF-8/DE" \
     details="
 Equivalent to C<--mode=uD>.
 
-Just like L<--utf8-to-latin1-de|/\"C<--utf8-to-latin1-de> , C<-d>\"> mode,
+Just like L<--utf8-to-latin1-de|/\"--utf8-to-latin1-de , -d\"> mode,
 but output is encoded in UTF-8 which is guaranteed to contain only Unicode
 characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.
 "
@@ -118,7 +118,7 @@ funct "utf8-to-utf8-de-pp" P "(debug) run only the UTF-8/DE preprocessor" \
 Equivalent to C<--mode=uDpp>.
 
 This mode performs only the preprocessing phase of the 
-L<--utf8-to-utf8-de|/\"C<--utf8-to-utf8-de> , C<-D>\"> conversion.
+L<--utf8-to-utf8-de|/\"--utf8-to-utf8-de , -D\"> conversion.
 Useful for debugging or complex processing pipelines.
 "
 
@@ -138,9 +138,11 @@ string "output" o "Output file (default=stdout)." \
 #-----------------------------------------------------------------------------
 # Bugs
 #-----------------------------------------------------------------------------
+#bugs "... arthropods, having a hard exoskeleton, a three-part body (head, thorax, and abdomen), three pairs of jointed legs, compound eyes, and two antennae; cf. http://en.wikipedia.org/wiki/Insect"
+
 bugs "
 
-... arthropods, having a hard exoskeleton, a three-part body (head, thorax, and abdomen), three pairs of jointed legs, compound eyes, and two antennae; cf. http://en.wikipedia.org/wiki/Insect
+Too much copying in the underlying library makes things a tad slow.
 
 "
 

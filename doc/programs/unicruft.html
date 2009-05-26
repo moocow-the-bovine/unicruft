@@ -22,7 +22,6 @@
 	<li><a href="#description">DESCRIPTION</a></li>
 	<li><a href="#arguments">ARGUMENTS</a></li>
 	<li><a href="#options">OPTIONS</a></li>
-	<li><a href="#configuration_files">CONFIGURATION FILES</a></li>
 	<li><a href="#addenda">ADDENDA</a></li>
 	<ul>
 
@@ -56,7 +55,6 @@
  Options
     -h      --help                 Print help and exit.
     -V      --version              Print version and exit.
-    -cFILE  --rcfile=FILE          Read an alternate configuration file.
     -mMODE  --mode=MODE            Conversion mode (lu|ua|ul|ud|uL|uD|uDpp)
     -u      --latin1-to-utf8       Convert Latin-1 to UTF-8
     -a      --utf8-to-ascii        Convert UTF-8 to ASCII (default)
@@ -100,13 +98,6 @@
 <p>Print version and exit.</p>
 <p>Default: '0'</p>
 </dd>
-<dt><strong><a name="rcfile_file_cfile" class="item"><code>--rcfile=FILE</code> , <code>-cFILE</code></a></strong></dt>
-
-<dd>
-<p>Read an alternate configuration file.</p>
-<p>Default: 'NULL'</p>
-<p>See also: <a href="#configuration_files">CONFIGURATION FILES</a>.</p>
-</dd>
 <dt><strong><a name="mode_mode_mmode" class="item"><code>--mode=MODE</code> , <code>-mMODE</code></a></strong></dt>
 
 <dd>
@@ -146,7 +137,7 @@ This is the default conversion mode.</p>
 <p>Converts arbitrary UTF-8 input to an 8-bit ISO-8859-1 (Latin-1) approximation.
 Input characters in the Unicode Latin-1 supplement are identity-mapped
 onto the 8-bit Latin-1 character set, other input characters are transliterated
-as for the <a href="#c___utf8_to_ascii____c__a_">--utf8-to-ascii</a> mode.</p>
+as for the <a href="#utf8_to_ascii_a">--utf8-to-ascii</a> mode.</p>
 </dd>
 <dt><strong><a name="utf8_to_latin1_de_d" class="item"><code>--utf8-to-latin1-de</code> , <code>-d</code></a></strong></dt>
 
@@ -157,7 +148,7 @@ as for the <a href="#c___utf8_to_ascii____c__a_">--utf8-to-ascii</a> mode.</p>
 <p>Converts arbitrary UTF-8 input to an 8-bit ISO-8859-1 (Latin-1) approximation using only characters
 active in contemporary German orthography.  Performs some
 context-sensitive replacements (e.g. of combining <em>Umlaute</em> and superscript letters),
-and otherwise transliterates as for the <a href="#c___utf8_to_latin1____c__a_">--utf8-to-latin1</a>
+and otherwise transliterates as for the <a href="#utf8_to_latin1_l">--utf8-to-latin1</a>
 mode.</p>
 </dd>
 <dt><strong><a name="utf8_to_utf8_latin1_l" class="item"><code>--utf8-to-utf8-latin1</code> , <code>-L</code></a></strong></dt>
@@ -166,7 +157,7 @@ mode.</p>
 <p>Convert UTF-8 to UTF-8/Latin-1</p>
 <p>Default: '0'</p>
 <p>Equivalent to <code>--mode=uL</code>.</p>
-<p>Just like <a href="#c___utf8_to_latin1____c__l_">--utf8-to-latin1</a> mode,
+<p>Just like <a href="#utf8_to_latin1_l">--utf8-to-latin1</a> mode,
 but output is encoded in UTF-8 which is guaranteed to contain only Unicode
 characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.</p>
 </dd>
@@ -176,7 +167,7 @@ characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.</p>
 <p>Convert UTF-8 to UTF-8/DE</p>
 <p>Default: '0'</p>
 <p>Equivalent to <code>--mode=uD</code>.</p>
-<p>Just like <a href="#c___utf8_to_latin1_de____c__d_">--utf8-to-latin1-de</a> mode,
+<p>Just like <a href="#utf8_to_latin1_de_d">--utf8-to-latin1-de</a> mode,
 but output is encoded in UTF-8 which is guaranteed to contain only Unicode
 characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.</p>
 </dd>
@@ -187,7 +178,7 @@ characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.</p>
 <p>Default: '0'</p>
 <p>Equivalent to <code>--mode=uDpp</code>.</p>
 <p>This mode performs only the preprocessing phase of the 
-<a href="#c___utf8_to_utf8_de____c__d_">--utf8-to-utf8-de</a> conversion.
+<a href="#utf8_to_utf8_de_d">--utf8-to-utf8-de</a> conversion.
 Useful for debugging or complex processing pipelines.</p>
 </dd>
 <dt><strong><a name="output_file_ofile" class="item"><code>--output=FILE</code> , <code>-oFILE</code></a></strong></dt>
@@ -200,19 +191,6 @@ Useful for debugging or complex processing pipelines.</p>
 <p>
 </p>
 <hr />
-<h1><a name="configuration_files">CONFIGURATION FILES</a></h1>
-<p>Configuration files are expected to contain lines of the form:</p>
-<pre>
-    LONG_OPTION_NAME    OPTION_VALUE</pre>
-<p>where LONG_OPTION_NAME is the long name of some option,
-without the leading '--', and OPTION_VALUE is the value for
-that option, if any.  Fields are whitespace-separated.
-Blank lines and comments (lines beginning with '#')
-are ignored.</p>
-<p>No configuration files are read by default.</p>
-<p>
-</p>
-<hr />
 <h1><a name="addenda">ADDENDA</a></h1>
 <p>
 </p>
@@ -222,12 +200,12 @@ using Getopt::Gen version 0.13.
 Translation was initiated
 as:</p>
 <pre>
-   optgen.perl -l --nocfile --nohfile --notimestamp -F unicruft unicruft.gog</pre>
+   optgen.perl -l --nocfile --nohfile --notimestamp --no-handle-rcfile -F unicruft unicruft.gog</pre>
 <p>
 </p>
 <hr />
 <h1><a name="bugs_and_limitations">BUGS AND LIMITATIONS</a></h1>
-<p>... arthropods, having a hard exoskeleton, a three-part body (head, thorax, and abdomen), three pairs of jointed legs, compound eyes, and two antennae; cf. <a href="http://en.wikipedia.org/wiki/Insect">http://en.wikipedia.org/wiki/Insect</a></p>
+<p>Too much copying in the underlying library makes things a tad slow.</p>
 <p>
 </p>
 <hr />

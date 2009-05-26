@@ -172,7 +172,7 @@ OPTGENFLAGS = -l
 
 if HAVE_OPTGEN
 .gog.pod:
-	$(OPTGEN_PERL) $(OPTGENFLAGS) --nocfile --nohfile --notimestamp -F $* $<
+	$(OPTGEN_PERL) $(OPTGENFLAGS) --nocfile --nohfile --notimestamp --no-handle-rcfile -F $* $<
 endif
 
 ##-----------------------------------------------------------------------

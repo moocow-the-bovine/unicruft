@@ -17,7 +17,6 @@ unicruft [OPTIONS] FILE(s)
  Options
     -h      --help                 Print help and exit.
     -V      --version              Print version and exit.
-    -cFILE  --rcfile=FILE          Read an alternate configuration file.
     -mMODE  --mode=MODE            Conversion mode (lu|ua|ul|ud|uL|uD|uDpp)
     -u      --latin1-to-utf8       Convert Latin-1 to UTF-8
     -a      --utf8-to-ascii        Convert UTF-8 to ASCII (default)
@@ -94,17 +93,6 @@ Default: '0'
 
 
 
-=item C<--rcfile=FILE> , C<-cFILE>
-
-Read an alternate configuration file.
-
-Default: 'NULL'
-
-See also: L<CONFIGURATION FILES>.
-
-
-
-
 =item C<--mode=MODE> , C<-mMODE>
 
 Conversion mode (lu|ua|ul|ud|uL|uD|uDpp)
@@ -167,7 +155,7 @@ Equivalent to C<--mode=ul>.
 Converts arbitrary UTF-8 input to an 8-bit ISO-8859-1 (Latin-1) approximation.
 Input characters in the Unicode Latin-1 supplement are identity-mapped
 onto the 8-bit Latin-1 character set, other input characters are transliterated
-as for the L<--utf8-to-ascii|/"C<--utf8-to-ascii> , C<-a>"> mode.
+as for the L<--utf8-to-ascii|/"--utf8-to-ascii , -a"> mode.
 
 
 
@@ -185,7 +173,7 @@ Equivalent to C<--mode=ud>.
 Converts arbitrary UTF-8 input to an 8-bit ISO-8859-1 (Latin-1) approximation using only characters
 active in contemporary German orthography.  Performs some
 context-sensitive replacements (e.g. of combining I<Umlaute> and superscript letters),
-and otherwise transliterates as for the L<--utf8-to-latin1|/"C<--utf8-to-latin1> , C<-a>">
+and otherwise transliterates as for the L<--utf8-to-latin1|/"--utf8-to-latin1 , -l">
 mode.
 
 
@@ -201,7 +189,7 @@ Default: '0'
 
 Equivalent to C<--mode=uL>.
 
-Just like L<--utf8-to-latin1|/"C<--utf8-to-latin1> , C<-l>"> mode,
+Just like L<--utf8-to-latin1|/"--utf8-to-latin1 , -l"> mode,
 but output is encoded in UTF-8 which is guaranteed to contain only Unicode
 characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.
 
@@ -218,7 +206,7 @@ Default: '0'
 
 Equivalent to C<--mode=uD>.
 
-Just like L<--utf8-to-latin1-de|/"C<--utf8-to-latin1-de> , C<-d>"> mode,
+Just like L<--utf8-to-latin1-de|/"--utf8-to-latin1-de , -d"> mode,
 but output is encoded in UTF-8 which is guaranteed to contain only Unicode
 characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.
 
@@ -236,7 +224,7 @@ Default: '0'
 Equivalent to C<--mode=uDpp>.
 
 This mode performs only the preprocessing phase of the 
-L<--utf8-to-utf8-de|/"C<--utf8-to-utf8-de> , C<-D>"> conversion.
+L<--utf8-to-utf8-de|/"--utf8-to-utf8-de , -D"> conversion.
 Useful for debugging or complex processing pipelines.
 
 
@@ -262,22 +250,6 @@ Default: '-'
 ###############################################################
 # configuration files
 ###############################################################
-=pod
-
-=head1 CONFIGURATION FILES
-
-Configuration files are expected to contain lines of the form:
-
-    LONG_OPTION_NAME    OPTION_VALUE
-
-where LONG_OPTION_NAME is the long name of some option,
-without the leading '--', and OPTION_VALUE is the value for
-that option, if any.  Fields are whitespace-separated.
-Blank lines and comments (lines beginning with '#')
-are ignored.
-
-No configuration files are read by default.
-
 =cut
 
 
@@ -298,7 +270,7 @@ using Getopt::Gen version 0.13.
 Translation was initiated
 as:
 
-   optgen.perl -l --nocfile --nohfile --notimestamp -F unicruft unicruft.gog
+   optgen.perl -l --nocfile --nohfile --notimestamp --no-handle-rcfile -F unicruft unicruft.gog
 
 =cut
 
@@ -312,7 +284,7 @@ as:
 
 
 
-... arthropods, having a hard exoskeleton, a three-part body (head, thorax, and abdomen), three pairs of jointed legs, compound eyes, and two antennae; cf. http://en.wikipedia.org/wiki/Insect
+Too much copying in the underlying library makes things a tad slow.
 
 
 
