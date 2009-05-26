@@ -3,7 +3,7 @@
 
 =head1 NAME
 
-unicruft - UTF-8 approximator
+unicruft - Approximating UTF-8 transliteration & recoding
 
 
 
@@ -15,16 +15,18 @@ unicruft [OPTIONS] FILE(s)
     FILE(s)  Input text file(s)
 
  Options
-    -h        --help                  Print help and exit.
-    -V        --version               Print version and exit.
-    -cFILE    --rcfile=FILE           Read an alternate configuration file.
-    -mSTRING  --mode=STRING           Conversion mode (ua|ul|ud|udpp|lu)
-    -a        --utf8-to-ascii         Convert UTF-8 input to 7-bit ASCII (default)
-    -l        --utf8-to-latin1        Convert UTF-8 input to 8-bit Latin-1
-    -d        --utf8-to-latin1-de     Convert UTF-8 input to de_DE.Latin-1-'safe' UTF-8
-    -p        --utf8-to-latin1-de-pp  Preprocess UTF-8 input to UTF-8 output (debug)
-    -u        --latin1-to-utf8        Convert Latin-1 input to UTF-8 output
-    -oFILE    --output=FILE           Output file (default=stdout).
+    -h      --help                 Print help and exit.
+    -V      --version              Print version and exit.
+    -cFILE  --rcfile=FILE          Read an alternate configuration file.
+    -mMODE  --mode=MODE            Conversion mode (lu|ua|ul|ud|uL|uD|uDpp)
+    -u      --latin1-to-utf8       Convert Latin-1 to UTF-8
+    -a      --utf8-to-ascii        Convert UTF-8 to ASCII (default)
+    -l      --utf8-to-latin1       Convert UTF-8 to Latin-1
+    -d      --utf8-to-latin1-de    Convert UTF-8 to Latin-1/DE
+    -L      --utf8-to-utf8-latin1  Convert UTF-8 to UTF-8/Latin-1
+    -D      --utf8-to-utf8-de      Convert UTF-8 to UTF-8/DE
+    -P      --utf8-to-utf8-de-pp   (debug) run only the UTF-8/DE preprocessor
+    -oFILE  --output=FILE          Output file (default=stdout).
 
 =cut
 
@@ -35,7 +37,7 @@ unicruft [OPTIONS] FILE(s)
 
 =head1 DESCRIPTION
 
-UTF-8 approximator
+Approximating UTF-8 transliteration & recoding
 
 
 
@@ -103,56 +105,18 @@ See also: L<CONFIGURATION FILES>.
 
 
 
-=item C<--mode=STRING> , C<-mSTRING>
+=item C<--mode=MODE> , C<-mMODE>
 
-Conversion mode (ua|ul|ud|udpp|lu)
+Conversion mode (lu|ua|ul|ud|uL|uD|uDpp)
 
 Default: 'ua'
 
 
-
-
-
-
-=item C<--utf8-to-ascii> , C<-a>
-
-Convert UTF-8 input to 7-bit ASCII (default)
-
-Default: '0'
-
-
-
-
-
-
-=item C<--utf8-to-latin1> , C<-l>
-
-Convert UTF-8 input to 8-bit Latin-1
-
-Default: '0'
-
-
-
-
-
-
-=item C<--utf8-to-latin1-de> , C<-d>
-
-Convert UTF-8 input to de_DE.Latin-1-'safe' UTF-8
-
-Default: '0'
-
-
-
-
-
-
-=item C<--utf8-to-latin1-de-pp> , C<-p>
-
-Preprocess UTF-8 input to UTF-8 output (debug)
-
-Default: '0'
-
+The C<--mode> argument is used to specify the requested conversion mode,
+i.e. input and output encoding and character-(sub-)set.  Each supported
+conversion mode has a long option alias as well as a canonical string value
+for the C<--mode> argument.  See the documentation of the remaining conversion
+options for details on the supported conversion modes.
 
 
 
@@ -160,10 +124,120 @@ Default: '0'
 
 =item C<--latin1-to-utf8> , C<-u>
 
-Convert Latin-1 input to UTF-8 output
+Convert Latin-1 to UTF-8
 
 Default: '0'
 
+
+Equivalent to C<--mode=lu>.
+
+Converts arbitrary 8-bit Latin-1 input to UTF-8.
+
+
+
+
+
+=item C<--utf8-to-ascii> , C<-a>
+
+Convert UTF-8 to ASCII (default)
+
+Default: '0'
+
+
+Equivalent to C<--mode=ua>.
+
+Converts arbitrary UTF-8 input to a 7-bit ASCII approximation
+using a modified version of the transliteration tables distributed
+with the L<Text::Unidecode(3pm)|Text::Unidecode> perl module by Sean M. Burke.
+This is the default conversion mode.
+
+
+
+
+
+=item C<--utf8-to-latin1> , C<-l>
+
+Convert UTF-8 to Latin-1
+
+Default: '0'
+
+
+Equivalent to C<--mode=ul>.
+
+Converts arbitrary UTF-8 input to an 8-bit ISO-8859-1 (Latin-1) approximation.
+Input characters in the Unicode Latin-1 supplement are identity-mapped
+onto the 8-bit Latin-1 character set, other input characters are transliterated
+as for the L<--utf8-to-ascii|/"C<--utf8-to-ascii> , C<-a>"> mode.
+
+
+
+
+
+=item C<--utf8-to-latin1-de> , C<-d>
+
+Convert UTF-8 to Latin-1/DE
+
+Default: '0'
+
+
+Equivalent to C<--mode=ud>.
+
+Converts arbitrary UTF-8 input to an 8-bit ISO-8859-1 (Latin-1) approximation using only characters
+active in contemporary German orthography.  Performs some
+context-sensitive replacements (e.g. of combining I<Umlaute> and superscript letters),
+and otherwise transliterates as for the L<--utf8-to-latin1|/"C<--utf8-to-latin1> , C<-a>">
+mode.
+
+
+
+
+
+=item C<--utf8-to-utf8-latin1> , C<-L>
+
+Convert UTF-8 to UTF-8/Latin-1
+
+Default: '0'
+
+
+Equivalent to C<--mode=uL>.
+
+Just like L<--utf8-to-latin1|/"C<--utf8-to-latin1> , C<-l>"> mode,
+but output is encoded in UTF-8 which is guaranteed to contain only Unicode
+characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.
+
+
+
+
+
+=item C<--utf8-to-utf8-de> , C<-D>
+
+Convert UTF-8 to UTF-8/DE
+
+Default: '0'
+
+
+Equivalent to C<--mode=uD>.
+
+Just like L<--utf8-to-latin1-de|/"C<--utf8-to-latin1-de> , C<-d>"> mode,
+but output is encoded in UTF-8 which is guaranteed to contain only Unicode
+characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.
+
+
+
+
+
+=item C<--utf8-to-utf8-de-pp> , C<-P>
+
+(debug) run only the UTF-8/DE preprocessor
+
+Default: '0'
+
+
+Equivalent to C<--mode=uDpp>.
+
+This mode performs only the preprocessing phase of the 
+L<--utf8-to-utf8-de|/"C<--utf8-to-utf8-de> , C<-D>"> conversion.
+Useful for debugging or complex processing pipelines.
 
 
 
@@ -261,7 +335,11 @@ Bryan Jurish E<lt>jurish@bbaw.deE<gt>
 
 =head1 SEE ALSO
 
-L<perl>, L<Getopt::Gen>.
+
+Text::Unidecode(3pm),
+recode(1),
+iconv(1)
+
 
 =cut
 
