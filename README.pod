@@ -18,7 +18,7 @@ referred to as "Latin-1.DE").
 
 The basic transliteration heuristics in uxTableAscii.c were auto-generated
 from those used by the L<Text::Unidecode(3pm)|Text::Unidecode> Perl module by
-Sean M. Burke.
+Sean M. Burke. 
 
 =cut
 
