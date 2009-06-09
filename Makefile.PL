@@ -3,8 +3,8 @@ use ExtUtils::MakeMaker;
 ##----------------------------------------------------------------------
 ## Configuration
 ##----------------------------------------------------------------------
-if (system("pkg-config --atleast-version=0.01 unicruft") != 0) {
-  die("Required module unicruft >= v0.01 not found!\n");
+if (system("pkg-config --atleast-version=0.02 unicruft") != 0) {
+  die("Required module unicruft >= v0.02 not found!\n");
 }
 
 $UX_IFLAGS = join(' ', map { $s=`pkg-config --cflags-only-I $_`; chomp($s); $s } qw(unicruft));
