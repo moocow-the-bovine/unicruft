@@ -44,6 +44,11 @@ WriteMakefile
    ##-- stuff that probably doesn't need to be changed
    #XSOPT        => '-C++',
    #TYPEMAPS     => ['perlobject.map', 'typemap'],
+
+   ##-- prerequisites
+   PREREQ_PM    => {
+		    'Encode' => undef,
+		   },
   );
 
 
