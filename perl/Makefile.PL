@@ -28,7 +28,7 @@ WriteMakefile
    DEFINE       => '-DHAVE_CONFIG_H',     ##-- additional defines
    INC          => $UX_IFLAGS,      ##-- additional includes
    CCFLAGS      => '',          ##-- additional flags
-   OPTIMIZE    => '-O1 -pipe', ##-- optimization flags
+   OPTIMIZE    => '-O2 -pipe', ##-- optimization flags
    #OBJECT      => 'Gfsm.o GfsmPerl.o',
 
    ##-- install these
