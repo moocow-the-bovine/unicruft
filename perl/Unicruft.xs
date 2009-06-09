@@ -66,6 +66,7 @@ CODE:
   ux_sv2buf_bytes(u8bytes, &ibuf);
   ux_unidecode_us(NULL, &ibuf, &obuf);
   RETVAL = newSVpvn(obuf.str, obuf.len);
+  SvUTF8_off(RETVAL);
 OUTPUT:
   RETVAL
 CLEANUP:
@@ -81,6 +82,7 @@ CODE:
   ux_sv2buf_bytes(u8bytes, &ibuf);
   ux_unidecode_us(&UNIDECODE_LATIN1, &ibuf, &obuf);
   RETVAL = newSVpvn(obuf.str, obuf.len);
+  SvUTF8_off(RETVAL);
 OUTPUT:
   RETVAL
 CLEANUP:
@@ -100,6 +102,7 @@ CODE:
   ux_depp_scan_const_buffer(&depp, &ibuf, &pbuf);
   ux_unidecode_us(&UNIDECODE_LATIN1, &pbuf, &obuf);
   RETVAL = newSVpvn(obuf.str, obuf.len);
+  SvUTF8_off(RETVAL);
 OUTPUT:
   RETVAL
 CLEANUP:
