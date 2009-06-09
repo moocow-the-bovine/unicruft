@@ -178,19 +178,19 @@ conditionals are required.
 
 =head3 ux_latin1_to_utf8
 
-Like L<latin1_to_utf8>(), but requires its argument to be a Latin-1-encoded byte string.
+Like L<latin1_to_utf8()|/latin1_to_utf8>, but requires its argument to be a Latin-1-encoded byte string.
 
 =head3 ux_utf8_to_ascii
 
-Like L<utf8_to_ascii>(), but requires its argument to be a UTF-8-encoded byte string.
+Like L<utf8_to_ascii()|/utf8_to_ascii>, but requires its argument to be a UTF-8-encoded byte string.
 
 =head3 ux_utf8_to_latin1
 
-Like L<utf8_to_latin1>(), but requires its argument to be a UTF-8-encoded byte string.
+Like L<utf8_to_latin1()|/utf8_to_latin1>, but requires its argument to be a UTF-8-encoded byte string.
 
 =head3 ux_utf8_to_latin1_de
 
-Like L<utf8_to_latin1_de>(), but requires its argument to be a UTF-8-encoded byte string.
+Like L<utf8_to_latin1_de()|/utf8_to_latin1_de>, but requires its argument to be a UTF-8-encoded byte string.
 
 
 =head1 SEE ALSO
