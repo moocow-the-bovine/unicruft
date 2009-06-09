@@ -76,6 +76,10 @@ tested version(s): 1.9.6
 
 Required for building from SVN sources.
 
+=item Perl (perl bindings only)
+
+tested version(s): 5.10.0
+
 =back
 
 =cut
@@ -92,6 +96,10 @@ To build this package from SVN sources, you must first run the shell command:
 from the distribution root directory B<BEFORE> running F<./configure>.
 Building from SVN sources requires additional development tools to present
 on the build system.  Then, follow the instructions in L</"Building from Source">.
+
+Included in the SVN repository are perl bindings for the unicruft library
+in the distribution subdirectory F<./perl>.  See the file F<README.txt>
+in that directory for installation details.
 
 =cut
 

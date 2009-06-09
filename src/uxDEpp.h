@@ -32,12 +32,14 @@ typedef struct {
 /** constructor */
 uxDEpp *ux_depp_new(void);
 
-/** destructor
- *  \param free_buffer (boolean): if true, I/O buffer \a buf and its data will be freed,
- *    otherwise user is responsible for freeing \a buf.
- */
+/** destructor */
 void ux_depp_free(uxDEpp *pp);
 
+/** initializer, suitable for calling with a local variable */
+void ux_depp_init(uxDEpp *pp);
+
+/** de-initializer, suitable for freeing internal data associated with a local variable */
+void ux_depp_free_data(uxDEpp *pp);
 
 /** top-level in-place pre-processing routine
  *  \param pp preprocessor struct as returned by ux_depp_new()

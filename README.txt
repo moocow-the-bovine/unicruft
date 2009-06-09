@@ -36,6 +36,9 @@ INSTALLATION
 
         Required for building from SVN sources.
 
+    Perl (perl bindings only)
+        tested version(s): 5.10.0
+
   Building from SVN
     To build this package from SVN sources, you must first run the shell
     command:
@@ -46,6 +49,10 @@ INSTALLATION
     Building from SVN sources requires additional development tools to
     present on the build system. Then, follow the instructions in "Building
     from Source".
+
+    Included in the SVN repository are perl bindings for the unicruft
+    library in the distribution subdirectory ./perl. See the file README.txt
+    in that directory for installation details.
 
   Building from Source
     To build and install the entire package, issue the following commands to

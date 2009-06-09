@@ -10,27 +10,39 @@
 #include <uxDEpp.h>
 #include <string.h>
 
-
 //--------------------------------------------------------------
-uxDEpp *ux_depp_new(void)
+void ux_depp_init(uxDEpp *pp)
 {
-  uxDEpp *pp = (uxDEpp*)malloc(sizeof(uxDEpp));
   assert(pp!=NULL);
   memset(pp,0,sizeof(pp));
   ux_de_yylex_init(&pp->scanner);
   ux_de_yyset_in (NULL, pp->scanner);
   ux_de_yyset_out(NULL, pp->scanner);
   ux_de_yyset_extra(&pp->data, pp->scanner);
+}
+
+//--------------------------------------------------------------
+uxDEpp *ux_depp_new(void)
+{
+  uxDEpp *pp = (uxDEpp*)malloc(sizeof(uxDEpp));
+  ux_depp_init(pp);
   return pp;
+}
+
+//--------------------------------------------------------------
+void ux_depp_free_data(uxDEpp *pp)
+{
+  if (pp) {
+    ux_de_yylex_destroy(pp->scanner);
+    pp->scanner = NULL;
+  }
 }
 
 //--------------------------------------------------------------
 void ux_depp_free(uxDEpp *pp)
 {
-  if (pp) {
-    ux_de_yylex_destroy(pp->scanner);
-    free(pp);
-  }
+  ux_depp_free_data(pp);
+  if (pp) free(pp);
 }
 
 //--------------------------------------------------------------
