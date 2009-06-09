@@ -2,7 +2,7 @@
 #-*- Mode: CPerl; coding: utf-8 -*-
 
 use lib qw(./blib/lib ./blib/arch);
-use Unicruft qw(:all);
+use Unicruft;
 use Encode qw(encode decode);
 no bytes;
 use utf8;

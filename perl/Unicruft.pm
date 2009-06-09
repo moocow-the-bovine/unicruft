@@ -23,13 +23,17 @@ XSLoader::load('Unicruft', $VERSION);
 ##======================================================================
 ## Exports
 ##======================================================================
-our %EXPORT_TAGS =
-  (
-   #all => ['latin1_to_utf8'],
-   all => [],
-  );
-our @EXPORT_OK = @{$EXPORT_TAGS{all}};
-our @EXPORT = qw();
+our (%EXPORT_TAGS, @EXPORT_OK, @EXPORT);
+BEGIN {
+  %EXPORT_TAGS =
+    (
+     std  => [qw(latin1_to_utf8 utf8_to_ascii utf8_to_latin1 utf8_to_latin1_de)],
+     guts => [qw(ux_latin1_to_utf8 ux_utf8_to_ascii ux_utf8_to_latin1 ux_utf8_to_latin1_de)],
+    );
+  $EXPORT_TAGS{all} = [@{$EXPORT_TAGS{std}}, @{$EXPORT_TAGS{guts}}];
+  @EXPORT_OK        = @{$EXPORT_TAGS{all}};
+  @EXPORT           = qw();
+}
 
 ##======================================================================
 ## Constants
@@ -76,20 +80,42 @@ Unicruft - Perl interface to the unicruft transliteration library
 
 =head1 SYNOPSIS
 
-  use Unicruft;
-
-  $libversion = Unicruft::library_version();
-
-  $u8str = Unicruft::latin1_to_utf8($l1str);
-  $astr  = Unicruft::utf8_to_ascii($u8str);
-  $l1str = Unicruft::utf8_to_latin1($u8str);
-  $l1str = Unicruft::utf8_to_latin1_de($u8str);
+ use Unicruft;
+ 
+ $libversion = Unicruft::library_version();
+ 
+ $u8str = Unicruft::latin1_to_utf8($l1str);
+ $astr  = Unicruft::utf8_to_ascii($u8str);
+ $l1str = Unicruft::utf8_to_latin1($u8str);
+ $l1str = Unicruft::utf8_to_latin1_de($u8str);
 
 =head1 DESCRIPTION
 
 The perl Unicruft package provides a perl interface to the
 libunicruft library, which is itself derived in part from
 the Text::Unidecode perl module.
+
+=head2 EXPORTS
+
+Nothing is exported by default, but
+the Unicruft module support the following export tags:
+
+=over 4
+
+=item :std
+
+Standard conversion functions (those without a "ux_" prefix)
+
+=item :guts
+
+Low-level conversion functions (those with a "ux_" prefix).
+
+=item :all
+
+All conversion functions exported by :std and :guts.
+
+=back
+
 
 =head2 FUNCTIONS
 
