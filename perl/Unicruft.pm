@@ -6,10 +6,11 @@ use warnings;
 use Carp;
 use AutoLoader;
 use Exporter;
+use Encode qw(encode decode);
 
 our @ISA = qw(Exporter);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 require XSLoader;
 XSLoader::load('Unicruft', $VERSION);
@@ -33,6 +34,30 @@ our @EXPORT = qw();
 ##======================================================================
 ## Constants
 ##======================================================================
+
+##======================================================================
+## Wrappers
+##======================================================================
+
+## $u8str = latin1_to_utf8($l1str)
+sub latin1_to_utf8 {
+  ux_latin1_to_utf8(utf8::is_utf8($_[0]) ? encode('latin1',$_[0]) : $_[0]);
+}
+
+## $astr = utf8_to_ascii($u8str)
+sub utf8_to_ascii {
+  ux_utf8_to_ascii(utf8::is_utf8($_[0]) ? encode('utf8',$_[0]) : $_[0]);
+}
+
+## $l1str = utf8_to_latin1($u8str)
+sub utf8_to_latin1 {
+  ux_utf8_to_latin1(utf8::is_utf8($_[0]) ? encode('utf8',$_[0]) : $_[0]);
+}
+
+## $destr = utf8_to_latin1_de($u8str)
+sub utf8_to_latin1_de {
+  ux_utf8_to_latin1_de(utf8::is_utf8($_[0]) ? encode('utf8',$_[0]) : $_[0]);
+}
 
 ##======================================================================
 ## Exports: finish
