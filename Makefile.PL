@@ -35,11 +35,11 @@ WriteMakefile
    EXE_FILES => [glob("bin/*.perl")],
 
    ##-- DEBUG
-   MAKEAPERL=>1,
-   #LINKTYPE=>'static',
-   MAP_TARGET=>'ucperl',
-   #INCLUDE_EXT=>[qw(Encode DynaLoader Exporter)], ##-- ??? doesn't work ???
-   CCFLAGS=>'-g',
+   #MAKEAPERL=>1,
+   ##LINKTYPE=>'static',
+   #MAP_TARGET=>'ucperl',
+   ##INCLUDE_EXT=>[qw(Encode DynaLoader Exporter)], ##-- ??? doesn't work ???
+   #CCFLAGS=>'-g',
    ##-- /DEBUG
 
    ##-- stuff that probably doesn't need to be changed
@@ -48,7 +48,7 @@ WriteMakefile
 
    ##-- prerequisites
    PREREQ_PM    => {
-		    'Encode' => undef,
+		    #'Encode' => undef,
 		   },
   );
 
