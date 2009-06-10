@@ -5,6 +5,7 @@
 /*#include "ppport.h"*/
 
 #include <unicruft.h>
+#include <string.h>
 
 /*==============================================================================
  * Utils
