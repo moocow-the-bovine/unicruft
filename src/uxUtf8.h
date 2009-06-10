@@ -76,8 +76,11 @@ int u8_offset(char *str, int charnum);
 /** byte offset to character number */
 int u8_charnum(char *s, int offset);
 
-/** return next character, updating an index variable */
+/** return next character, updating an index variable.  expects NUL-terminated \a s */
 u_int32_t u8_nextchar(char *s, int *i);
+
+/** (moo): return next character, updating an index variable which may not exceed length \a slen */
+u_int32_t u8_nextcharn(char *s, int slen, int *i);
 
 /** move to next character */
 void u8_inc(char *s, int *i);

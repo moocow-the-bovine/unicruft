@@ -41,14 +41,14 @@ size_t ux_unidecode_us(const uxLookupTable *tab, const uxBuffer *src, uxBuffer *
 
   //-- compute required length
   for (srci=0; (size_t)srci < src->len; ) {
-    wc = u8_nextchar(src->str, &srci);
+    wc = u8_nextcharn(src->str, src->len, &srci);
     dst_needed += ux_unidecode_wc_len(tab, wc);
   }
   ux_buffer_reserve(dst, dst->len + dst_needed + 1);
 
   //-- translate
   for (srci=0; (size_t)srci < src->len; ) {
-    wc = u8_nextchar(src->str, &srci);
+    wc = u8_nextcharn(src->str, src->len, &srci);
     dst->len += ux_unidecode_wc_nolen(tab, wc, dst);
   }
   dst->str[dst->len] = '\0';

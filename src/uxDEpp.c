@@ -66,6 +66,7 @@ uxBuffer *ux_depp_scan_buffer(uxDEpp *pp, uxBuffer *in, uxBuffer *out)
   assert2(yybuf != NULL, "couldn't set up flex buffer");
 
   ux_de_yylex(pp->scanner);
+  //ux_buffer_append_delim(out, '\0'); //-- always NUL-terminate (because uxUtf8.c is so stupid)
 
   //-- cleanup
   in->len -= 2; //-- "remove" flex EOB sentinels
@@ -79,9 +80,9 @@ uxBuffer *ux_depp_scan_const_buffer(uxDEpp *pp, const uxBuffer *in, uxBuffer *ou
   YY_BUFFER_STATE yybuf;
 
   if (!out)
-    out = ux_buffer_new(NULL,0,in->len);
+    out = ux_buffer_new(NULL,0,in->len+1);
   else 
-    ux_buffer_reserve(out, out->len+in->len);
+    ux_buffer_reserve(out, out->len+in->len+1);
 
   pp->data.obuf = out;
   ux_de_yyset_extra(&pp->data, pp->scanner);                     //-- (re-)set scanner 'extra' data
@@ -89,6 +90,7 @@ uxBuffer *ux_depp_scan_const_buffer(uxDEpp *pp, const uxBuffer *in, uxBuffer *ou
   assert2(yybuf != NULL, "couldn't set up flex buffer");
 
   ux_de_yylex(pp->scanner);
+  //ux_buffer_append_delim(out, '\0'); //-- always NUL-terminate (because uxUtf8.c is so stupid)
 
   if (yybuf) ux_de_yy_delete_buffer(yybuf,pp->scanner);
   return out;
