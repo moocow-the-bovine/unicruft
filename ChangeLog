@@ -3,6 +3,7 @@ ChangeLog for package unicruft
 v0.03 Wed, 10 Jun 2009 15:30:34 +0200 (moocow)
 	+ eliminated NUL-termination requirement on ux_unidecode_us()
 	  - should fix weird & unpredictable bugs with perl Unicruft.xs bindings
+	+ removed Encode dependency from perl module (faster too; now uses pack() & unpack())
 
 v0.02 Tue, 09 Jun 2009 13:23:39 +0200 (moocow)
 	+ included perl wrappers in subdirectory perl/
