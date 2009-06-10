@@ -28,7 +28,7 @@ BEGIN {
   %EXPORT_TAGS =
     (
      std  => [qw(latin1_to_utf8 utf8_to_ascii utf8_to_latin1 utf8_to_latin1_de)],
-     guts => [qw(ux_latin1_to_utf8 ux_utf8_to_ascii ux_utf8_to_latin1 ux_utf8_to_latin1_de)
+     guts => [qw(ux_latin1_to_utf8 ux_utf8_to_ascii ux_utf8_to_latin1 ux_utf8_to_latin1_de),
 	      qw(ux_latin1_bytes ux_utf8_bytes),
 	     ],
     );
