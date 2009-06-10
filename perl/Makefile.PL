@@ -3,8 +3,8 @@ use ExtUtils::MakeMaker;
 ##----------------------------------------------------------------------
 ## Configuration
 ##----------------------------------------------------------------------
-if (system("pkg-config --atleast-version=0.02 unicruft") != 0) {
-  die("Required module unicruft >= v0.02 not found!\n");
+if (system("pkg-config --atleast-version=0.03 unicruft") != 0) {
+  die("Required module unicruft >= v0.03 not found!\n");
 }
 
 $UX_IFLAGS = join(' ', map { $s=`pkg-config --cflags-only-I $_`; chomp($s); $s } qw(unicruft));
@@ -35,10 +35,11 @@ WriteMakefile
    EXE_FILES => [glob("bin/*.perl")],
 
    ##-- DEBUG
-   #MAKEAPERL=>1,
+   MAKEAPERL=>1,
    #LINKTYPE=>'static',
-   #MAP_TARGET=>'gfsmperl',
-   #CCFLAGS=>'-g',
+   MAP_TARGET=>'ucperl',
+   #INCLUDE_EXT=>[qw(Encode DynaLoader Exporter)], ##-- ??? doesn't work ???
+   CCFLAGS=>'-g',
    ##-- /DEBUG
 
    ##-- stuff that probably doesn't need to be changed

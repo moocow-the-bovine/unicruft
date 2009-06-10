@@ -1,4 +1,4 @@
-/* -*- Mode: C; coding: UTF-8 -*- */
+/* -*- Mode: C; coding: utf-8 -*- */
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
@@ -145,7 +145,7 @@ void utf8_to_utf8_latin1_main(void)
   while ( ux_buffer_getline(ibuf,f_in) >= 0 ) {
     obuf->len=0;
     ux_unidecode_us(&UNIDECODE_LATIN1, ibuf, obuf);
-    ux_buffer_append_delim(obuf,'\0'); //-- we need this because uxUtf8.c scans to next char to find sequence lengths
+    ux_buffer_append_delim(obuf,'\0'); //-- for uxUtf8.c code; should be implicit in ux_unidecode_us()
 
     ibuf->len=0;
     ux_buffer_latin1_to_utf8(obuf,ibuf);
@@ -169,7 +169,7 @@ void utf8_to_latin1_de_main(void)
   while ( ux_buffer_getline(ibuf,f_in) >= 0 ) {
     obuf->len=0;
     ux_depp_scan_buffer(pp,ibuf,obuf);
-    ux_buffer_append_delim(obuf,'\0'); //-- we need this because uxUtf8.c scans to next char to find sequence lengths
+    //ux_buffer_append_delim(obuf,'\0'); //-- for uxUtf8.c; now implicit in ux_depp_scan_buffer()
 
     ibuf->len=0;
     ux_unidecode_us(&UNIDECODE_LATIN1, obuf, ibuf);
@@ -183,11 +183,11 @@ void utf8_to_utf8_de_main(void)
   while ( ux_buffer_getline(ibuf,f_in) >= 0 ) {
     obuf->len=0;
     ux_depp_scan_buffer(pp,ibuf,obuf);
-    ux_buffer_append_delim(obuf,'\0'); //-- we need this because uxUtf8.c scans to next char to find sequence lengths
+    //ux_buffer_append_delim(obuf,'\0'); //-- for uxUtf8.c; now implicit in ux_depp_scan_buffer()
 
     ibuf->len=0;
     ux_unidecode_us(&UNIDECODE_LATIN1, obuf, ibuf);
-    ux_buffer_append_delim(ibuf,'\0'); //-- ... again
+    ux_buffer_append_delim(ibuf,'\0'); //--  for uxUtf8.c; SHOULD BE implicit in ux_unidecode_us()
 
     obuf->len=0;
     ux_buffer_latin1_to_utf8(ibuf,obuf);

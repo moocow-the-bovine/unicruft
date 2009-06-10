@@ -103,7 +103,7 @@ void ux_buffer_utf8_to_latin1(const uxBuffer *src, uxBuffer *dst)
   int i;
   ux_buffer_reserve(dst, src->len+1);
   for (i=0; (size_t)i < src->len; dst->len++) {
-    dst->str[dst->len] = (char)u8_nextchar(src->str, &i);
+    dst->str[dst->len] = (char)u8_nextcharn(src->str, src->len, &i);
   }
   dst->str[dst->len++] = '\0';
 }

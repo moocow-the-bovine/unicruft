@@ -230,6 +230,22 @@ u_int32_t u8_nextchar(char *s, int *i)
     return ch;
 }
 
+/*-- moo: reads the next utf-8 sequence out of a string, updating an index, and not exceeding a given length */
+u_int32_t u8_nextcharn(char *s, int slen, int *i)
+{
+    u_int32_t ch = 0;
+    int sz = 0;
+
+    do {
+        ch <<= 6;
+        ch += (unsigned char)s[(*i)++];
+        sz++;
+    } while (*i < slen && !isutf(s[*i]));
+    ch -= offsetsFromUTF8[sz-1];
+
+    return ch;
+}
+
 /* number of characters */
 int u8_strlen(char *s)
 {
