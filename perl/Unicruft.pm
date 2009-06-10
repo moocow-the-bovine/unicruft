@@ -6,7 +6,7 @@ use warnings;
 use Carp;
 use AutoLoader;
 use Exporter;
-#use Encode qw(encode decode);
+#use Encode;  ##-- slower than pack/unpack!
 
 our @ISA = qw(Exporter);
 
@@ -28,7 +28,9 @@ BEGIN {
   %EXPORT_TAGS =
     (
      std  => [qw(latin1_to_utf8 utf8_to_ascii utf8_to_latin1 utf8_to_latin1_de)],
-     guts => [qw(ux_latin1_to_utf8 ux_utf8_to_ascii ux_utf8_to_latin1 ux_utf8_to_latin1_de)],
+     guts => [qw(ux_latin1_to_utf8 ux_utf8_to_ascii ux_utf8_to_latin1 ux_utf8_to_latin1_de)
+	      qw(ux_latin1_bytes ux_utf8_bytes),
+	     ],
     );
   $EXPORT_TAGS{all} = [@{$EXPORT_TAGS{std}}, @{$EXPORT_TAGS{guts}}];
   @EXPORT_OK        = @{$EXPORT_TAGS{all}};
@@ -40,27 +42,43 @@ BEGIN {
 ##======================================================================
 
 ##======================================================================
+## Utils
+##======================================================================
+
+## $u8bytes = ux_utf8_bytes($str)
+##  + returns UTF-8 byte-string encoded version of $str; respects perl UTF-8 flag
+sub ux_utf8_bytes {
+  return utf8::is_utf8($_[0]) ? pack('C0C*',unpack('U0C*',$_[0])) : $_[0];
+}
+
+## $l1bytes = ux_latin1_bytes($str)
+##  + returns Latin-1 byte-string encoded version of $str; respects perl UTF-8 flag
+sub ux_latin1_bytes {
+  return utf8::is_utf8($_[0]) ? pack('C0C*',unpack('U0U*',$_[0])) : $_[0];
+}
+
+##======================================================================
 ## Wrappers
 ##======================================================================
 
 ## $u8str = latin1_to_utf8($l1str)
 sub latin1_to_utf8 {
-  ux_latin1_to_utf8(utf8::is_utf8($_[0]) ? encode('latin1',$_[0]) : $_[0]);
+  ux_latin1_to_utf8(ux_latin1_bytes($_[0]));
 }
 
 ## $astr = utf8_to_ascii($u8str)
 sub utf8_to_ascii {
-  ux_utf8_to_ascii(utf8::is_utf8($_[0]) ? encode('utf8',$_[0]) : $_[0]);
+  ux_utf8_to_ascii(ux_utf8_bytes($_[0]));
 }
 
 ## $l1str = utf8_to_latin1($u8str)
 sub utf8_to_latin1 {
-  ux_utf8_to_latin1(utf8::is_utf8($_[0]) ? encode('utf8',$_[0]) : $_[0]);
+  ux_utf8_to_latin1(ux_utf8_bytes($_[0]));
 }
 
 ## $destr = utf8_to_latin1_de($u8str)
 sub utf8_to_latin1_de {
-  ux_utf8_to_latin1_de(utf8::is_utf8($_[0]) ? encode('utf8',$_[0]) : $_[0]);
+  ux_utf8_to_latin1_de(ux_utf8_bytes($_[0]));
 }
 
 ##======================================================================
@@ -117,7 +135,7 @@ All conversion functions exported by :std and :guts.
 =back
 
 
-=head2 FUNCTIONS
+=head2 HIGH-LEVEL CONVERSION FUNCTIONS
 
 =head3 library_version
 
@@ -168,7 +186,28 @@ $u8str may be either a byte-string (assumed to contain a valid UTF-8 byte sequen
 or a perl-native UTF-8 string (i.e. a scalar with the SvUTF8 flag set).
 The returned string $l1str will have its UTF-8 flag cleared.
 
-=head2 LOW-LEVEL FUNCTIONS
+
+=head2 LOW-LEVEL UTILITY FUNCTIONS
+
+The following functions are available, but not expected to be
+of much use to the casual user.
+
+=head3 ux_latin1_bytes
+
+ $bytes = ux_latin1_bytes($string);
+
+Returns an latin-1 encoded byte string representing its argument.
+Respects perl UTF-8 flag.
+
+=head3 ux_utf8_bytes
+
+ $bytes = ux_latin1_bytes($string);
+
+Returns an UTF-8 encoded byte string representing its argument.
+Respects perl UTF-8 flag.
+
+
+=head2 LOW-LEVEL CONVERSION FUNCTIONS
 
 For each conversion function C<X_to_Y>, there is an underlying
 C<ux_X_to_Y> function which places stricter requirements on its

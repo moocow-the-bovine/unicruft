@@ -1,13 +1,13 @@
-#!./ucperl -w
+#!/usr/bin/perl -w
 #-*- Mode: CPerl; coding: utf-8 -*-
 
 use lib qw(./blib/lib ./blib/arch);
 use Unicruft qw(:all);
-#use Encode qw(encode decode);
+use Benchmark qw(cmpthese timethese);
 #no warnings 'utf8';
 
 our $linebuffer = 1;
-our $warn_on_approx = 1;
+our $warn_on_approx = 0; ##-- debug
 our $want_output = 1;
 
 our $nbytes_in  = 0;

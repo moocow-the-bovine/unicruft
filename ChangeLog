@@ -1,4 +1,12 @@
 ChangeLog for package unicruft
 
+v0.03 Wed, 10 Jun 2009 15:30:34 +0200 (moocow)
+	+ eliminated NUL-termination requirement on ux_unidecode_us()
+	  - should fix weird & unpredictable bugs with perl Unicruft.xs bindings
+
+v0.02 Tue, 09 Jun 2009 13:23:39 +0200 (moocow)
+	+ included perl wrappers in subdirectory perl/
+	+ added uxDEpp methods for initialization & freeing of local variables
+	
 v0.01 Mon, 25 May 2009 16:36:56 +0200 (moocow)
 	+ initial v0.01 release
