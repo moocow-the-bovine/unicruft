@@ -160,6 +160,19 @@ CC_V (\xcd\xae)
 /* CC_X: U+036F: COMBINING LATIN SMALL LETTER X */
 CC_X (\xcd\xaf)
 
+/*--------------------------------------------------------------
+ * Grimm stuff
+ */
+ /* CHR_EZH: U+0292 | U+01B7 | U+021D | U+04E1 : map to "sharp-s" (ß) */
+CHR_EZH  ((\xca\x92)|(\xc6\xb7)|(\xc8\x9d)|(\xd3\xa1))
+CHR_Z    ((\xca\x92)|(\xc6\xb7)|(\xc8\x9d)|(\xd3\xa1)|[Zz])
+
+ /* CHR_LONGS: long "s": U+017F (ſ) */
+CHR_LONGS  (\xc5\xbf)
+
+ /* CHR_S: any "s" */
+CHR_S      ([Ss]|(\xc5\xbf))
+
 /*======================================================================
  * Flex Rules
  */
@@ -167,6 +180,7 @@ CC_X (\xcd\xaf)
 
  /*-------------------------------------------------------------
   * EOF
+
   */
 <<EOF>>     { return 0; }
 
@@ -204,6 +218,13 @@ u{CIRC}     { MAPTOS("au",2); }
 {CC_T} { MAPTOC('t'); }
 {CC_V} { MAPTOC('v'); }
 {CC_X} { MAPTOC('x'); }
+
+ /*-------------------------------------------------------------
+  * Misc: s-z stuff
+  */
+{CHR_LONGS}{CHR_Z} { MAPTOS("\xc3\x9f", 2); } /*-- sz -> sz ligature (U+00DF) --*/
+ /*{CHR_S}{CHR_Z}     { MAPTOS("\xc3\x9f", 2); } */ /*-- sz -> sz ligature (U+00DF) --*/
+{CHR_EZH}          { MAPTOS("\xc3\x9f", 2); } /*-- sz -> sz ligature (U+00DF) --*/
 
  /*-------------------------------------------------------------
   * BLOCK: Latin-1 Supplement
