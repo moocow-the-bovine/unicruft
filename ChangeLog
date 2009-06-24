@@ -1,5 +1,8 @@
 ChangeLog for package unicruft
 
+v0.04 Wed, 24 Jun 2009 13:33:33 +0200 (moocow)
+	+ updated "sz" handling in uxDEyy.l
+
 v0.03 Wed, 10 Jun 2009 15:30:34 +0200 (moocow)
 	+ eliminated NUL-termination requirement on ux_unidecode_us()
 	  - should fix weird & unpredictable bugs with perl Unicruft.xs bindings
