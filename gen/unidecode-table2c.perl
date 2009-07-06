@@ -43,10 +43,19 @@ sub c_table_str {
   $s = '' if (!defined($s));
 
   ##-- Text::Unidecode catch-all: "[?]"
-  # (leave alone)
+  #; (leave alone)
   $s =~ s/\s*\[\?\]\s*//sg;  ##-- ... map to empty
   #$s =~ s/\[\?\]/\#/sg;      ##-- ... map to '#'
   #$s =~ s/\[\?\]/\_/sg;      ##-- ... map to '_'
+
+  ##-- Quotes
+  $s = '"'
+    if ($s eq ',,'                ##-- U+201E, U+301F: low double quotes
+	|| $s eq "''"             ##-- U+2033: high double quotes
+	|| $s eq '``'             ##-- U+2036: double backquotes
+	#|| $s eq "\x{ab}"         ##-- U+00ab: <<: see latin1-de-maketable.perl
+	#|| $s eq "\x{bb}"         ##-- U+00ab: >>: see latin1-de-maketable.perl
+       );
 
   ##-- Text::Unidecode strangeness
   $s =~ s/\[JIS\]/(JIS)/sg; ##-- "[JIS]" = 12292 = 0x3004 = "Japanese Industrial Standard" symbol
