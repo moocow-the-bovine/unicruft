@@ -196,6 +196,16 @@ u{UMLAUT}   { MAPTOS("\xC3\xBC",2); }
 {UMLAUT}    { ; }
 
  /*-------------------------------------------------------------
+  * Combining "e": [VOWEL]^e --> [VOWEL +umlaut]
+  */
+A{CC_E}   { MAPTOS("\xC3\x84",2); }
+O{CC_E}   { MAPTOS("\xC3\x96",2); }
+U{CC_E}   { MAPTOS("\xC3\x9C",2); }
+a{CC_E}   { MAPTOS("\xC3\xA4",2); }
+o{CC_E}   { MAPTOS("\xC3\xB6",2); }
+u{CC_E}   { MAPTOS("\xC3\xBC",2); }
+
+ /*-------------------------------------------------------------
   * Circumflex
   */
 U{CIRC}     { MAPTOS("AU",2); }
@@ -203,7 +213,7 @@ u{CIRC}     { MAPTOS("au",2); }
 {CIRC}      { ; }
 
  /*-------------------------------------------------------------
-  * Combining Letters
+  * Combining Letters: other
   */
 {CC_A} { MAPTOC('a'); }
 {CC_E} { MAPTOC('e'); }
@@ -223,9 +233,9 @@ u{CIRC}     { MAPTOS("au",2); }
  /*-------------------------------------------------------------
   * Misc: s-z stuff
   */
-{CHR_LONGS}{CHR_Z} { MAPTOS("\xc3\x9f", 2); } /*-- sz -> sz ligature (U+00DF) --*/
+{CHR_LONGS}{CHR_Z} { MAPTOS("\xc3\x9f", 2); } /*-- [Long_s]z -> sz ligature (U+00DF) --*/
  /*{CHR_S}{CHR_Z}     { MAPTOS("\xc3\x9f", 2); } */ /*-- sz -> sz ligature (U+00DF) --*/
-{CHR_EZH}{CHR_EZH} { MAPTOS("\xc3\x9f", 2); } /*-- [ztail][zatil] -> sz ligature (U+00DF) --*/
+{CHR_EZH}{CHR_EZH} { MAPTOS("\xc3\x9f", 2); } /*-- [ztail][ztail] -> sz ligature (U+00DF) --*/
 {CHR_EZH}          { MAPTOS("\xc3\x9f", 2); } /*-- [ztail] -> sz ligature (U+00DF) --*/
 
 

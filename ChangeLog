@@ -1,5 +1,9 @@
 ChangeLog for package unicruft
 
+v0.05 Fri, 28 Aug 2009 11:31:29 +0200 (moocow)
+	+ updated combining-e handling in uxDEyy.l
+	  - {VOWEL}{U+0364} (VOWEL + COMBINING LATIN SMALL LETTER E) now maps to [VOWEL +Umlaut]
+
 v0.04 Wed, 24 Jun 2009 13:33:33 +0200 (moocow)
 	+ updated "sz" handling in uxDEyy.l
 
