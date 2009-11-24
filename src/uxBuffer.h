@@ -81,6 +81,7 @@ void ux_buffer_append_buf(uxBuffer *buf1, const uxBuffer *buf2)
 {
   ux_buffer_reserve(buf1, buf1->len+buf2->len);
   memcpy(buf1->str+buf1->len, buf2->str, buf2->len);
+  buf1->len += buf2->len;
 }
 
 /** append a NUL-terminated string onto a string buffer */
@@ -90,6 +91,7 @@ void ux_buffer_append_str(uxBuffer *buf, const char *s)
   size_t slen = strlen(s);
   ux_buffer_reserve(buf, buf->len+slen);
   strcpy(buf->str+buf->len, s);
+  buf->len += slen;
 }
 
 /** append binary data to a buffer */
@@ -98,6 +100,7 @@ void ux_buffer_append_data(uxBuffer *buf, const char *s, size_t slen)
 {
   ux_buffer_reserve(buf, buf->len+slen);
   memcpy(buf->str+buf->len, s, slen);
+  buf->len += slen;
 }
 
 //@}
@@ -162,6 +165,7 @@ void ux_wbuffer_append_buf(uxWBuffer *buf1, const uxWBuffer *buf2)
 {
   ux_wbuffer_reserve(buf1, buf1->len+buf2->len);
   memcpy(buf1->wstr+buf1->len, buf2->wstr, buf2->len*sizeof(ucs4));
+  buf1->len += buf2->len;
 }
 
 /** append a NUL-terminated UCS4 wide string onto a UCS4 wide string buffer */
@@ -173,6 +177,7 @@ void ux_wbuffer_append_data(uxWBuffer *buf, const ucs4 *ws, size_t wslen)
 {
   ux_wbuffer_reserve(buf, buf->len+wslen);
   memcpy(buf->wstr+buf->len, ws, wslen*sizeof(ucs4));
+  buf->len += wslen;
 }
 
 //@}
