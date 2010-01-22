@@ -5,7 +5,6 @@ U+00AB ~ \xAB ~ 171	latin1 « "	utf8 Â« "	LEFT-POINTING DOUBLE ANGLE QUOTATION MA
 U+00B1 ~ \xB1 ~ 177	latin1 ± +/-	utf8 Â± +/-	PLUS-MINUS SIGN
 U+00B2 ~ \xB2 ~ 178	latin1 ² 2	utf8 Â² 2	SUPERSCRIPT TWO
 U+00B3 ~ \xB3 ~ 179	latin1 ³ 3	utf8 Â³ 3	SUPERSCRIPT THREE
-U+00B5 ~ \xB5 ~ 181	latin1 µ u	utf8 Âµ u	MICRO SIGN
 U+00B8 ~ \xB8 ~ 184	latin1 ¸ 	utf8 Â¸ 	CEDILLA
 U+00B9 ~ \xB9 ~ 185	latin1 ¹ 1	utf8 Â¹ 1	SUPERSCRIPT ONE
 U+00BA ~ \xBA ~ 186	latin1 º o	utf8 Âº o	MASCULINE ORDINAL INDICATOR

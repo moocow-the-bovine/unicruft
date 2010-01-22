@@ -36,7 +36,7 @@ typedef struct {
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 35
+#define YY_FLEX_SUBMINOR_VERSION 33
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -58,7 +58,7 @@ typedef struct {
 
 /* C99 systems have <inttypes.h>. Non-C99 systems may or may not. */
 
-#if defined (__STDC_VERSION__) && __STDC_VERSION__ >= 199901L
+#if __STDC_VERSION__ >= 199901L
 
 /* C99 says to define __STDC_LIMIT_MACROS before including stdint.h,
  * if you want the limit (max/min) macros for int types. 
@@ -81,6 +81,7 @@ typedef int flex_int32_t;
 typedef unsigned char flex_uint8_t; 
 typedef unsigned short int flex_uint16_t;
 typedef unsigned int flex_uint32_t;
+#endif /* ! C99 */
 
 /* Limits of integral types. */
 #ifndef INT8_MIN
@@ -111,8 +112,6 @@ typedef unsigned int flex_uint32_t;
 #define UINT32_MAX             (4294967295U)
 #endif
 
-#endif /* ! C99 */
-
 #endif /* ! FLEXINT_H */
 
 #ifdef __cplusplus
@@ -122,12 +121,11 @@ typedef unsigned int flex_uint32_t;
 
 #else	/* ! __cplusplus */
 
-/* C99 requires __STDC__ to be defined as 1. */
-#if defined (__STDC__)
+#if __STDC__
 
 #define YY_USE_CONST
 
-#endif	/* defined (__STDC__) */
+#endif	/* __STDC__ */
 #endif	/* ! __cplusplus */
 
 #ifdef YY_USE_CONST
@@ -163,6 +161,8 @@ typedef void* yyscan_t;
 #define yycolumn (YY_CURRENT_BUFFER_LVALUE->yy_bs_column)
 #define yy_flex_debug yyg->yy_flex_debug_r
 
+int ux_de_yylex_init (yyscan_t* scanner);
+
 /* Enter a start condition.  This macro really ought to take a parameter,
  * but we do it the disgusting crufty way forced on us by the ()-less
  * definition of BEGIN.
@@ -186,15 +186,7 @@ typedef void* yyscan_t;
 
 /* Size of default input buffer. */
 #ifndef YY_BUF_SIZE
-#ifdef __ia64__
-/* On IA-64, the buffer size is 16k, not 8k.
- * Moreover, YY_BUF_SIZE is 2*YY_READ_BUF_SIZE in the general case.
- * Ditto for the __ia64__ case accordingly.
- */
-#define YY_BUF_SIZE 32768
-#else
 #define YY_BUF_SIZE 16384
-#endif /* __ia64__ */
 #endif
 
 /* The state buf must be large enough to hold one state per character in the main buffer.
@@ -228,9 +220,14 @@ typedef struct yy_buffer_state *YY_BUFFER_STATE;
 
 #define unput(c) yyunput( c, yyg->yytext_ptr , yyscanner )
 
+/* The following is because we cannot portably get our hands on size_t
+ * (without autoconf's help, which isn't available because we want
+ * flex-generated scanners to compile on their own).
+ */
+
 #ifndef YY_TYPEDEF_YY_SIZE_T
 #define YY_TYPEDEF_YY_SIZE_T
-typedef size_t yy_size_t;
+typedef unsigned int yy_size_t;
 #endif
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
@@ -5278,7 +5275,7 @@ void ux_deyy_puts(uxDEyyData *data, const char *s)
  */
 /* L_UMLAUT: U+00a8: latin-1 DIAERESIS (UMLAUT) */
 /* C_UMLAUT: U+00308 COMBINING LATIN DIAERESIS (UMLAUT) ABOVE */
-/* UMLAUT: either of the above umläute ... */
+/* UMLAUT: either of the above umlÃ¤ute ... */
 /* U_CIRC: U+0302: COMBINING CIRCUMFLEX ACCENT (^) ABOVE */
 /*CIRC   ({L_CIRC}|{C_CIRC})*/
 /*--------------------------------------------------------------
@@ -5300,13 +5297,13 @@ void ux_deyy_puts(uxDEyyData *data, const char *s)
 /*--------------------------------------------------------------
  * Grimm stuff
  */
-/* CHR_EZH: U+0292 | U+01B7 | U+021D | U+04E1 : Grimm "&ztail;": map to "sharp-s" (ÃŸ) */
-/* CHR_LONGS: long "s": U+017F (Å¿) */
+/* CHR_EZH: U+0292 | U+01B7 | U+021D | U+04E1 : Grimm "&ztail;": map to "sharp-s" (ÃƒÂŸ) */
+/* CHR_LONGS: long "s": U+017F (Ã…Â¿) */
 /* CHR_S: any "s" */
 /*======================================================================
  * Flex Rules
  */
-#line 5310 "uxDEyy.c"
+#line 5307 "uxDEyy.c"
 
 #define INITIAL 0
 
@@ -5357,10 +5354,6 @@ struct yyguts_t
     }; /* end struct yyguts_t */
 
 static int yy_init_globals (yyscan_t yyscanner );
-
-int ux_de_yylex_init (yyscan_t* scanner);
-
-int ux_de_yylex_init_extra (YY_EXTRA_TYPE user_defined,yyscan_t* scanner);
 
 /* Accessor methods to globals.
    These are made visible to non-reentrant scanners for convenience. */
@@ -5425,12 +5418,7 @@ static int input (yyscan_t yyscanner );
 
 /* Amount of stuff to slurp up with each read. */
 #ifndef YY_READ_BUF_SIZE
-#ifdef __ia64__
-/* On IA-64, the buffer size is 16k, not 8k */
-#define YY_READ_BUF_SIZE 16384
-#else
 #define YY_READ_BUF_SIZE 8192
-#endif /* __ia64__ */
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
@@ -5438,7 +5426,7 @@ static int input (yyscan_t yyscanner );
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ECHO do { if (fwrite( yytext, yyleng, 1, yyout )) {} } while (0)
+#define ECHO (void) fwrite( yytext, yyleng, 1, yyout )
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -5523,7 +5511,7 @@ YY_DECL
   * EOF
 
   */
-#line 5527 "uxDEyy.c"
+#line 5515 "uxDEyy.c"
 
 	if ( !yyg->yy_init )
 		{
@@ -5786,357 +5774,357 @@ YY_RULE_SETUP
 case 33:
 YY_RULE_SETUP
 #line 251 "uxDEyy.l"
-{ MAPTOC(' '          ); } /*-- U+00A0 (  ->   ): NO-BREAK SPACE                             --*/
+{ MAPTOC(' '          ); } /*-- U+00A0 (Â  ->   ): NO-BREAK SPACE                             --*/
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 252 "uxDEyy.l"
-{ MAPTOC('!'          ); } /*-- U+00A1 (¡ -> ! ): INVERTED EXCLAMATION MARK                  --*/
+{ MAPTOC('!'          ); } /*-- U+00A1 (Â¡ -> ! ): INVERTED EXCLAMATION MARK                  --*/
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 253 "uxDEyy.l"
-{ MAPTOC('a'          ); } /*-- U+00AA (ª -> a ): FEMININE ORDINAL INDICATOR                 --*/
+{ MAPTOC('a'          ); } /*-- U+00AA (Âª -> a ): FEMININE ORDINAL INDICATOR                 --*/
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 254 "uxDEyy.l"
-{ MAPTOC('\"'         ); } /*-- U+00AB (« -> " ): LEFT-POINTING DOUBLE ANGLE QUOTATION MARK  --*/
+{ MAPTOC('\"'         ); } /*-- U+00AB (Â« -> " ): LEFT-POINTING DOUBLE ANGLE QUOTATION MARK  --*/
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 255 "uxDEyy.l"
-{ MAPTOS("+/-"     , 3); } /*-- U+00B1 (± -> +/-): PLUS-MINUS SIGN                            --*/
+{ MAPTOS("+/-"     , 3); } /*-- U+00B1 (Â± -> +/-): PLUS-MINUS SIGN                            --*/
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 256 "uxDEyy.l"
-{ MAPTOC('2'          ); } /*-- U+00B2 (² -> 2 ): SUPERSCRIPT TWO                            --*/
+{ MAPTOC('2'          ); } /*-- U+00B2 (Â² -> 2 ): SUPERSCRIPT TWO                            --*/
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 257 "uxDEyy.l"
-{ MAPTOC('3'          ); } /*-- U+00B3 (³ -> 3 ): SUPERSCRIPT THREE                          --*/
+{ MAPTOC('3'          ); } /*-- U+00B3 (Â³ -> 3 ): SUPERSCRIPT THREE                          --*/
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 258 "uxDEyy.l"
-{ MAPTOC('u'          ); } /*-- U+00B5 (µ -> u ): MICRO SIGN                                 --*/
+{ MAPTOS("\xc2\xb5", 2); } /*-- U+00B5 (Âµ -> Âµ ): MICRO SIGN                                 --*/
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
 #line 259 "uxDEyy.l"
-{ MAPTOC('1'          ); } /*-- U+00B9 (¹ -> 1 ): SUPERSCRIPT ONE                            --*/
+{ MAPTOC('1'          ); } /*-- U+00B9 (Â¹ -> 1 ): SUPERSCRIPT ONE                            --*/
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
 #line 260 "uxDEyy.l"
-{ MAPTOC('o'          ); } /*-- U+00BA (º -> o ): MASCULINE ORDINAL INDICATOR                --*/
+{ MAPTOC('o'          ); } /*-- U+00BA (Âº -> o ): MASCULINE ORDINAL INDICATOR                --*/
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
 #line 261 "uxDEyy.l"
-{ MAPTOC('\"'         ); } /*-- U+00BB (» -> " ): RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK --*/
+{ MAPTOC('\"'         ); } /*-- U+00BB (Â» -> " ): RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK --*/
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
 #line 262 "uxDEyy.l"
-{ MAPTOS("1/4"     , 3); } /*-- U+00BC (¼ -> 1/4): VULGAR FRACTION ONE QUARTER                --*/
+{ MAPTOS("1/4"     , 3); } /*-- U+00BC (Â¼ -> 1/4): VULGAR FRACTION ONE QUARTER                --*/
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
 #line 263 "uxDEyy.l"
-{ MAPTOS("1/2"     , 3); } /*-- U+00BD (½ -> 1/2): VULGAR FRACTION ONE HALF                   --*/
+{ MAPTOS("1/2"     , 3); } /*-- U+00BD (Â½ -> 1/2): VULGAR FRACTION ONE HALF                   --*/
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
 #line 264 "uxDEyy.l"
-{ MAPTOS("3/4"     , 3); } /*-- U+00BE (¾ -> 3/4): VULGAR FRACTION THREE QUARTERS             --*/
+{ MAPTOS("3/4"     , 3); } /*-- U+00BE (Â¾ -> 3/4): VULGAR FRACTION THREE QUARTERS             --*/
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
 #line 265 "uxDEyy.l"
-{ MAPTOC('?'          ); } /*-- U+00BF (¿ -> ? ): INVERTED QUESTION MARK                     --*/
+{ MAPTOC('?'          ); } /*-- U+00BF (Â¿ -> ? ): INVERTED QUESTION MARK                     --*/
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
 #line 266 "uxDEyy.l"
-{ MAPTOC('A'          ); } /*-- U+00C0 (À -> A ): LATIN CAPITAL LETTER A WITH GRAVE          --*/
+{ MAPTOC('A'          ); } /*-- U+00C0 (Ã€ -> A ): LATIN CAPITAL LETTER A WITH GRAVE          --*/
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
 #line 267 "uxDEyy.l"
-{ MAPTOC('A'          ); } /*-- U+00C1 (Á -> A ): LATIN CAPITAL LETTER A WITH ACUTE          --*/
+{ MAPTOC('A'          ); } /*-- U+00C1 (Ã -> A ): LATIN CAPITAL LETTER A WITH ACUTE          --*/
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
 #line 268 "uxDEyy.l"
-{ MAPTOC('A'          ); } /*-- U+00C2 (Â -> A ): LATIN CAPITAL LETTER A WITH CIRCUMFLEX     --*/
+{ MAPTOC('A'          ); } /*-- U+00C2 (Ã‚ -> A ): LATIN CAPITAL LETTER A WITH CIRCUMFLEX     --*/
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
 #line 269 "uxDEyy.l"
-{ MAPTOC('A'          ); } /*-- U+00C3 (Ã -> A ): LATIN CAPITAL LETTER A WITH TILDE          --*/
+{ MAPTOC('A'          ); } /*-- U+00C3 (Ãƒ -> A ): LATIN CAPITAL LETTER A WITH TILDE          --*/
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
 #line 270 "uxDEyy.l"
-{ MAPTOC('A'          ); } /*-- U+00C5 (Å -> A ): LATIN CAPITAL LETTER A WITH RING ABOVE     --*/
+{ MAPTOC('A'          ); } /*-- U+00C5 (Ã… -> A ): LATIN CAPITAL LETTER A WITH RING ABOVE     --*/
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
 #line 271 "uxDEyy.l"
-{ MAPTOS("AE"      , 2); } /*-- U+00C6 (Æ -> AE): LATIN CAPITAL LETTER AE                    --*/
+{ MAPTOS("AE"      , 2); } /*-- U+00C6 (Ã† -> AE): LATIN CAPITAL LETTER AE                    --*/
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
 #line 272 "uxDEyy.l"
-{ MAPTOC('C'          ); } /*-- U+00C7 (Ç -> C ): LATIN CAPITAL LETTER C WITH CEDILLA        --*/
+{ MAPTOC('C'          ); } /*-- U+00C7 (Ã‡ -> C ): LATIN CAPITAL LETTER C WITH CEDILLA        --*/
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
 #line 273 "uxDEyy.l"
-{ MAPTOC('E'          ); } /*-- U+00C8 (È -> E ): LATIN CAPITAL LETTER E WITH GRAVE          --*/
+{ MAPTOC('E'          ); } /*-- U+00C8 (Ãˆ -> E ): LATIN CAPITAL LETTER E WITH GRAVE          --*/
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
 #line 274 "uxDEyy.l"
-{ MAPTOC('E'          ); } /*-- U+00C9 (É -> E ): LATIN CAPITAL LETTER E WITH ACUTE          --*/
+{ MAPTOC('E'          ); } /*-- U+00C9 (Ã‰ -> E ): LATIN CAPITAL LETTER E WITH ACUTE          --*/
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
 #line 275 "uxDEyy.l"
-{ MAPTOC('E'          ); } /*-- U+00CA (Ê -> E ): LATIN CAPITAL LETTER E WITH CIRCUMFLEX     --*/
+{ MAPTOC('E'          ); } /*-- U+00CA (ÃŠ -> E ): LATIN CAPITAL LETTER E WITH CIRCUMFLEX     --*/
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
 #line 276 "uxDEyy.l"
-{ MAPTOC('E'          ); } /*-- U+00CB (Ë -> E ): LATIN CAPITAL LETTER E WITH DIAERESIS      --*/
+{ MAPTOC('E'          ); } /*-- U+00CB (Ã‹ -> E ): LATIN CAPITAL LETTER E WITH DIAERESIS      --*/
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
 #line 277 "uxDEyy.l"
-{ MAPTOC('I'          ); } /*-- U+00CC (Ì -> I ): LATIN CAPITAL LETTER I WITH GRAVE          --*/
+{ MAPTOC('I'          ); } /*-- U+00CC (ÃŒ -> I ): LATIN CAPITAL LETTER I WITH GRAVE          --*/
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
 #line 278 "uxDEyy.l"
-{ MAPTOC('I'          ); } /*-- U+00CD (Í -> I ): LATIN CAPITAL LETTER I WITH ACUTE          --*/
+{ MAPTOC('I'          ); } /*-- U+00CD (Ã -> I ): LATIN CAPITAL LETTER I WITH ACUTE          --*/
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
 #line 279 "uxDEyy.l"
-{ MAPTOS("EI"      , 2); } /*-- U+00CE (Î -> EI): LATIN CAPITAL LETTER I WITH CIRCUMFLEX     --*/
+{ MAPTOS("EI"      , 2); } /*-- U+00CE (ÃŽ -> EI): LATIN CAPITAL LETTER I WITH CIRCUMFLEX     --*/
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
 #line 280 "uxDEyy.l"
-{ MAPTOC('i'          ); } /*-- U+00CF (Ï -> i ): LATIN CAPITAL LETTER I WITH DIAERESIS      --*/
+{ MAPTOC('i'          ); } /*-- U+00CF (Ã -> i ): LATIN CAPITAL LETTER I WITH DIAERESIS      --*/
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
 #line 281 "uxDEyy.l"
-{ MAPTOC('D'          ); } /*-- U+00D0 (Ð -> D ): LATIN CAPITAL LETTER ETH                   --*/
+{ MAPTOC('D'          ); } /*-- U+00D0 (Ã -> D ): LATIN CAPITAL LETTER ETH                   --*/
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
 #line 282 "uxDEyy.l"
-{ MAPTOC('N'          ); } /*-- U+00D1 (Ñ -> N ): LATIN CAPITAL LETTER N WITH TILDE          --*/
+{ MAPTOC('N'          ); } /*-- U+00D1 (Ã‘ -> N ): LATIN CAPITAL LETTER N WITH TILDE          --*/
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
 #line 283 "uxDEyy.l"
-{ MAPTOC('O'          ); } /*-- U+00D2 (Ò -> O ): LATIN CAPITAL LETTER O WITH GRAVE          --*/
+{ MAPTOC('O'          ); } /*-- U+00D2 (Ã’ -> O ): LATIN CAPITAL LETTER O WITH GRAVE          --*/
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
 #line 284 "uxDEyy.l"
-{ MAPTOC('O'          ); } /*-- U+00D3 (Ó -> O ): LATIN CAPITAL LETTER O WITH ACUTE          --*/
+{ MAPTOC('O'          ); } /*-- U+00D3 (Ã“ -> O ): LATIN CAPITAL LETTER O WITH ACUTE          --*/
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
 #line 285 "uxDEyy.l"
-{ MAPTOC('O'          ); } /*-- U+00D4 (Ô -> O ): LATIN CAPITAL LETTER O WITH CIRCUMFLEX     --*/
+{ MAPTOC('O'          ); } /*-- U+00D4 (Ã” -> O ): LATIN CAPITAL LETTER O WITH CIRCUMFLEX     --*/
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
 #line 286 "uxDEyy.l"
-{ MAPTOC('O'          ); } /*-- U+00D5 (Õ -> O ): LATIN CAPITAL LETTER O WITH TILDE          --*/
+{ MAPTOC('O'          ); } /*-- U+00D5 (Ã• -> O ): LATIN CAPITAL LETTER O WITH TILDE          --*/
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
 #line 287 "uxDEyy.l"
-{ MAPTOC('x'          ); } /*-- U+00D7 (× -> x ): MULTIPLICATION SIGN                        --*/
+{ MAPTOC('x'          ); } /*-- U+00D7 (Ã— -> x ): MULTIPLICATION SIGN                        --*/
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
 #line 288 "uxDEyy.l"
-{ MAPTOS("\xc3\x96", 2); } /*-- U+00D8 (Ø -> Ö): LATIN CAPITAL LETTER O WITH STROKE         --*/
+{ MAPTOS("\xc3\x96", 2); } /*-- U+00D8 (Ã˜ -> Ã–): LATIN CAPITAL LETTER O WITH STROKE         --*/
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
 #line 289 "uxDEyy.l"
-{ MAPTOC('U'          ); } /*-- U+00D9 (Ù -> U ): LATIN CAPITAL LETTER U WITH GRAVE          --*/
+{ MAPTOC('U'          ); } /*-- U+00D9 (Ã™ -> U ): LATIN CAPITAL LETTER U WITH GRAVE          --*/
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
 #line 290 "uxDEyy.l"
-{ MAPTOC('U'          ); } /*-- U+00DA (Ú -> U ): LATIN CAPITAL LETTER U WITH ACUTE          --*/
+{ MAPTOC('U'          ); } /*-- U+00DA (Ãš -> U ): LATIN CAPITAL LETTER U WITH ACUTE          --*/
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
 #line 291 "uxDEyy.l"
-{ MAPTOS("AU"      , 2); } /*-- U+00DB (Û -> AU): LATIN CAPITAL LETTER U WITH CIRCUMFLEX     --*/
+{ MAPTOS("AU"      , 2); } /*-- U+00DB (Ã› -> AU): LATIN CAPITAL LETTER U WITH CIRCUMFLEX     --*/
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
 #line 292 "uxDEyy.l"
-{ MAPTOC('Y'          ); } /*-- U+00DD (Ý -> Y ): LATIN CAPITAL LETTER Y WITH ACUTE          --*/
+{ MAPTOC('Y'          ); } /*-- U+00DD (Ã -> Y ): LATIN CAPITAL LETTER Y WITH ACUTE          --*/
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
 #line 293 "uxDEyy.l"
-{ MAPTOS("Th"      , 2); } /*-- U+00DE (Þ -> Th): LATIN CAPITAL LETTER THORN                 --*/
+{ MAPTOS("Th"      , 2); } /*-- U+00DE (Ãž -> Th): LATIN CAPITAL LETTER THORN                 --*/
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
 #line 294 "uxDEyy.l"
-{ MAPTOC('a'          ); } /*-- U+00E0 (à -> a ): LATIN SMALL LETTER A WITH GRAVE            --*/
+{ MAPTOC('a'          ); } /*-- U+00E0 (Ã  -> a ): LATIN SMALL LETTER A WITH GRAVE            --*/
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
 #line 295 "uxDEyy.l"
-{ MAPTOC('a'          ); } /*-- U+00E1 (á -> a ): LATIN SMALL LETTER A WITH ACUTE            --*/
+{ MAPTOC('a'          ); } /*-- U+00E1 (Ã¡ -> a ): LATIN SMALL LETTER A WITH ACUTE            --*/
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
 #line 296 "uxDEyy.l"
-{ MAPTOC('a'          ); } /*-- U+00E2 (â -> a ): LATIN SMALL LETTER A WITH CIRCUMFLEX       --*/
+{ MAPTOC('a'          ); } /*-- U+00E2 (Ã¢ -> a ): LATIN SMALL LETTER A WITH CIRCUMFLEX       --*/
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
 #line 297 "uxDEyy.l"
-{ MAPTOC('a'          ); } /*-- U+00E3 (ã -> a ): LATIN SMALL LETTER A WITH TILDE            --*/
+{ MAPTOC('a'          ); } /*-- U+00E3 (Ã£ -> a ): LATIN SMALL LETTER A WITH TILDE            --*/
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
 #line 298 "uxDEyy.l"
-{ MAPTOC('a'          ); } /*-- U+00E5 (å -> a ): LATIN SMALL LETTER A WITH RING ABOVE       --*/
+{ MAPTOC('a'          ); } /*-- U+00E5 (Ã¥ -> a ): LATIN SMALL LETTER A WITH RING ABOVE       --*/
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
 #line 299 "uxDEyy.l"
-{ MAPTOS("ae"      , 2); } /*-- U+00E6 (æ -> ae): LATIN SMALL LETTER AE                      --*/
+{ MAPTOS("ae"      , 2); } /*-- U+00E6 (Ã¦ -> ae): LATIN SMALL LETTER AE                      --*/
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
 #line 300 "uxDEyy.l"
-{ MAPTOC('c'          ); } /*-- U+00E7 (ç -> c ): LATIN SMALL LETTER C WITH CEDILLA          --*/
+{ MAPTOC('c'          ); } /*-- U+00E7 (Ã§ -> c ): LATIN SMALL LETTER C WITH CEDILLA          --*/
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
 #line 301 "uxDEyy.l"
-{ MAPTOC('e'          ); } /*-- U+00E8 (è -> e ): LATIN SMALL LETTER E WITH GRAVE            --*/
+{ MAPTOC('e'          ); } /*-- U+00E8 (Ã¨ -> e ): LATIN SMALL LETTER E WITH GRAVE            --*/
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
 #line 302 "uxDEyy.l"
-{ MAPTOC('e'          ); } /*-- U+00E9 (é -> e ): LATIN SMALL LETTER E WITH ACUTE            --*/
+{ MAPTOC('e'          ); } /*-- U+00E9 (Ã© -> e ): LATIN SMALL LETTER E WITH ACUTE            --*/
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
 #line 303 "uxDEyy.l"
-{ MAPTOC('e'          ); } /*-- U+00EA (ê -> e ): LATIN SMALL LETTER E WITH CIRCUMFLEX       --*/
+{ MAPTOC('e'          ); } /*-- U+00EA (Ãª -> e ): LATIN SMALL LETTER E WITH CIRCUMFLEX       --*/
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
 #line 304 "uxDEyy.l"
-{ MAPTOC('e'          ); } /*-- U+00EB (ë -> e ): LATIN SMALL LETTER E WITH DIAERESIS        --*/
+{ MAPTOC('e'          ); } /*-- U+00EB (Ã« -> e ): LATIN SMALL LETTER E WITH DIAERESIS        --*/
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
 #line 305 "uxDEyy.l"
-{ MAPTOC('i'          ); } /*-- U+00EC (ì -> i ): LATIN SMALL LETTER I WITH GRAVE            --*/
+{ MAPTOC('i'          ); } /*-- U+00EC (Ã¬ -> i ): LATIN SMALL LETTER I WITH GRAVE            --*/
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
 #line 306 "uxDEyy.l"
-{ MAPTOC('i'          ); } /*-- U+00ED (í -> i ): LATIN SMALL LETTER I WITH ACUTE            --*/
+{ MAPTOC('i'          ); } /*-- U+00ED (Ã­ -> i ): LATIN SMALL LETTER I WITH ACUTE            --*/
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
 #line 307 "uxDEyy.l"
-{ MAPTOS("ei"      , 2); } /*-- U+00EE (î -> ei): LATIN SMALL LETTER I WITH CIRCUMFLEX       --*/
+{ MAPTOS("ei"      , 2); } /*-- U+00EE (Ã® -> ei): LATIN SMALL LETTER I WITH CIRCUMFLEX       --*/
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
 #line 308 "uxDEyy.l"
-{ MAPTOC('i'          ); } /*-- U+00EF (ï -> i ): LATIN SMALL LETTER I WITH DIAERESIS        --*/
+{ MAPTOC('i'          ); } /*-- U+00EF (Ã¯ -> i ): LATIN SMALL LETTER I WITH DIAERESIS        --*/
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
 #line 309 "uxDEyy.l"
-{ MAPTOC('d'          ); } /*-- U+00F0 (ð -> d ): LATIN SMALL LETTER ETH                     --*/
+{ MAPTOC('d'          ); } /*-- U+00F0 (Ã° -> d ): LATIN SMALL LETTER ETH                     --*/
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
 #line 310 "uxDEyy.l"
-{ MAPTOC('n'          ); } /*-- U+00F1 (ñ -> n ): LATIN SMALL LETTER N WITH TILDE            --*/
+{ MAPTOC('n'          ); } /*-- U+00F1 (Ã± -> n ): LATIN SMALL LETTER N WITH TILDE            --*/
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
 #line 311 "uxDEyy.l"
-{ MAPTOC('o'          ); } /*-- U+00F2 (ò -> o ): LATIN SMALL LETTER O WITH GRAVE            --*/
+{ MAPTOC('o'          ); } /*-- U+00F2 (Ã² -> o ): LATIN SMALL LETTER O WITH GRAVE            --*/
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
 #line 312 "uxDEyy.l"
-{ MAPTOC('o'          ); } /*-- U+00F3 (ó -> o ): LATIN SMALL LETTER O WITH ACUTE            --*/
+{ MAPTOC('o'          ); } /*-- U+00F3 (Ã³ -> o ): LATIN SMALL LETTER O WITH ACUTE            --*/
 	YY_BREAK
 case 95:
 YY_RULE_SETUP
 #line 313 "uxDEyy.l"
-{ MAPTOC('o'          ); } /*-- U+00F4 (ô -> o ): LATIN SMALL LETTER O WITH CIRCUMFLEX       --*/
+{ MAPTOC('o'          ); } /*-- U+00F4 (Ã´ -> o ): LATIN SMALL LETTER O WITH CIRCUMFLEX       --*/
 	YY_BREAK
 case 96:
 YY_RULE_SETUP
 #line 314 "uxDEyy.l"
-{ MAPTOC('o'          ); } /*-- U+00F5 (õ -> o ): LATIN SMALL LETTER O WITH TILDE            --*/
+{ MAPTOC('o'          ); } /*-- U+00F5 (Ãµ -> o ): LATIN SMALL LETTER O WITH TILDE            --*/
 	YY_BREAK
 case 97:
 YY_RULE_SETUP
 #line 315 "uxDEyy.l"
-{ MAPTOS("\xc3\xb6", 2); } /*-- U+00F8 (ø -> ö): LATIN SMALL LETTER O WITH STROKE           --*/
+{ MAPTOS("\xc3\xb6", 2); } /*-- U+00F8 (Ã¸ -> Ã¶): LATIN SMALL LETTER O WITH STROKE           --*/
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
 #line 316 "uxDEyy.l"
-{ MAPTOC('u'          ); } /*-- U+00F9 (ù -> u ): LATIN SMALL LETTER U WITH GRAVE            --*/
+{ MAPTOC('u'          ); } /*-- U+00F9 (Ã¹ -> u ): LATIN SMALL LETTER U WITH GRAVE            --*/
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
 #line 317 "uxDEyy.l"
-{ MAPTOC('u'          ); } /*-- U+00FA (ú -> u ): LATIN SMALL LETTER U WITH ACUTE            --*/
+{ MAPTOC('u'          ); } /*-- U+00FA (Ãº -> u ): LATIN SMALL LETTER U WITH ACUTE            --*/
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
 #line 318 "uxDEyy.l"
-{ MAPTOS("au"      , 2); } /*-- U+00FB (û -> au): LATIN SMALL LETTER U WITH CIRCUMFLEX       --*/
+{ MAPTOS("au"      , 2); } /*-- U+00FB (Ã» -> au): LATIN SMALL LETTER U WITH CIRCUMFLEX       --*/
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
 #line 319 "uxDEyy.l"
-{ MAPTOC('y'          ); } /*-- U+00FD (ý -> y ): LATIN SMALL LETTER Y WITH ACUTE            --*/
+{ MAPTOC('y'          ); } /*-- U+00FD (Ã½ -> y ): LATIN SMALL LETTER Y WITH ACUTE            --*/
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
 #line 320 "uxDEyy.l"
-{ MAPTOS("th"      , 2); } /*-- U+00FE (þ -> th): LATIN SMALL LETTER THORN                   --*/
+{ MAPTOS("th"      , 2); } /*-- U+00FE (Ã¾ -> th): LATIN SMALL LETTER THORN                   --*/
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
 #line 321 "uxDEyy.l"
-{ MAPTOC('y'          ); } /*-- U+00FF (ÿ -> y ): LATIN SMALL LETTER Y WITH DIAERESIS        --*/
+{ MAPTOC('y'          ); } /*-- U+00FF (Ã¿ -> y ): LATIN SMALL LETTER Y WITH DIAERESIS        --*/
 	YY_BREAK
 /*-------------------------------------------------------------
   * DEFAULT: pass-through
@@ -6152,7 +6140,7 @@ YY_RULE_SETUP
 #line 329 "uxDEyy.l"
 ECHO;
 	YY_BREAK
-#line 6156 "uxDEyy.c"
+#line 6144 "uxDEyy.c"
 
 	case YY_END_OF_BUFFER:
 		{
@@ -6405,14 +6393,6 @@ static int yy_get_next_buffer (yyscan_t yyscanner)
 
 	else
 		ret_val = EOB_ACT_CONTINUE_SCAN;
-
-	if ((yy_size_t) (yyg->yy_n_chars + number_to_move) > YY_CURRENT_BUFFER_LVALUE->yy_buf_size) {
-		/* Extend the array by 50%, plus the number we really need. */
-		yy_size_t new_size = yyg->yy_n_chars + number_to_move + (yyg->yy_n_chars >> 1);
-		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) ux_de_yyrealloc((void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf,new_size ,yyscanner );
-		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
-			YY_FATAL_ERROR( "out of dynamic memory in yy_get_next_buffer()" );
-	}
 
 	yyg->yy_n_chars += number_to_move;
 	YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[yyg->yy_n_chars] = YY_END_OF_BUFFER_CHAR;
@@ -6837,9 +6817,7 @@ static void ux_de_yyensure_buffer_stack (yyscan_t yyscanner)
 		yyg->yy_buffer_stack = (struct yy_buffer_state**)ux_de_yyalloc
 								(num_to_alloc * sizeof(struct yy_buffer_state*)
 								, yyscanner);
-		if ( ! yyg->yy_buffer_stack )
-			YY_FATAL_ERROR( "out of dynamic memory in ux_de_yyensure_buffer_stack()" );
-								  
+		
 		memset(yyg->yy_buffer_stack, 0, num_to_alloc * sizeof(struct yy_buffer_state*));
 				
 		yyg->yy_buffer_stack_max = num_to_alloc;
@@ -6857,8 +6835,6 @@ static void ux_de_yyensure_buffer_stack (yyscan_t yyscanner)
 								(yyg->yy_buffer_stack,
 								num_to_alloc * sizeof(struct yy_buffer_state*)
 								, yyscanner);
-		if ( ! yyg->yy_buffer_stack )
-			YY_FATAL_ERROR( "out of dynamic memory in ux_de_yyensure_buffer_stack()" );
 
 		/* zero only the new slots.*/
 		memset(yyg->yy_buffer_stack + yyg->yy_buffer_stack_max, 0, grow_size * sizeof(struct yy_buffer_state*));
@@ -6917,8 +6893,8 @@ YY_BUFFER_STATE ux_de_yy_scan_string (yyconst char * yystr , yyscan_t yyscanner)
 
 /** Setup the input buffer state to scan the given bytes. The next call to ux_de_yylex() will
  * scan from a @e copy of @a bytes.
- * @param yybytes the byte buffer to scan
- * @param _yybytes_len the number of bytes in the buffer pointed to by @a bytes.
+ * @param bytes the byte buffer to scan
+ * @param len the number of bytes in the buffer pointed to by @a bytes.
  * @param yyscanner The scanner object.
  * @return the newly allocated buffer state object.
  */
@@ -7150,42 +7126,6 @@ int ux_de_yylex_init(yyscan_t* ptr_yy_globals)
     /* By setting to 0xAA, we expose bugs in yy_init_globals. Leave at 0x00 for releases. */
     memset(*ptr_yy_globals,0x00,sizeof(struct yyguts_t));
 
-    return yy_init_globals ( *ptr_yy_globals );
-}
-
-/* ux_de_yylex_init_extra has the same functionality as ux_de_yylex_init, but follows the
- * convention of taking the scanner as the last argument. Note however, that
- * this is a *pointer* to a scanner, as it will be allocated by this call (and
- * is the reason, too, why this function also must handle its own declaration).
- * The user defined value in the first argument will be available to ux_de_yyalloc in
- * the yyextra field.
- */
-
-int ux_de_yylex_init_extra(YY_EXTRA_TYPE yy_user_defined,yyscan_t* ptr_yy_globals )
-
-{
-    struct yyguts_t dummy_yyguts;
-
-    ux_de_yyset_extra (yy_user_defined, &dummy_yyguts);
-
-    if (ptr_yy_globals == NULL){
-        errno = EINVAL;
-        return 1;
-    }
-	
-    *ptr_yy_globals = (yyscan_t) ux_de_yyalloc ( sizeof( struct yyguts_t ), &dummy_yyguts );
-	
-    if (*ptr_yy_globals == NULL){
-        errno = ENOMEM;
-        return 1;
-    }
-    
-    /* By setting to 0xAA, we expose bugs in
-    yy_init_globals. Leave at 0x00 for releases. */
-    memset(*ptr_yy_globals,0x00,sizeof(struct yyguts_t));
-    
-    ux_de_yyset_extra (yy_user_defined, *ptr_yy_globals);
-    
     return yy_init_globals ( *ptr_yy_globals );
 }
 
