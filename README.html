@@ -10,8 +10,10 @@
 
 <body>
 
-<p><a name="__index__"></a></p>
+
 <!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
 
 <ul>
 
@@ -35,9 +37,11 @@
 	<li><a href="#see_also">SEE ALSO</a></li>
 	<li><a href="#author">AUTHOR</a></li>
 </ul>
+
+<hr name="index" />
+</div>
 <!-- INDEX END -->
 
-<hr />
 <p>
 </p>
 <hr />
@@ -50,7 +54,7 @@
 <p>The `unicruft' package contains both a C library and command-line utilities
 for robust approximation of UTF-8 input by ASCII, Latin-1, and/or
 the subet of Latin-1 used in contemporary German orthography (henceforth
-referred to as ``Latin-1.DE'').</p>
+referred to as &quot;Latin-1.DE&quot;).</p>
 <p>The basic transliteration heuristics in uxTableAscii.c were auto-generated
 from those used by the <a href="/Text/Unidecode.html">Text::Unidecode(3pm)</a> Perl module by
 Sean M. Burke.</p>
@@ -70,30 +74,30 @@ GNU C library is highly recommended.</p>
 </p>
 <h3><a name="development_tools">Development Tools</a></h3>
 <dl>
-<dt><strong><a name="item_c_compiler">C compiler</a></strong></dt>
+<dt><strong><a name="c_compiler" class="item">C compiler</a></strong></dt>
 
 <dd>
 <p>tested version(s): gcc v4.3.3 / linux</p>
 </dd>
-<dt><strong><a name="item_flex">GNU flex (development only)</a></strong></dt>
+<dt><strong><a name="flex" class="item">GNU flex (development only)</a></strong></dt>
 
 <dd>
 <p>tested version(s): 2.5.33</p>
 <p>Only needed if you plan on making changes to the lexer sources.</p>
 </dd>
-<dt><strong><a name="item_autoconf">GNU autoconf (SVN only)</a></strong></dt>
+<dt><strong><a name="autoconf" class="item">GNU autoconf (SVN only)</a></strong></dt>
 
 <dd>
 <p>tested version(s): 2.61</p>
 <p>Required for building from SVN sources.</p>
 </dd>
-<dt><strong><a name="item_automake">GNU automake (SVN only)</a></strong></dt>
+<dt><strong><a name="automake" class="item">GNU automake (SVN only)</a></strong></dt>
 
 <dd>
 <p>tested version(s): 1.9.6</p>
 <p>Required for building from SVN sources.</p>
 </dd>
-<dt><strong><a name="item_perl">Perl (perl bindings only)</a></strong></dt>
+<dt><strong><a name="perl" class="item">Perl (perl bindings only)</a></strong></dt>
 
 <dd>
 <p>tested version(s): 5.10.0</p>
@@ -105,11 +109,11 @@ GNU C library is highly recommended.</p>
 <p>To build this package from SVN sources, you must first run the shell command:</p>
 <pre>
  bash$ sh ./autoreconf.sh</pre>
-<p>from the distribution root directory <strong>BEFORE</strong> running <em>./configure</em>.
+<p>from the distribution root directory <strong>BEFORE</strong> running <em class="file">./configure</em>.
 Building from SVN sources requires additional development tools to present
 on the build system.  Then, follow the instructions in <a href="#building_from_source">Building from Source</a>.</p>
 <p>Included in the SVN repository are perl bindings for the unicruft library
-in the distribution subdirectory <em>./perl</em>.  See the file <em>README.txt</em>
+in the distribution subdirectory <em class="file">./perl</em>.  See the file <em class="file">README.txt</em>
 in that directory for installation details.</p>
 <p>
 </p>
@@ -121,7 +125,7 @@ in that directory for installation details.</p>
  bash$ make                  # build the package
  bash$ make install          # install the package on your system</pre>
 <p>More details on the top-level installation process can be found in
-the file <em>INSTALL</em> in the distribution root directory.</p>
+the file <em class="file">INSTALL</em> in the distribution root directory.</p>
 <p>
 </p>
 <hr />
@@ -135,8 +139,8 @@ See the <em>unicruft(1)</em> manpage for more details.</p>
 <hr />
 <h1><a name="see_also">SEE ALSO</a></h1>
 <p>Text::Unidecode(3pm),
-recode(1),
-iconv(1),
+<code>recode(1)</code>,
+<code>iconv(1)</code>,
 ...</p>
 <p>
 </p>

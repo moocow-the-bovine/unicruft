@@ -14,7 +14,8 @@
 void ux_depp_init(uxDEpp *pp)
 {
   assert(pp!=NULL);
-  memset(pp,0,sizeof(pp));
+  //memset(pp,0,sizeof(pp));
+  memset(pp,0,sizeof(uxDEpp));
   ux_de_yylex_init(&pp->scanner);
   ux_de_yyset_in (NULL, pp->scanner);
   ux_de_yyset_out(NULL, pp->scanner);
