@@ -35,7 +35,6 @@ void ux_buffer_free(uxBuffer *buf, int free_data)
   free(buf);
 }
 
-
 /*======================================================================
  * uxWBuffer
  */
@@ -155,4 +154,38 @@ ssize_t ux_buffer_getdelim(uxBuffer *buf, int delim, FILE *f)
   //-- return
   return buf->len==0 ? -1 : ((ssize_t)buf->len);
 #endif
+}
+
+//--------------------------------------------------------------
+size_t ux_buffer_fread(uxBuffer *buf, size_t nbytes, FILE *f)
+{
+  ux_buffer_reserve(buf,nbytes+1);
+  buf->len = fread(buf->str, sizeof(char),nbytes, f);
+  ux_buffer_append_delim(buf,'\0');
+  return buf->len;
+}
+
+//--------------------------------------------------------------
+#define UX_BUFFER_SLURP_DEFAULT_BUFSIZE 2048
+#define UX_BUFFER_SLURP_MIN_BUFSIZE 256
+size_t ux_buffer_slurp_file(uxBuffer *buf, FILE *f)
+{
+  size_t nread;
+
+  //-- initialize buffer size if zero)
+  if (buf->alloc == 0) ux_buffer_reserve(buf,UX_BUFFER_SLURP_DEFAULT_BUFSIZE);
+  buf->len = 0;
+
+  //-- loop
+  while (!feof(f)) {
+    if (buf->alloc-buf->len < UX_BUFFER_SLURP_MIN_BUFSIZE)
+      ux_buffer_reserve(buf, 2*buf->len);
+
+    nread = fread(buf->str+buf->len, sizeof(char),(buf->alloc-buf->len), f);
+    buf->len += nread;
+  }
+
+  //-- delimit & return
+  ux_buffer_append_delim(buf,'\0');
+  return buf->len;
 }

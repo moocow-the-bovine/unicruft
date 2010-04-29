@@ -58,6 +58,17 @@ void ux_buffer_reserve(uxBuffer *buf, size_t sz)
   buf->alloc = sz;
 }
 
+/** ensure string buffer has space allocated for at least \a sz bytes, growing to size \a szx if realloc is required */
+static inline
+void ux_buffer_reservex(uxBuffer *buf, size_t sz, size_t szx)
+{
+  if (sz <= buf->alloc) return;
+  if (szx < sz) szx = sz;
+  buf->str = (char*)realloc(buf->str, szx);
+  assert(buf->str != NULL);
+  buf->alloc = szx;
+}
+
 /** append a single character to a string buffer */
 static inline
 void ux_buffer_append_char(uxBuffer *buf, char c)
@@ -269,6 +280,31 @@ size_t ux_buffer_fwrite(uxBuffer *buf, FILE *f)
 {
   return fwrite(buf->str, sizeof(char),buf->len, f);
 }
+
+/** Read a fixed number of bytes from a file into a buffer.
+ *  \param buf buffer in which to store data read
+ *  \param nbytes max number of bytes to read
+ *  \returns number of bytes actually read
+ * \li clobbers current contents of \a buf, if any.
+ * \li \a buf may be resized by this call
+ * \li NUL-terminates \a buf
+ * \li on return, \a buf->len contains the number of bytes
+ *     read into \a buf->str, up to and not including the terminating '\0'.
+ */
+size_t ux_buffer_fread(uxBuffer *buf, size_t nbytes, FILE *f);
+
+/** Slurp all remaining data from a stream into a buffer.
+ *  \param buf buffer in which to store file data
+ *  \param rbufsize size of temporary read buffer, in bytes
+ *  \param f name of the file to slurp
+ *  \returns number of bytes actually read
+ * \li clobbers current contents of \a buf, if any.
+ * \li \a buf may be resized by this call
+ * \li NUL-terminates \a buf
+ * \li on return, \a buf->len contains the number of bytes
+ *     read into \a buf->str, up to and not including the terminating '\0'.
+ */
+size_t ux_buffer_slurp_file(uxBuffer *buf, FILE *f);
 
 //@}
 

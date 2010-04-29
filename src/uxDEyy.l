@@ -4,11 +4,10 @@
  * Flex Options
  */
 
-/*-- automake handles output file for us --*/
-/*%option outfile="uxDEyy.c"*/
-%option outfile="lex.yy.c" 
+/*-- automake handles output file for us (but not the header file: do this ourselves) --*/
+/*%option outfile="lex.yy.c" */
 
-/*-- ... but not the header-file ... --*/
+%option outfile="uxDEyy.c"
 %option header-file="uxDEyy.h"
 
 %option 8bit
@@ -57,19 +56,32 @@ static int ux_de_yywrap(yyscan_t yyscanner);
 
 #define YY_EXTRA_TYPE uxDEyyData*
 
-/** flex utility: output a single character */
+#define UX_DEYY_SAFE
+
+
+/** flex utility: reserve \a sz bytes for a buffer */
+#define UX_DEYY_GROWBY 2048
 static inline
+void ux_deyy_reserve(uxDEyyData *data, size_t addsz)
+{
+  ux_buffer_reservex(data->obuf, data->obuf->len+addsz, data->obuf->len+addsz+UX_DEYY_GROWBY);
+  //ux_buffer_reserve(data->obuf, data->obuf->len+addsz);
+}
+
+
+/** flex utility: output a single character */
+static /*inline*/
 void ux_deyy_putc(uxDEyyData *data, char c)
 {
-  //ux_buffer_append_char(pp->obuf, c);
+  ux_deyy_reserve(data, 1);
   data->obuf->str[data->obuf->len++] = c;
 }
 
 /** flex utility: output binary bytes */
-static inline
+static /*inline*/
 void ux_deyy_putbytes(uxDEyyData *data, const char *bytes, size_t len)
 {
-  //ux_buffer_append_data(data->obuf, bytes, len);
+  ux_deyy_reserve(data, len);
   memcpy(data->obuf->str+data->obuf->len, bytes, len);
   data->obuf->len += len;
 }
@@ -78,7 +90,6 @@ void ux_deyy_putbytes(uxDEyyData *data, const char *bytes, size_t len)
 static inline
 void ux_deyy_puts(uxDEyyData *data, const char *s)
 {
-  //ux_buffer_append_str(data->obuf, s);
   ux_deyy_putbytes(data, s, strlen(s));
 }
 

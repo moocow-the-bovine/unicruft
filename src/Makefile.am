@@ -11,19 +11,13 @@ include $(top_srcdir)/Common.am
 
 lib_LTLIBRARIES = libunicruft.la
 
-if HAVE_FLEX
-uxDEyy_sources = uxDEyy.l
-else
-uxDEyy_sources = uxDEyy.c
-endif
-
 libunicruft_la_SOURCES = \
 	uxUtf8.c \
 	uxBuffer.c \
 	uxUnidecode.c \
 	uxTableAscii.c \
 	uxTableLatin1.c \
-	$(uxDEyy_sources) \
+	uxDEyy.c \
 	uxDEpp.c
 
 #uxTableLatin1DE.c 
@@ -105,6 +99,18 @@ utf8-to-latin1-de.o: utf8-to-latin1-de.c $(filter_deps)
 #utf8-to-latin1-ppde.o: utf8-to-latin1-ppde.c $(filter_deps)
 
 extra: $(EXTRA_PROGRAMS)
+
+##-----------------------------------------------------------------------
+## Programs: flex stuff
+
+if HAVE_FLEX
+uxDEyy.h: uxDEyy.l
+	$(FLEX) $<
+
+uxDEyy.c: uxDEyy.l
+	$(FLEX) $<
+endif
+
 
 ##-----------------------------------------------------------------------
 ## Programs: gog stuff

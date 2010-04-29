@@ -1,0 +1,59 @@
+(gdb) print &ibuf
+$7 = (uxBuffer *) 0x7fff391e2aa0
+: in.str=0x64749e0
+
+(gdb) print &pbuf
+$8 = (uxBuffer *) 0x7fff391e2a80
+: out.str=0x655cb50
+
+: yybuf.yy_ch_buf=0x6644cc0 (copy of in.str)
+
+--> after ux_de_yylex(pp->scanner) at uxDEpp.c line 96, we have:
+      out.str = 0x655cb50
+      out.len = 950633
+      out.alloc = 950625
+    : this is WRONG (out.alloc should never be < out.len!)
+
+--> more strangeness at uxDEpp.c line 96:
+ *yybuf = {
+   yy_input_file = 0x0,
+   yy_ch_buf = 0x6644cc0 = "Aus...",
+   yy_buf_pos = 0x6644cc0 "Aus...",
+   yy_buf_size = 950624,
+   yy_n_chars = 0,
+   yy_is_our_buffer = 950624,           //-- bizarre: why is this boolean flag == buf size ?!
+   yy_is_interactive = 1,
+   yy_at_bol = 0,
+   yy_bs_lineno = 1,
+   yy_bs_column = 950624,
+   yy_fill_buffer = 0,
+   yy_buffer_status = 0
+  };
+  sizeof(*yybuf) == 64;
+  sizeof(yy_size_t) == 4;               //-- THIS IS PROBABLY IT, BUT WHY?!
+
+--> but one level down in ux_de_yy_delete_buffer(yybuf=b=0xfea0c0, pp->scanner=yyscanner=0xfea190),
+    in uxDEyy.c at line 6695, we have:
+  b = {
+   yy_input_file = 0x0,
+   yy_ch_buf = 0x6644cc0 "Aus..",
+   yy_buf_pos = 0x6644cc0 "Aus...",
+   yy_buf_size = 950624,
+   yy_n_chars = 950624,
+   yy_is_our_buffer = 1,
+   yy_is_interactive = 0,
+   yy_at_bol = 1,
+   yy_bs_lineno = 950624,
+   yy_bs_column = 0,
+   yy_fill_buffer = 0,
+   yy_buffer_status = 1
+  };
+  sizeof(*b) == 64
+  sizeof(yy_size_t) == 8;               //-- THIS IS PROBABLY IT, BUT WHY?!
+
+: b is of type YY_BUFFER_STATE, by default (uxDEyy.h line 162)
+  typedef struct yy_buffer_state *YY_BUFFER_STATE;
+
+: might be some goofiness with typedef yy_size_t
+  typedef unsigned int yy_size_t;  // uxDEyy.h line 172
+  --> sizeof(yy_size_t) == 8 in uxDEyy.c
