@@ -1,5 +1,16 @@
 ChangeLog for package unicruft
 
+v0.09 Thu, 29 Apr 2010 14:39:55 +0200 (moocow)
+	+ added missing reserve() calles in uxDEyy.l
+	+ removed uxDEyy.l from automake SOURCES
+	  - do this by hand to ensure header (uxDEyy.h) gets updated too
+	+ re-generated uxDEyy.[ch] on kaskade solves yy_size_t typedef problems
+	  32/64 bit conflicts: size_t vs. unsigned int
+	  - fixes mantis bug 264: http://odo.dwds.de/mantis/view.php?id=264
+	+ incremented to unicruft library version 0.09
+
+v0.06 - v0.08: (see svn log)
+
 v0.05 Fri, 28 Aug 2009 11:31:29 +0200 (moocow)
 	+ updated combining-e handling in uxDEyy.l
 	  - {VOWEL}{U+0364} (VOWEL + COMBINING LATIN SMALL LETTER E) now maps to [VOWEL +Umlaut]
