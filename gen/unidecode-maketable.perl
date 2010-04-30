@@ -24,7 +24,7 @@ if ($help) {
 Usage: $0 [OPTIONS]
  Options:
    -help              # this help message
-   -include PLFILE    # include PLFILE (override @table contents)
+   -include PLFILE    # include PLFILE (override \@table contents; see also unidecode-table2c.perl -I flag)
 EOF
   exit 0;
 }

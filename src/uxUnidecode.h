@@ -40,11 +40,11 @@ extern const uxLookupTable UNIDECODE_ASCII;
  * \details this is a small (256-element) lookup table which maps all
  *  latin-1 codepoints (U+0000-U+00FF) to themselves.
  *
- *  \li Table data lives in uxTableAscii.c
+ *  \li Table data lives in uxTableLatin1.c
  *  \li This table was created  ../gen by:
  *   <pre>
- *   $ ./unidecode-maketable.perl > unidecode-table.PL
- *   $ ./unidecode-tabl2c.perl -tab-name=UNIDECODE_ASCII -I=unidecode-extra.PL unidecode-table.PL > ../src/uxTableAscii.c
+ *   $ ./latin1-maketable.perl > latin1-table.PL
+ *   $ ./unidecode-table2c.perl -tab-name=UNIDECODE_LATIN1 latin1-table.PL > ../src/uxTableLatin1.c
  *   </pre>
  */
 extern const uxLookupTable UNIDECODE_LATIN1;
