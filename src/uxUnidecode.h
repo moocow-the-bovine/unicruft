@@ -26,12 +26,26 @@ typedef struct {
  *  \details transliteration target strings indexed by unicode codepoint:
  *  <code>const char *cx = UNIDECODE_ASCII[(unsigned int)ucs4_codepoint];</code>
  *  All entries should be non-NULL, although they may be empty (""s).
+ *
+ *  \li Table data lives in uxTableAscii.c
+ *  \li This table was created  ../gen by:
+ *   <pre>
+ *   $ ./unidecode-maketable.perl > unidecode-table.PL
+ *   $ ./unidecode-tabl2c.perl -tab-name=UNIDECODE_ASCII unidecode-table.PL > ../src/uxTableAscii.c
+ *   </pre>
  */
 extern const uxLookupTable UNIDECODE_ASCII;
 
 /** \brief Unicode -> Latin-1 override table 
  * \details this is a small (256-element) lookup table which maps all
  *  latin-1 codepoints (U+0000-U+00FF) to themselves.
+ *
+ *  \li Table data lives in uxTableAscii.c
+ *  \li This table was created  ../gen by:
+ *   <pre>
+ *   $ ./unidecode-maketable.perl > unidecode-table.PL
+ *   $ ./unidecode-tabl2c.perl -tab-name=UNIDECODE_ASCII -I=unidecode-extra.PL unidecode-table.PL > ../src/uxTableAscii.c
+ *   </pre>
  */
 extern const uxLookupTable UNIDECODE_LATIN1;
 
