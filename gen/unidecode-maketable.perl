@@ -1,9 +1,33 @@
 #!/usr/bin/perl -w
 
+use Getopt::Long (':config'=>'no_ignore_case');
 use Data::Dumper;
 our $UNIDECODE_TABDIR = "Text-Unidecode-0.04/lib/Text/Unidecode";
 
 use vars ('@Text::Unidecode::Char');
+
+##======================================================================
+## Globals
+
+our ($help);
+our @includes = qw();
+GetOptions(
+	   ##-- general
+	   'help|h' => \$help,
+
+	   ##-- misc
+	   'include|I=s' => \@includes,
+	  );
+
+if ($help) {
+  print STDERR <<EOF;
+Usage: $0 [OPTIONS]
+ Options:
+   -help              # this help message
+   -include PLFILE    # include PLFILE (override @table contents)
+EOF
+  exit 0;
+}
 
 
 ##======================================================================
@@ -25,6 +49,12 @@ our @table = qw();
 foreach $banki (0..$#banks) {
   $offset = $banki*256;
   @table[$offset..($offset+255)] = @{$banks[$banki]}[0..255];
+}
+
+##-- load includes (overrides)
+foreach $incfile (@includes) {
+  do $incfile
+    or die("$0: include failed for file '$incfile': $!");
 }
 
 ##-- dump table

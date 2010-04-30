@@ -11,12 +11,14 @@ our ($help);
 our $tabfile = '-';                  ##-- default table data file (perl code, expanded)
 our $cfile   = '-';                  ##-- default output file
 our $tabname = 'UNIDECODE_ASCII';    ##-- output: variable name for C 
+our @include = qw();                 ##-- additional table(s) to read
 
 GetOptions(
 	   ##-- general
 	   'help|h' => \$help,
 
 	   ##-- misc
+	   'include|inc|i|I=s' => \@include,
 	   'tab-name|tabname|name|n=s' => \$tabname,
 	   'output|o=s' => \$cfile,
 	  );
@@ -26,6 +28,7 @@ if ($help) {
 Usage: $0 [OPTIONS] [TABFILE]
  Options:
    -help              # this help message
+   -include PLFILE    # include \@table overrides from PLFILE
    -tab-name NAME     # output table name
    -output FILE       # output C file
 EOF
@@ -86,6 +89,13 @@ if ($tabfile ne '-') {
   eval $tabstr;
   die("$0: could not load transliteration table from STDIN: $@") if ($@);
 }
+
+##-- load overrides
+foreach $incfile (@include) {
+  do $incfile
+    or die("$0: include failed for file '$incfile': $!");
+}
+
 foreach (@table) {
   utf8::upgrade($_) if (defined($_) && !utf8::is_utf8($_));
 }
