@@ -18,5 +18,17 @@ $table[0x20B6] = "lt"; ##-- Currency Symbols / Livre Tournois Sign (13th-18th Ce
 $table[0x20B7] = "S"; ##-- Currency Symbols / Spesmilo Sign (historical, Esperonto)
 $table[0x20B8] = "T"; ##-- Currency Symbols / Tenge Sign (Kazakhstan)
 
+$table[0x221A] = "sqrt";      ##-- Mathematical Operators / SQUARE ROOT
+$table[0x2114] = "Lb";        ##-- Letterlike Symbols / L B BAR SYMBOL
+$table[0x222b] = "integral";  ##-- Mathematical Operators / INTEGRAL
+$table[0x2609] = "Sun";       ##-- Miscellaneous Symbols / SUN
+$table[0x2643] = "Jupiter";   ##-- Miscellaneous Symbols / JUPITER
+$table[0x2219] = "Bullet";    ##-- Mathematical Operators / BULLET OPERATOR
+$table[0x23d1] = "Breve";     ##-- Miscellaneous Technical / METRICAL BREVE
+$table[0x221e] = "infinity";  ##-- Mathematical Operators / INFINITY
+$table[0x2133] = "M";         ##-- Letterlike Symbols / SCRIPT CAPITAL M
+$table[0x2202] = "partial";   ##-- Mathematical Operators / PARTIAL DIFFERENTIAL
+
+
 
 1; ##-- be happy
