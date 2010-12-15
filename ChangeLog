@@ -1,5 +1,11 @@
 ChangeLog for package unicruft
 
+v0.11 Wed, 15 Dec 2010 11:25:13 +0100 (moocow)
+	+ minor bug fixes in uxDEyy.l
+	
+v0.10 Thu, 29 Apr 2010 13:24:07 +0200 (moocow)
+	+ minor bug fixes
+	
 v0.09 Fri, 30 Apr 2010 10:34:17 +0200 (moocow)
 	+ added transliterations for some currency symbols & arabic characters in
 	  gen/unidecode-extra.PL

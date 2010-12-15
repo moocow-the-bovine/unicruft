@@ -5942,7 +5942,7 @@ YY_RULE_SETUP
 case 62:
 YY_RULE_SETUP
 #line 291 "uxDEyy.l"
-{ MAPTOC('i'          ); } /*-- U+00CF (Ï -> i ): LATIN CAPITAL LETTER I WITH DIAERESIS      --*/
+{ MAPTOC('I'          ); } /*-- U+00CF (Ï -> i ): LATIN CAPITAL LETTER I WITH DIAERESIS      --*/
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
@@ -6007,7 +6007,7 @@ YY_RULE_SETUP
 case 75:
 YY_RULE_SETUP
 #line 304 "uxDEyy.l"
-{ MAPTOS("Th"      , 2); } /*-- U+00DE (Þ -> Th): LATIN CAPITAL LETTER THORN                 --*/
+{ MAPTOS("TH"      , 2); } /*-- U+00DE (Þ -> Th): LATIN CAPITAL LETTER THORN                 --*/
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
