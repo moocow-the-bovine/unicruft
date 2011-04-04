@@ -172,6 +172,19 @@ CC_V (\xcd\xae)
 CC_X (\xcd\xaf)
 
 /*--------------------------------------------------------------
+ * r rotunda
+ */
+
+/* CC_R_ROTUNDA: U+A75B: Latin Small Letter R Rotunda */
+CC_R_ROTUNDA (\xea\x9d\x9b)
+
+/* CC_TIRO_ET: U+204A: TIRONIAN SIGN ET (approximates r rotunda in early DTA texts) */
+CC_TIRO_ET (\xe2\x81\x8a)
+
+/* CC_RROT : any "r rotunda"-like character */
+CC_RROT ({CC_R_ROTUNDA}|{CC_TIRO_ET})
+
+/*--------------------------------------------------------------
  * Grimm stuff
  */
  /* CHR_EZH: U+0292 | U+01B7 | U+021D | U+04E1 : Grimm "&ztail;": map to "sharp-s" (Ã) */
@@ -240,6 +253,11 @@ u{CIRC}     { MAPTOS("au",2); }
 {CC_V} { MAPTOC('v'); }
 {CC_X} { MAPTOC('x'); }
 
+ /*-------------------------------------------------------------
+  * R rotundta
+  */
+{CC_RROT}c[\.\,\;\:\ \t\n]   { MAPTOS("etc",3); MAPTOC(yytext[yyleng-1]); }  /* [r_rotunda]c --> etc */
+{CC_RROT}                    { MAPTOC('r'); }                                /* [r_rotunda]  --> r */
 
  /*-------------------------------------------------------------
   * Misc: s-z stuff
