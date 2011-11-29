@@ -10,7 +10,7 @@ use Exporter;
 
 our @ISA = qw(Exporter);
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 require XSLoader;
 XSLoader::load('Unicruft', $VERSION);
@@ -27,7 +27,7 @@ our (%EXPORT_TAGS, @EXPORT_OK, @EXPORT);
 BEGIN {
   %EXPORT_TAGS =
     (
-     std  => [qw(latin1_to_utf8 utf8_to_ascii utf8_to_latin1 utf8_to_latin1_de)],
+     std  => [qw(latin1_to_utf8 utf8_to_ascii utf8_to_latin1 utf8_to_latin1_de utf8_to_utf8_de)],
      guts => [qw(ux_latin1_to_utf8 ux_utf8_to_ascii ux_utf8_to_latin1 ux_utf8_to_latin1_de),
 	      qw(ux_latin1_bytes ux_utf8_bytes),
 	     ],
@@ -81,6 +81,12 @@ sub utf8_to_latin1_de {
   ux_utf8_to_latin1_de(ux_utf8_bytes($_[0]));
 }
 
+## $destr = utf8_to_utf8_de($u8str)
+sub utf8_to_utf8_de {
+  utf8::upgrade(my $s = ux_utf8_to_latin1_de(ux_utf8_bytes($_[0])));
+  return $s;
+}
+
 ##======================================================================
 ## Exports: finish
 ##======================================================================
@@ -106,6 +112,7 @@ Unicruft - Perl interface to the unicruft transliteration library
  $astr  = Unicruft::utf8_to_ascii($u8str);
  $l1str = Unicruft::utf8_to_latin1($u8str);
  $l1str = Unicruft::utf8_to_latin1_de($u8str);
+ $u8str = Unicruft::utf8_to_utf8_de($u8str);
 
 =head1 DESCRIPTION
 
@@ -186,6 +193,15 @@ $u8str may be either a byte-string (assumed to contain a valid UTF-8 byte sequen
 or a perl-native UTF-8 string (i.e. a scalar with the SvUTF8 flag set).
 The returned string $l1str will have its UTF-8 flag cleared.
 
+=head3 utf8_to_utf8_de
+
+ $u8str = Unicruft::utf8_to_utf8_de($u8str);
+
+Approximate the UTF-8 string $u8str as 8-bit-safe UTF-8 using only
+characters which occur in contemporary German orthography.  Really just a wrapper for:
+
+ utf8::upgrade(my $s = Unicruft::utf8_to_latin1_de($u8str));
+ return $s;
 
 =head2 LOW-LEVEL UTILITY FUNCTIONS
 
@@ -244,10 +260,10 @@ Bryan Jurish E<lt>jurish@bbaw.deE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2009 by Bryan Jurish
+Copyright (C) 2009-2011 by Bryan Jurish
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.8.4 or,
+it under the same terms as Perl itself, either Perl version 5.10.1 or,
 at your option, any later version of Perl 5 you may have available.
 
 =cut
