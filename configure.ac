@@ -3,13 +3,14 @@ AC_PREREQ(2.5)
 
 dnl Some handy macros
 define([THE_PACKAGE_NAME],    [unicruft])
-define([THE_PACKAGE_VERSION], [0.11])
+define([THE_PACKAGE_VERSION], [0.12])
 define([THE_PACKAGE_MAINTAINER],  [jurish@bbaw.de])
 
 AC_INIT(THE_PACKAGE_NAME, THE_PACKAGE_VERSION, THE_PACKAGE_MAINTAINER)
 
 dnl source && aux dir
 AC_CONFIG_AUX_DIR(.)
+AC_CONFIG_MACRO_DIR([m4])
 
 dnl canonical target (sets $target, $target_(cpu|vendor|os) : used for bindist)
 AC_CANONICAL_TARGET

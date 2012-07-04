@@ -197,6 +197,12 @@ CHR_LONGS  (\xc5\xbf)
  /* CHR_S: any "s" */
 CHR_S      ([Ss]|(\xc5\xbf))
 
+/*--------------------------------------------------------------
+ * Unknown character: U+FFFD : Specials / REPLACEMENT CHARACTER
+ *  - mapped to U+A5 = YEN SIGN
+ */
+CHR_UNK	(\xef\xbf\xbd)
+
 /*======================================================================
  * Flex Rules
  */
@@ -267,6 +273,10 @@ u{CIRC}     { MAPTOS("au",2); }
 {CHR_EZH}{CHR_EZH} { MAPTOS("\xc3\x9f", 2); } /*-- [ztail][ztail] -> sz ligature (U+00DF) --*/
 {CHR_EZH}          { MAPTOS("\xc3\x9f", 2); } /*-- [ztail] -> sz ligature (U+00DF) --*/
 
+ /*-------------------------------------------------------------
+  * Unknown character
+  */
+{CHR_UNK}	{ MAPTOS("\xc2\xa5", 2); } /*-- � (U+FFFD: REPLACEMENT CHARACTER) -> ¥ (U+00A5: YEN SIGN)
 
  /*-------------------------------------------------------------
   * BLOCK: Latin-1 Supplement
