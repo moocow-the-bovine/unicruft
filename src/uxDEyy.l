@@ -276,7 +276,7 @@ u{CIRC}     { MAPTOS("au",2); }
  /*-------------------------------------------------------------
   * Unknown character
   */
-{CHR_UNK}	{ MAPTOS("\xc2\xa5", 2); } /*-- � (U+FFFD: REPLACEMENT CHARACTER) -> ¥ (U+00A5: YEN SIGN)
+{CHR_UNK}	{ MAPTOC('@'); } /*-- � (U+FFFD: REPLACEMENT CHARACTER) -> @ (U+0040: COMMERCIAL AT) --*/
 
  /*-------------------------------------------------------------
   * BLOCK: Latin-1 Supplement
