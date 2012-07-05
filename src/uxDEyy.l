@@ -198,10 +198,12 @@ CHR_LONGS  (\xc5\xbf)
 CHR_S      ([Ss]|(\xc5\xbf))
 
 /*--------------------------------------------------------------
- * Unknown character: U+FFFD : Specials / REPLACEMENT CHARACTER
- *  - mapped to U+A5 = YEN SIGN
+ * Unknown character(s)
+ *  U+FFFC : Specials / OBJECT REPLACEMENT CHARACTER
+ *  U+FFFD : Specials / REPLACEMENT CHARACTER
+ *  - mapped to '@'
  */
-CHR_UNK	(\xef\xbf\xbd)
+CHR_UNK	(\xef\xbf[\xbc\xbd])
 
 /*======================================================================
  * Flex Rules
@@ -276,7 +278,7 @@ u{CIRC}     { MAPTOS("au",2); }
  /*-------------------------------------------------------------
   * Unknown character
   */
-{CHR_UNK}	{ MAPTOC('@'); } /*-- � (U+FFFD: REPLACEMENT CHARACTER) -> @ (U+0040: COMMERCIAL AT) --*/
+{CHR_UNK}	{ MAPTOC('@'); } /*-- (￼:U+FFFC:OBJECT_REPLACEMENT_CHARACTER|�:U+FFFD:REPLACEMENT_CHARACTER) -> @:U+0040:COMMERCIAL_AT --*/
 
  /*-------------------------------------------------------------
   * BLOCK: Latin-1 Supplement
