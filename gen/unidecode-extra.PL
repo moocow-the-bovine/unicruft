@@ -29,6 +29,6 @@ $table[0x221e] = "infinity";  ##-- Mathematical Operators / INFINITY
 $table[0x2133] = "M";         ##-- Letterlike Symbols / SCRIPT CAPITAL M
 $table[0x2202] = "partial";   ##-- Mathematical Operators / PARTIAL DIFFERENTIAL
 
-
+$table[0xfffc] = '@';	##-- Specials / OBJECT REPLACEMENT CHARACTER
 
 1; ##-- be happy
