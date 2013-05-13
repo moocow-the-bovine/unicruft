@@ -49,25 +49,10 @@ uxBuffer *ux_buffer_new(char *str, size_t len, size_t sz);
 void ux_buffer_free(uxBuffer *buf, int free_data);
 
 /** ensure string buffer has space allocated for at least \a sz bytes */
-static inline
-void ux_buffer_reserve(uxBuffer *buf, size_t sz)
-{
-  if (sz <= buf->alloc) return;
-  buf->str = (char*)realloc(buf->str, sz);
-  assert(buf->str != NULL);
-  buf->alloc = sz;
-}
+void ux_buffer_reserve(uxBuffer *buf, size_t sz);
 
 /** ensure string buffer has space allocated for at least \a sz bytes, growing to size \a szx if realloc is required */
-static inline
-void ux_buffer_reservex(uxBuffer *buf, size_t sz, size_t szx)
-{
-  if (sz <= buf->alloc) return;
-  if (szx < sz) szx = sz;
-  buf->str = (char*)realloc(buf->str, szx);
-  assert(buf->str != NULL);
-  buf->alloc = szx;
-}
+void ux_buffer_reservex(uxBuffer *buf, size_t sz, size_t szx);
 
 /** append a single character to a string buffer */
 static inline
@@ -145,13 +130,7 @@ uxWBuffer *ux_wbuffer_new(ucs4 *wstr, size_t len, size_t sz);
 void ux_wbuffer_free(uxWBuffer *buf, int free_data);
 
 /** ensure UCS4 wide-string buffer has space allocated for at least \a sz characters */
-static inline
-void ux_wbuffer_reserve(uxWBuffer *buf, size_t sz)
-{
-  if (sz <= buf->alloc) return;
-  buf->wstr = (ucs4*)realloc(buf->wstr, sz*sizeof(ucs4));
-  assert(buf->wstr != NULL);
-}
+void ux_wbuffer_reserve(uxWBuffer *buf, size_t sz);
 
 /** append a single character to a UCS4 wide string buffer */
 static inline

@@ -35,6 +35,25 @@ void ux_buffer_free(uxBuffer *buf, int free_data)
   free(buf);
 }
 
+//--------------------------------------------------------------
+void ux_buffer_reserve(uxBuffer *buf, size_t sz)
+{
+  if (sz <= buf->alloc) return;
+  buf->str = (char*)realloc(buf->str, sz);
+  assert(buf->str != NULL);
+  buf->alloc = sz;
+}
+
+//--------------------------------------------------------------
+void ux_buffer_reservex(uxBuffer *buf, size_t sz, size_t szx)
+{
+  if (sz <= buf->alloc) return;
+  if (szx < sz) szx = sz;
+  buf->str = (char*)realloc(buf->str, szx);
+  assert(buf->str != NULL);
+  buf->alloc = szx;
+}
+
 /*======================================================================
  * uxWBuffer
  */
@@ -61,6 +80,15 @@ void ux_wbuffer_free(uxWBuffer *buf, int free_data)
   if (free_data && buf->wstr != NULL) free(buf->wstr);
   free(buf);
 }
+
+//--------------------------------------------------------------
+void ux_wbuffer_reserve(uxWBuffer *buf, size_t sz)
+{
+  if (sz <= buf->alloc) return;
+  buf->wstr = (ucs4*)realloc(buf->wstr, sz*sizeof(ucs4));
+  assert(buf->wstr != NULL);
+}
+
 
 //--------------------------------------------------------------
 void ux_wbuffer_append_wstr(uxWBuffer *buf, const ucs4 *s)
