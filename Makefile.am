@@ -37,7 +37,7 @@ pkgconfig_DATA = @PACKAGE@.pc
 
 PODS = README.pod
 
-pkgdoc_DATA = $(PODS:.pod=.txt) $(PODS:.pod=.html)
+pkgdoc_DATA = $(PODS:.pod=.txt) $(PODS:.pod=.html) COPYING COPYING.GPL-3
 
 all-local: $(pkgdoc_DATA)
 
