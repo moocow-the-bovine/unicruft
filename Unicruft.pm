@@ -10,7 +10,7 @@ use Exporter;
 
 our @ISA = qw(Exporter);
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 require XSLoader;
 XSLoader::load('Unicruft', $VERSION);
@@ -260,10 +260,10 @@ Bryan Jurish E<lt>jurish@bbaw.deE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2009-2011 by Bryan Jurish
+Copyright (C) 2009-2013 by Bryan Jurish
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.10.1 or,
+it under the same terms as Perl itself, either Perl version 5.14.2 or,
 at your option, any later version of Perl 5 you may have available.
 
 =cut

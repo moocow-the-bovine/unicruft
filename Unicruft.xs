@@ -100,7 +100,9 @@ PREINIT:
 CODE:
   ux_sv2buf_bytes(u8bytes, &ibuf);
   ux_depp_init(&depp);
+  ibuf.len++; //-- make uxDEyy scanner treat terminating NUL as a "normal" character
   ux_depp_scan_const_buffer(&depp, &ibuf, &pbuf);
+  if (pbuf.len>0) pbuf.len--; //-- terminating NUL is not really a "normal" character
   ux_unidecode_us(&UNIDECODE_LATIN1, &pbuf, &obuf);
   RETVAL = newSVpvn(obuf.str, obuf.len);
   SvUTF8_off(RETVAL);
