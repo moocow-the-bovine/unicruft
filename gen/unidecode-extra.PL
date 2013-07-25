@@ -6,6 +6,9 @@
 ##  + include this file in your call to unidecode-table2c.perl, e.g.:
 ##    $ ./unidecode-table2c.perl -I unidecode-extra.PL unidecode-table.PL -o ascii.c
 
+$table[0xA75B] = "r";  ##-- U+A75B: Latin Small Letter R Rotunda
+$table[0x204A] = "r";  ##-- U+204A: TIRONIAN SIGN ET (approximates r rotunda in early DTA texts)
+
 $table[0x06E5] = "'";  ##-- Arabic / ARABIC SMALL WAW
 
 $table[0x20B0] = "Pf"; ##-- Currency Symbols / German Penns Sign

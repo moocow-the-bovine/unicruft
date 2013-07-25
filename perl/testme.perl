@@ -98,7 +98,25 @@ sub test_ud {
   print "test_ud/bytes:", "\n sub=", dumpstr($sub), "\n sab=", dumpstr($sab), "\n";
 }
 #test_ud();
-test_ud('<?xml version="1.0" encoding="UTF-8"?>'."\n");
+#test_ud('<?xml version="1.0" encoding="UTF-8"?>'."\n");
+
+##--------------------------------------------------------------
+## test: utf8 -> utf8/de
+
+sub test_uud {
+  print "----\ntest_uud:\n";
+  our $su = shift;
+  $su = "Auml=(ÄA¨Ä); ucirc=(ûu^û); a^e=(aͤ); oelig=(œ); pi_eps=(πε); Rc=ꝛc" if (!defined($su));
+  print " su/in=", dumpstr($su), "\n";
+  our $sa = Unicruft::utf8_to_utf8_de($su);
+  print "test_uud/utf8:", "\n su=", dumpstr($su), "\n sa=", dumpstr($sa), "\n";
+
+  our $sub = encode('utf8',$su);
+  our $sab = Unicruft::utf8_to_utf8_de($sub);
+  print "test_uud/bytes:", "\n sub=", dumpstr($sub), "\n sab=", dumpstr($sab), "\n";
+}
+test_uud(@ARGV);
+#test_ud('<?xml version="1.0" encoding="UTF-8"?>'."\n");
 
 ##--------------------------------------------------------------
 ## MAIN

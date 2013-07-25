@@ -106,6 +106,7 @@ void ux_deyy_puts(uxDEyyData *data, const char *s)
  */
 
 /*%s XOFF XLEN TOFF TLEN TEXT ATEOF*/
+/*%x RROT_ETC*/
 
 /*======================================================================
  * Flex Definitions
@@ -262,12 +263,6 @@ u{CIRC}     { MAPTOS("au",2); }
 {CC_X} { MAPTOC('x'); }
 
  /*-------------------------------------------------------------
-  * R rotundta
-  */
-{CC_RROT}c[\.\,\;\:\ \t\n]   { MAPTOS("etc",3); MAPTOC(yytext[yyleng-1]); }  /* [r_rotunda]c --> etc */
-{CC_RROT}                    { MAPTOC('r'); }                                /* [r_rotunda]  --> r */
-
- /*-------------------------------------------------------------
   * Misc: s-z stuff
   */
 {CHR_LONGS}{CHR_Z} { MAPTOS("\xc3\x9f", 2); } /*-- [Long_s]z -> sz ligature (U+00DF) --*/
@@ -279,6 +274,13 @@ u{CIRC}     { MAPTOS("au",2); }
   * Unknown character
   */
 {CHR_UNK}	{ MAPTOC('@'); } /*-- (￼:U+FFFC:OBJECT_REPLACEMENT_CHARACTER|�:U+FFFD:REPLACEMENT_CHARACTER) -> @:U+0040:COMMERCIAL_AT --*/
+
+ /*-------------------------------------------------------------
+  * R rotunda: special handling
+  *  + this SHOULD also work at EOF, but it doesn't for some reason
+  */
+{CC_RROT}c[\.\,\;\:\ \t\r\n\0]	{ MAPTOS("etc",3); MAPTOC(yytext[yyleng-1]); }	/* r rotunda -> et */
+{CC_RROT}                       { MAPTOC('r'); }				/* r rotunda -> r (also in default tables) */
 
  /*-------------------------------------------------------------
   * BLOCK: Latin-1 Supplement
