@@ -14,10 +14,11 @@ our $template = '-';                  ##-- template file
 our $replace  = '__RULES__';          ##-- replace this string with generated rules
 our $outfile  = '-';                  ##-- default output file
 our $outfunc  = 'MAPTOS';             ##-- output function or macro, MAPTOS(target,len)
-our $outfunc1 = 'MAPTOC';             ##-- output function or macro for length-1: MAPTOC(target,char)
+our $outfunc1 = 'MAPTOC';             ##-- output function or macro for length=1: MAPTOC(target,char)
+our $outfunc0 = 'MAPTO0';             ##-- output function or macro for length=0: MAPTO0(target)
 
-our $ignore_id = 0;     ##-- no rules for identity translations?
-our $ignore_empty = 1;  ##-- no rules for empty targets?
+our $ignore_id    = 1;  ##-- no rules for identity translations?
+our $ignore_empty = 0;  ##-- no rules for empty targets?
 
 GetOptions(
 	   ##-- general
@@ -30,6 +31,7 @@ GetOptions(
 	   'ignore-empty|ie!'    => \$ignore_empty,
 	   'outfunc|func|of|f=s' => \$outfunc,
 	   'outfunc1|func1|of1|f1=s' => \$outfunc1,
+	   'outfunc0|func0|of0|f0=s' => \$outfunc0,
 	   'output|o=s' => \$outfile,
 	  );
 
@@ -44,6 +46,7 @@ Usage: $0 [OPTIONS] [TEMPLATE_FILE]
    -ignore-empty      # no rules for empty-target translations
    -outfunc FUNC      # str-output function name (MAPTOS; called as FUNC(\$target_str,\$len))
    -outfunc1 FUNC1    # char-output function name (MAPTOC; called as FUNC(\$target_chr))
+   -outfunc0 FUNC0    # null-output function name (MAPTO0; called as FUNC())
    -output FILE       # output C file
 EOF
   exit 0;
@@ -130,7 +133,7 @@ our $c_hex_len   =  8;
 our $out_str_len = 10;
 our $out_n_len   =  2;
 our $cmt_c_len   =  2;
-our $func_len    = length($outfunc) >= length($outfunc1) ? length($outfunc) : length($outfunc1);
+our $func_len    = length($outfunc) > length($outfunc1) ? length($outfunc) : length($outfunc1);
 our $name_len    = 42;
 
 foreach $ci (0..$#table) {
@@ -167,12 +170,15 @@ foreach $ci (0..$#table) {
 
   ##-- Print rule
   $rules .= (sprintf("%-${c_hex_len}s { ", c_hex_str($cub))
-	     .(length($cxb)==1
+	     .(length($cxb)==0
 	       ? sprintf("%-${func_len}s(%-${out_str_len}s%s);",
-			 $outfunc1, ("'".c_safe_str($cxb)."'"), (' ' x ($out_n_len+1)))
-	       : sprintf("%-${func_len}s(%-${out_str_len}s,%${out_n_len}d);",
-			 $outfunc, ('"'.c_safe_str($cxb).'"'), length($cxb))
-	      )
+			 $outfunc0, '', (' ' x ($out_n_len+1)))
+	       : (length($cxb)==1
+		  ? sprintf("%-${func_len}s(%-${out_str_len}s%s);",
+			    $outfunc1, ("'".c_safe_str($cxb)."'"), (' ' x ($out_n_len+1)))
+		  : sprintf("%-${func_len}s(%-${out_str_len}s,%${out_n_len}d);",
+			    $outfunc, ('"'.c_safe_str($cxb).'"'), length($cxb))
+		 ))
 	     .sprintf(" } /*-- %s (%${cmt_c_len}s -> %-${cmt_c_len}s): %-${name_len}s --*/\n",
 		      $c_codepoint, c_cmt_str($cub), c_cmt_str($cxb),
 		      $c_name)

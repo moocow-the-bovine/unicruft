@@ -6,6 +6,7 @@
 %option full
 
 %{
+/* Utility macro: output a byte string */
 #define MAPTO(str,len) fwrite((str),1,(len),yyout)
 %}
 

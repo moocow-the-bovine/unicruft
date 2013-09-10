@@ -99,6 +99,8 @@ void ux_deyy_puts(uxDEyyData *data, const char *s)
 /** Utility macro: output a byte string */
 #define MAPTOS(str,len) ux_deyy_putbytes(yyextra,(str),(len))
 
+/** Utility macro: output a nulll string */
+#define MAPTO0() 
 %}
 
 /*======================================================================
@@ -285,8 +287,10 @@ u{CIRC}     { MAPTOS("au",2); }
  /*-------------------------------------------------------------
   * BLOCK: Latin-1 Supplement
   */
- /* + see also:
-  *  ./uxTableLatinDE.c
+ /*
+  * + generated in ../gen with
+  *   ./unidecode-table2flex.perl -tabfile=latin1-de-table.PL test.l.template | sed -ne'/----/,/^$/p'
+  * + see also:
   *  ../gen/latin1-de-maketable.perl
   *  ../gen/latin-de-xlate.csv
   *  ../gen/latin1-de-table.PL
@@ -295,10 +299,11 @@ u{CIRC}     { MAPTOS("au",2); }
 \xC2\xA1 { MAPTOC('!'          ); } /*-- U+00A1 (¡ -> ! ): INVERTED EXCLAMATION MARK                  --*/
 \xC2\xAA { MAPTOC('a'          ); } /*-- U+00AA (ª -> a ): FEMININE ORDINAL INDICATOR                 --*/
 \xC2\xAB { MAPTOC('\"'         ); } /*-- U+00AB (« -> " ): LEFT-POINTING DOUBLE ANGLE QUOTATION MARK  --*/
+\xC2\xAD { MAPTO0(             ); } /*-- U+00AD (­ ->   ): SOFT HYPHEN                                --*/
 \xC2\xB1 { MAPTOS("+/-"     , 3); } /*-- U+00B1 (± -> +/-): PLUS-MINUS SIGN                            --*/
 \xC2\xB2 { MAPTOC('2'          ); } /*-- U+00B2 (² -> 2 ): SUPERSCRIPT TWO                            --*/
 \xC2\xB3 { MAPTOC('3'          ); } /*-- U+00B3 (³ -> 3 ): SUPERSCRIPT THREE                          --*/
-\xC2\xB5 { MAPTOS("\xc2\xb5", 2); } /*-- U+00B5 (µ -> µ ): MICRO SIGN                                 --*/
+\xC2\xB8 { MAPTO0(             ); } /*-- U+00B8 (¸ ->   ): CEDILLA                                    --*/
 \xC2\xB9 { MAPTOC('1'          ); } /*-- U+00B9 (¹ -> 1 ): SUPERSCRIPT ONE                            --*/
 \xC2\xBA { MAPTOC('o'          ); } /*-- U+00BA (º -> o ): MASCULINE ORDINAL INDICATOR                --*/
 \xC2\xBB { MAPTOC('\"'         ); } /*-- U+00BB (» -> " ): RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK --*/
@@ -320,7 +325,7 @@ u{CIRC}     { MAPTOS("au",2); }
 \xC3\x8C { MAPTOC('I'          ); } /*-- U+00CC (Ì -> I ): LATIN CAPITAL LETTER I WITH GRAVE          --*/
 \xC3\x8D { MAPTOC('I'          ); } /*-- U+00CD (Í -> I ): LATIN CAPITAL LETTER I WITH ACUTE          --*/
 \xC3\x8E { MAPTOS("EI"      , 2); } /*-- U+00CE (Î -> EI): LATIN CAPITAL LETTER I WITH CIRCUMFLEX     --*/
-\xC3\x8F { MAPTOC('I'          ); } /*-- U+00CF (Ï -> i ): LATIN CAPITAL LETTER I WITH DIAERESIS      --*/
+\xC3\x8F { MAPTOC('I'          ); } /*-- U+00CF (Ï -> I ): LATIN CAPITAL LETTER I WITH DIAERESIS      --*/
 \xC3\x90 { MAPTOC('D'          ); } /*-- U+00D0 (Ð -> D ): LATIN CAPITAL LETTER ETH                   --*/
 \xC3\x91 { MAPTOC('N'          ); } /*-- U+00D1 (Ñ -> N ): LATIN CAPITAL LETTER N WITH TILDE          --*/
 \xC3\x92 { MAPTOC('O'          ); } /*-- U+00D2 (Ò -> O ): LATIN CAPITAL LETTER O WITH GRAVE          --*/
@@ -333,7 +338,7 @@ u{CIRC}     { MAPTOS("au",2); }
 \xC3\x9A { MAPTOC('U'          ); } /*-- U+00DA (Ú -> U ): LATIN CAPITAL LETTER U WITH ACUTE          --*/
 \xC3\x9B { MAPTOS("AU"      , 2); } /*-- U+00DB (Û -> AU): LATIN CAPITAL LETTER U WITH CIRCUMFLEX     --*/
 \xC3\x9D { MAPTOC('Y'          ); } /*-- U+00DD (Ý -> Y ): LATIN CAPITAL LETTER Y WITH ACUTE          --*/
-\xC3\x9E { MAPTOS("TH"      , 2); } /*-- U+00DE (Þ -> Th): LATIN CAPITAL LETTER THORN                 --*/
+\xC3\x9E { MAPTOS("Th"      , 2); } /*-- U+00DE (Þ -> Th): LATIN CAPITAL LETTER THORN                 --*/
 \xC3\xA0 { MAPTOC('a'          ); } /*-- U+00E0 (à -> a ): LATIN SMALL LETTER A WITH GRAVE            --*/
 \xC3\xA1 { MAPTOC('a'          ); } /*-- U+00E1 (á -> a ): LATIN SMALL LETTER A WITH ACUTE            --*/
 \xC3\xA2 { MAPTOC('a'          ); } /*-- U+00E2 (â -> a ): LATIN SMALL LETTER A WITH CIRCUMFLEX       --*/
@@ -362,7 +367,6 @@ u{CIRC}     { MAPTOS("au",2); }
 \xC3\xBD { MAPTOC('y'          ); } /*-- U+00FD (ý -> y ): LATIN SMALL LETTER Y WITH ACUTE            --*/
 \xC3\xBE { MAPTOS("th"      , 2); } /*-- U+00FE (þ -> th): LATIN SMALL LETTER THORN                   --*/
 \xC3\xBF { MAPTOC('y'          ); } /*-- U+00FF (ÿ -> y ): LATIN SMALL LETTER Y WITH DIAERESIS        --*/
-
 
  /*-------------------------------------------------------------
   * DEFAULT: pass-through
