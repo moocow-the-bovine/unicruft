@@ -139,6 +139,11 @@ CIRC {C_CIRC}
 /* CC_TILDE: U+0303 COMBINING TILDE */
 CC_TILDE (\xcc\x83)
 
+/* CC_MACRON: U+0304 COMBINING MACRON */
+CC_MACRON (\xcc\x84)
+
+CC_TILDE_X ({CC_TILDE}|{CC_MACRON})
+
 /* N_TILDE_UPPER: U+00D1 LATIN CAPITAL LETTER N WITH TILDE */
 N_TILDE_UPPER  (\xc3\x91)
 
@@ -269,17 +274,22 @@ u{CIRC}     { MAPTOS("au",2); }
  /*-------------------------------------------------------------
   * Tilde
   */
-[VvUu][Nn]{CC_TILDE}	{ MAPTOS(yytext,2);  MAPTOC('d'); }
+[VvUu][Nn]{CC_TILDE_X}	{ MAPTOS(yytext,2);  MAPTOC('d'); }
 [VvUu]{N_TILDE_LOWER}	{ MAPTOC(yytext[0]); MAPTOS("nd",2); }
 [VvUu]{N_TILDE_UPPER}	{ MAPTOC(yytext[0]); MAPTOS("ND",2); }
 
-[Nn]{CC_TILDE}		{ MAPTOC(yytext[0]);  MAPTOC(yytext[0]); }
+[Nn]{CC_TILDE_X}	{ MAPTOC(yytext[0]);  MAPTOC(yytext[0]); }
 {N_TILDE_LOWER}		{ MAPTOS("nn",2); }
 {N_TILDE_UPPER}		{ MAPTOS("NN",2); }
 
-{CC_TILDE}		{ MAPTOC('n'); }
+[Mm]{CC_TILDE_X}	{ MAPTOC(yytext[0]); MAPTOC(yytext[0]); }
+
+e{CC_TILDE_X}		{ MAPTOS("en",2); }
+E{CC_TILDE_X}		{ MAPTOS("EN",2); }
 {E_TILDE_LOWER}		{ MAPTOS("en",2); }
 {E_TILDE_UPPER}		{ MAPTOS("EN",2); }
+
+{CC_TILDE}		{ MAPTOC('n'); }
 
  /*-------------------------------------------------------------
   * Combining Letters: other
