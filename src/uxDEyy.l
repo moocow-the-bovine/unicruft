@@ -212,6 +212,12 @@ CC_TIRO_ET (\xe2\x81\x8a)
 CC_RROT ({CC_R_ROTUNDA}|{CC_TIRO_ET})
 
 /*--------------------------------------------------------------
+ * Other special chars
+ */
+/* CHR_VCURL: U+2C74: LATIN SMALL LETTER V WITH CURL */
+CHR_VCURL (\xe2\xb1\xb4)
+
+/*--------------------------------------------------------------
  * Grimm stuff
  */
  /* CHR_EZH: U+0292 | U+01B7 | U+021D | U+04E1 : Grimm "&ztail;": map to "sharp-s" (Ã) */
@@ -315,6 +321,11 @@ E{CC_TILDE_X}		{ MAPTOS("EN",2); }
  /*{CHR_S}{CHR_Z}     { MAPTOS("\xc3\x9f", 2); } */ /*-- sz -> sz ligature (U+00DF) --*/
 {CHR_EZH}{CHR_EZH} { MAPTOS("\xc3\x9f", 2); } /*-- [ztail][ztail] -> sz ligature (U+00DF) --*/
 {CHR_EZH}          { MAPTOS("\xc3\x9f", 2); } /*-- [ztail] -> sz ligature (U+00DF) --*/
+
+ /*-------------------------------------------------------------
+  * Misc: other special characters
+  */
+{CHR_VCURL}	   { MAPTOS("ver", 3); } /*-- [vcurl] -> ver --*/
 
  /*-------------------------------------------------------------
   * Unknown character
