@@ -11,6 +11,7 @@ $table[0x204A] = "r";  ##-- ⁊ U+204A: TIRONIAN SIGN ET (approximates r rotunda
 
 $table[0x06E5] = "'";  ##-- ۥ Arabic / ARABIC SMALL WAW
 
+$table[0x20AC] = "EUR";  ##-- Currency Symbols / EURO SIGN
 $table[0x20B0] = "Pf"; ##-- ₰ Currency Symbols / German Penns Sign
 $table[0x20B1] = "P"; ##-- ₱ Currency Symbols / Peso Sign (Phillipines)
 $table[0x20B2] = "G"; ##-- ₲ Currency Symbols / Guarani Sign (Paraguay)
