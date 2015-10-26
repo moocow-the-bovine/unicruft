@@ -77,7 +77,7 @@ if test "$GCC" == "yes" ; then
       WFLAGS=""
       ;;
     *)
-     WFLAGS="-W -Wall -Winline -Wno-unused"
+     WFLAGS="-W -Wall -Winline -Wno-unused -Wno-unused-variable -Wno-unused-parameter"
      AC_MSG_RESULT([$WFLAGS])
      ;;
    esac
