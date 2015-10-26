@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title></title>
+<title>unicruft - Approximating UTF-8 transliteration &amp; recoding</title>
 <link rel="stylesheet" href="moopod.css" type="text/css" />
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rev="made" href="mailto:root@localhost" />
@@ -11,35 +11,47 @@
 <body>
 
 
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
 
-<ul id="index">
-  <li><a href="#NAME">NAME</a></li>
-  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
-  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
-  <li><a href="#ARGUMENTS">ARGUMENTS</a></li>
-  <li><a href="#OPTIONS">OPTIONS</a></li>
-  <li><a href="#ADDENDA">ADDENDA</a>
-    <ul>
-      <li><a href="#About-this-Document">About this Document</a></li>
-    </ul>
-  </li>
-  <li><a href="#BUGS-AND-LIMITATIONS">BUGS AND LIMITATIONS</a></li>
-  <li><a href="#ACKNOWLEDGEMENTS">ACKNOWLEDGEMENTS</a></li>
-  <li><a href="#AUTHOR">AUTHOR</a></li>
-  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#arguments">ARGUMENTS</a></li>
+	<li><a href="#options">OPTIONS</a></li>
+	<li><a href="#addenda">ADDENDA</a></li>
+	<ul>
+
+		<li><a href="#about_this_document">About this Document</a></li>
+	</ul>
+
+	<li><a href="#bugs_and_limitations">BUGS AND LIMITATIONS</a></li>
+	<li><a href="#acknowledgements">ACKNOWLEDGEMENTS</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#see_also">SEE ALSO</a></li>
 </ul>
 
-<h1 id="NAME">NAME</h1>
+<hr name="index" />
+</div>
+<!-- INDEX END -->
 
+<p>
+</p>
+<hr />
+<h1><a name="name">NAME</a></h1>
 <p>unicruft - Approximating UTF-8 transliteration &amp; recoding</p>
-
-<h1 id="SYNOPSIS">SYNOPSIS</h1>
-
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
 <p>unicruft [OPTIONS] FILE(s)</p>
-
-<pre><code> Arguments:
-    FILE(s)  Input text file(s)
-
+<pre>
+ Arguments:
+    FILE(s)  Input text file(s)</pre>
+<pre>
  Options
     -h      --help                 Print help and exit.
     -V      --version              Print version and exit.
@@ -51,179 +63,168 @@
     -L      --utf8-to-utf8-latin1  Convert UTF-8 to UTF-8/Latin-1
     -D      --utf8-to-utf8-de      Convert UTF-8 to UTF-8/DE
     -P      --utf8-to-utf8-de-pp   (debug) run only the UTF-8/DE preprocessor
-    -oFILE  --output=FILE          Output file (default=stdout).</code></pre>
-
-<h1 id="DESCRIPTION">DESCRIPTION</h1>
-
+    -oFILE  --output=FILE          Output file (default=stdout).</pre>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
 <p>Approximating UTF-8 transliteration &amp; recoding</p>
-
-<h1 id="ARGUMENTS">ARGUMENTS</h1>
-
+<p>
+</p>
+<hr />
+<h1><a name="arguments">ARGUMENTS</a></h1>
 <dl>
+<dt><strong><a name="file" class="item"><code>FILE(s)</code></a></strong></dt>
 
-<dt id="FILE-s"><code>FILE(s)</code></dt>
 <dd>
-
 <p>Input text file(s)</p>
-
 <p>If unspecified, standard input will be read.</p>
-
 </dd>
 </dl>
-
-<h1 id="OPTIONS">OPTIONS</h1>
-
+<p>
+</p>
+<hr />
+<h1><a name="options">OPTIONS</a></h1>
 <dl>
+<dt><strong><a name="help_h" class="item"><code>--help</code> , <code>-h</code></a></strong></dt>
 
-<dt id="help--h"><code>--help</code> , <code>-h</code></dt>
 <dd>
-
 <p>Print help and exit.</p>
-
-<p>Default: &#39;0&#39;</p>
-
+<p>Default: '0'</p>
 </dd>
-<dt id="version--V"><code>--version</code> , <code>-V</code></dt>
-<dd>
+<dt><strong><a name="version_v" class="item"><code>--version</code> , <code>-V</code></a></strong></dt>
 
+<dd>
 <p>Print version and exit.</p>
-
-<p>Default: &#39;0&#39;</p>
-
+<p>Default: '0'</p>
 </dd>
-<dt id="mode-MODE--mMODE"><code>--mode=MODE</code> , <code>-mMODE</code></dt>
-<dd>
+<dt><strong><a name="mode_mode_mmode" class="item"><code>--mode=MODE</code> , <code>-mMODE</code></a></strong></dt>
 
+<dd>
 <p>Conversion mode (lu|ua|ul|ud|uL|uD|uDpp)</p>
-
-<p>Default: &#39;ua&#39;</p>
-
-<p>The <code>--mode</code> argument is used to specify the requested conversion mode, i.e. input and output encoding and character-(sub-)set. Each supported conversion mode has a long option alias as well as a canonical string value for the <code>--mode</code> argument. See the documentation of the remaining conversion options for details on the supported conversion modes.</p>
-
+<p>Default: 'ua'</p>
+<p>The <code>--mode</code> argument is used to specify the requested conversion mode,
+i.e. input and output encoding and character-(sub-)set.  Each supported
+conversion mode has a long option alias as well as a canonical string value
+for the <code>--mode</code> argument.  See the documentation of the remaining conversion
+options for details on the supported conversion modes.</p>
 </dd>
-<dt id="latin1-to-utf8--u"><code>--latin1-to-utf8</code> , <code>-u</code></dt>
-<dd>
+<dt><strong><a name="latin1_to_utf8_u" class="item"><code>--latin1-to-utf8</code> , <code>-u</code></a></strong></dt>
 
+<dd>
 <p>Convert Latin-1 to UTF-8</p>
-
-<p>Default: &#39;0&#39;</p>
-
+<p>Default: '0'</p>
 <p>Equivalent to <code>--mode=lu</code>.</p>
-
 <p>Converts arbitrary 8-bit Latin-1 input to UTF-8.</p>
-
 </dd>
-<dt id="utf8-to-ascii--a"><code>--utf8-to-ascii</code> , <code>-a</code></dt>
-<dd>
+<dt><strong><a name="utf8_to_ascii_a" class="item"><code>--utf8-to-ascii</code> , <code>-a</code></a></strong></dt>
 
+<dd>
 <p>Convert UTF-8 to ASCII (default)</p>
-
-<p>Default: &#39;0&#39;</p>
-
+<p>Default: '0'</p>
 <p>Equivalent to <code>--mode=ua</code>.</p>
-
-<p>Converts arbitrary UTF-8 input to a 7-bit ASCII approximation using a modified version of the transliteration tables distributed with the <a>Text::Unidecode(3pm)</a> perl module by Sean M. Burke. This is the default conversion mode.</p>
-
+<p>Converts arbitrary UTF-8 input to a 7-bit ASCII approximation
+using a modified version of the transliteration tables distributed
+with the <a href="./Text/Unidecode.html">Text::Unidecode(3pm)</a> perl module by Sean M. Burke.
+This is the default conversion mode.</p>
 </dd>
-<dt id="utf8-to-latin1--l"><code>--utf8-to-latin1</code> , <code>-l</code></dt>
-<dd>
+<dt><strong><a name="utf8_to_latin1_l" class="item"><code>--utf8-to-latin1</code> , <code>-l</code></a></strong></dt>
 
+<dd>
 <p>Convert UTF-8 to Latin-1</p>
-
-<p>Default: &#39;0&#39;</p>
-
+<p>Default: '0'</p>
 <p>Equivalent to <code>--mode=ul</code>.</p>
-
-<p>Converts arbitrary UTF-8 input to an 8-bit ISO-8859-1 (Latin-1) approximation. Input characters in the Unicode Latin-1 supplement are identity-mapped onto the 8-bit Latin-1 character set, other input characters are transliterated as for the <a href="#utf8-to-ascii--a">--utf8-to-ascii</a> mode.</p>
-
+<p>Converts arbitrary UTF-8 input to an 8-bit ISO-8859-1 (Latin-1) approximation.
+Input characters in the Unicode Latin-1 supplement are identity-mapped
+onto the 8-bit Latin-1 character set, other input characters are transliterated
+as for the <a href="#utf8_to_ascii_a">--utf8-to-ascii</a> mode.</p>
 </dd>
-<dt id="utf8-to-latin1-de--d"><code>--utf8-to-latin1-de</code> , <code>-d</code></dt>
-<dd>
+<dt><strong><a name="utf8_to_latin1_de_d" class="item"><code>--utf8-to-latin1-de</code> , <code>-d</code></a></strong></dt>
 
+<dd>
 <p>Convert UTF-8 to Latin-1/DE</p>
-
-<p>Default: &#39;0&#39;</p>
-
+<p>Default: '0'</p>
 <p>Equivalent to <code>--mode=ud</code>.</p>
-
-<p>Converts arbitrary UTF-8 input to an 8-bit ISO-8859-1 (Latin-1) approximation using only characters active in contemporary German orthography. Performs some context-sensitive replacements (e.g. of combining <i>Umlaute</i> and superscript letters), and otherwise transliterates as for the <a href="#utf8-to-latin1--l">--utf8-to-latin1</a> mode.</p>
-
+<p>Converts arbitrary UTF-8 input to an 8-bit ISO-8859-1 (Latin-1) approximation using only characters
+active in contemporary German orthography.  Performs some
+context-sensitive replacements (e.g. of combining <em>Umlaute</em> and superscript letters),
+and otherwise transliterates as for the <a href="#utf8_to_latin1_l">--utf8-to-latin1</a>
+mode.</p>
 </dd>
-<dt id="utf8-to-utf8-latin1--L"><code>--utf8-to-utf8-latin1</code> , <code>-L</code></dt>
-<dd>
+<dt><strong><a name="utf8_to_utf8_latin1_l" class="item"><code>--utf8-to-utf8-latin1</code> , <code>-L</code></a></strong></dt>
 
+<dd>
 <p>Convert UTF-8 to UTF-8/Latin-1</p>
-
-<p>Default: &#39;0&#39;</p>
-
+<p>Default: '0'</p>
 <p>Equivalent to <code>--mode=uL</code>.</p>
-
-<p>Just like <a href="#utf8-to-latin1--l">--utf8-to-latin1</a> mode, but output is encoded in UTF-8 which is guaranteed to contain only Unicode characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.</p>
-
+<p>Just like <a href="#utf8_to_latin1_l">--utf8-to-latin1</a> mode,
+but output is encoded in UTF-8 which is guaranteed to contain only Unicode
+characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.</p>
 </dd>
-<dt id="utf8-to-utf8-de--D"><code>--utf8-to-utf8-de</code> , <code>-D</code></dt>
-<dd>
+<dt><strong><a name="utf8_to_utf8_de_d" class="item"><code>--utf8-to-utf8-de</code> , <code>-D</code></a></strong></dt>
 
+<dd>
 <p>Convert UTF-8 to UTF-8/DE</p>
-
-<p>Default: &#39;0&#39;</p>
-
+<p>Default: '0'</p>
 <p>Equivalent to <code>--mode=uD</code>.</p>
-
-<p>Just like <a href="#utf8-to-latin1-de--d">--utf8-to-latin1-de</a> mode, but output is encoded in UTF-8 which is guaranteed to contain only Unicode characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.</p>
-
+<p>Just like <a href="#utf8_to_latin1_de_d">--utf8-to-latin1-de</a> mode,
+but output is encoded in UTF-8 which is guaranteed to contain only Unicode
+characters in the range U+0000 .. U+00FF, i.e. the Latin-1 supplement.</p>
 </dd>
-<dt id="utf8-to-utf8-de-pp--P"><code>--utf8-to-utf8-de-pp</code> , <code>-P</code></dt>
-<dd>
+<dt><strong><a name="utf8_to_utf8_de_pp_p" class="item"><code>--utf8-to-utf8-de-pp</code> , <code>-P</code></a></strong></dt>
 
+<dd>
 <p>(debug) run only the UTF-8/DE preprocessor</p>
-
-<p>Default: &#39;0&#39;</p>
-
+<p>Default: '0'</p>
 <p>Equivalent to <code>--mode=uDpp</code>.</p>
-
-<p>This mode performs only the preprocessing phase of the <a href="#utf8-to-utf8-de--D">--utf8-to-utf8-de</a> conversion. Useful for debugging or complex processing pipelines.</p>
-
+<p>This mode performs only the preprocessing phase of the 
+<a href="#utf8_to_utf8_de_d">--utf8-to-utf8-de</a> conversion.
+Useful for debugging or complex processing pipelines.</p>
 </dd>
-<dt id="output-FILE--oFILE"><code>--output=FILE</code> , <code>-oFILE</code></dt>
+<dt><strong><a name="output_file_ofile" class="item"><code>--output=FILE</code> , <code>-oFILE</code></a></strong></dt>
+
 <dd>
-
 <p>Output file (default=stdout).</p>
-
-<p>Default: &#39;-&#39;</p>
-
+<p>Default: '-'</p>
 </dd>
 </dl>
-
-<h1 id="ADDENDA">ADDENDA</h1>
-
-<h2 id="About-this-Document">About this Document</h2>
-
-<p>Documentation file auto-generated by optgen.perl version 0.07 using Getopt::Gen version 0.14. Translation was initiated as:</p>
-
-<pre><code>   optgen.perl -l --nocfile --nohfile --notimestamp --no-handle-rcfile -F unicruft unicruft.gog</code></pre>
-
-<h1 id="BUGS-AND-LIMITATIONS">BUGS AND LIMITATIONS</h1>
-
+<p>
+</p>
+<hr />
+<h1><a name="addenda">ADDENDA</a></h1>
+<p>
+</p>
+<h2><a name="about_this_document">About this Document</a></h2>
+<p>Documentation file auto-generated by optgen.perl version 0.07
+using Getopt::Gen version 0.14.
+Translation was initiated
+as:</p>
+<pre>
+   optgen.perl -l --nocfile --nohfile --notimestamp --no-handle-rcfile -F unicruft unicruft.gog</pre>
+<p>
+</p>
+<hr />
+<h1><a name="bugs_and_limitations">BUGS AND LIMITATIONS</a></h1>
 <p>Too much copying in the underlying library makes things a tad slow.</p>
-
-<h1 id="ACKNOWLEDGEMENTS">ACKNOWLEDGEMENTS</h1>
-
+<p>
+</p>
+<hr />
+<h1><a name="acknowledgements">ACKNOWLEDGEMENTS</a></h1>
 <p>Perl by Larry Wall.</p>
-
 <p>Getopt::Gen by Bryan Jurish.</p>
-
-<h1 id="AUTHOR">AUTHOR</h1>
-
-<p>Bryan Jurish &lt;jurish@bbaw.de&gt;</p>
-
-<h1 id="SEE-ALSO">SEE ALSO</h1>
-
-<p>Text::Unidecode(3pm), recode(1), iconv(1)</p>
-
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Bryan Jurish &lt;<a href="mailto:jurish@bbaw.de">jurish@bbaw.de</a>&gt;</p>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p>Text::Unidecode(3pm),
+<code>recode(1)</code>,
+<code>iconv(1)</code></p>
 
 </body>
 
 </html>
-
-
