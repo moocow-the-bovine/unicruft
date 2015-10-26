@@ -1,7 +1,50 @@
 ChangeLog for package unicruft
 
-v0.11 Wed, 15 Dec 2010 11:25:13 +0100 (moocow)
-	+ minor bug fixes in uxDEyy.l
+v0.20 2015-10-26  moocow
+	* v0.20: hunting mantis bug #5704 (extra NUL byte after every character)
+	* branch nullbug (from v0.19 / trunk rev 15294): hunt mantis bug #5704
+
+v0.19 2014-06-03  moocow
+	* added € -> EUR (U+20AC Currency Symbols / EURO SIGN)
+
+v0.18 2014-01-24  moocow
+	* added latin-c stuff
+
+v0.17 2013-12-20  moocow
+	* added macron, rebuilt
+	* more tilde handling: added macron
+	* combining tilde handling
+
+v0.16 2013-09-10  moocow
+	* remove U+00AD (SOFT HYPHEN) for latin-1/de
+
+v0.15 2013-07-25  moocow
+	* unicruft: added (r rotunda -> r) rules to and latin1 tables
+	* unicruft-perl
+	  + hacked handling of utf8_to_latin1_de() with
+	    ux_depp_scan_const_buffer(): tweaked buffer len to make scanner
+	    treat terminating NUL as a 'real' character
+	  + this allows e.g. just the string ꝛc to map to etc; otherwise we
+	    don't have EOF context
+
+v0.14 2013-06-27  moocow
+	* added COPYING stuff to dist: LGPLv3
+	* un-inlined ux_buffer_reserve(), ux_buffer_reservex(), ux_wbuffer_reserve()
+	  - gcc 4.7 (debian wheezy) complained
+	* added mapping U+FFFC -> @ /* Specials / OBJECT REPLACEMENT CHARACTER */
+
+v0.13 2012-07-05  moocow
+	* added unknown character rule for U+FFFC (object replacement character - used in DTA)
+
+v0.12 2012-07-04  moocow
+	* map U+FFFD (replacement charcter) to U+0040 (commercial at)
+	* added macro dir m4
+	* added uxDEyy preprocessor mapping from U+FFFD (replacement character) to U+00A5 (yen sign)
+
+v0.11 2011-11-29  moocow
+	* added Unicruft::utf8_to_utf8_de() wrapper
+	* added uxDEyy.l rules for U+A75B (latin small letter r rotunda)
+	* minor bug fixes in uxDEyy.l
 
 v0.10 Thu, 29 Apr 2010 13:24:07 +0200 (moocow)
 	+ minor bug fixes
@@ -35,6 +78,6 @@ v0.03 Wed, 10 Jun 2009 15:30:34 +0200 (moocow)
 v0.02 Tue, 09 Jun 2009 13:23:39 +0200 (moocow)
 	+ included perl wrappers in subdirectory perl/
 	+ added uxDEpp methods for initialization & freeing of local variables
-	
+
 v0.01 Mon, 25 May 2009 16:36:56 +0200 (moocow)
 	+ initial v0.01 release

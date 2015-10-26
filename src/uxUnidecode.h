@@ -99,6 +99,7 @@ size_t ux_unidecode_wc_len(const uxLookupTable *tab, ucs4 wc)
  *  \param dst output ASCII string buffer
  *  \returns number of bytes written to \a dst
  *  \li implicitly falls back to translations from UNIDECODE_ASCII
+ *  \li updates output buffer length
  *  \li always NULL-terminates output buffer
  *  \li may auto-grow output buffer
  */
