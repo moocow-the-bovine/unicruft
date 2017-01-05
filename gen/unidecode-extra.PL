@@ -70,4 +70,8 @@ $table[0x2C7D] = "V"; ##-- V MODIFIER LETTER CAPITAL V
 $table[0x2C7E] = "S"; ##-- Ȿ LATIN CAPITAL LETTER S WITH SWASH TAIL
 $table[0x2C7F] = "Z"; ##-- Ɀ LATIN CAPITAL LETTER Z
 
+##--------------------------------------------------------------
+## RIDGES stuff, 2016-01-05
+$table[0x2E17] = "-"; ##-- ⸗ DOUBLE OBLIQUE HYPHEN
+
 1; ##-- be happy

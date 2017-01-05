@@ -154,7 +154,6 @@ N_TILDE_UPPER  (\xc3\x91)
 /* N_TILDE_LOWER: U+00F1 LATIN SMALL LETTER N WITH TILDE */
 N_TILDE_LOWER  (\xc3\xb1)
 
-
 /*--------------------------------------------------------------
  * Combining Letters
  */

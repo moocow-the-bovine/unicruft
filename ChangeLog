@@ -1,5 +1,8 @@
 ChangeLog for package unicruft
 
+v0.21 Thu, 05 Jan 2017 14:57:15 +0100 moocow
+	* added support for "⸗" : U+2E17 Supplemental Punctuation / DOUBLE OBLIQUE HYPHEN (from RIDGES data)
+
 v0.20 2015-10-26  moocow
 	* v0.20: hunting mantis bug #5704 (extra NUL byte after every character)
 	* branch nullbug (from v0.19 / trunk rev 15294): hunt mantis bug #5704
