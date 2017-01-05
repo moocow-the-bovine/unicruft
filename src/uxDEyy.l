@@ -144,17 +144,16 @@ CC_MACRON (\xcc\x84)
 
 CC_TILDE_X ({CC_TILDE}|{CC_MACRON})
 
+/* E_TILDE_UPPER: U+1EBC: LATIN CAPITAL LETTER E WITH TILDE */
+E_TILDE_UPPER  (\xe1\xba\xbc)
+/* E_TILDE_LOWER: U+1EBD LATIN SMALL LETTER E WITH TILDE */
+E_TILDE_LOWER  (\xe1\xba\xbd)
+
 /* N_TILDE_UPPER: U+00D1 LATIN CAPITAL LETTER N WITH TILDE */
 N_TILDE_UPPER  (\xc3\x91)
-
 /* N_TILDE_LOWER: U+00F1 LATIN SMALL LETTER N WITH TILDE */
 N_TILDE_LOWER  (\xc3\xb1)
 
-/* E_TILDE_UPPER: 1EBC: LATIN CAPITAL LETTER E WITH TILDE */
-E_TILDE_UPPER  (\xe1\xba\xbc)
-
-/* E_TILDE_LOWER: U+1EBD LATIN SMALL LETTER E WITH TILDE */
-E_TILDE_LOWER  (\xe1\xba\xbd)
 
 /*--------------------------------------------------------------
  * Combining Letters
@@ -295,7 +294,7 @@ E{CC_TILDE_X}		{ MAPTOS("EN",2); }
 {E_TILDE_LOWER}		{ MAPTOS("en",2); }
 {E_TILDE_UPPER}		{ MAPTOS("EN",2); }
 
-{CC_TILDE}		{ MAPTOC('n'); }
+{CC_TILDE_X}		{ MAPTOC('n'); }
 
  /*-------------------------------------------------------------
   * Combining Letters: other
