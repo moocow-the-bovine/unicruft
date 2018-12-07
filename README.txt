@@ -9,7 +9,7 @@ DESCRIPTION
 INSTALLATION
   Requirements
    C Libraries
-    libunicruft >= v0.02
+    libunicruft >= v0.21
 
   Building from Source
     To build and install the entire package, issue the following commands to
@@ -28,5 +28,5 @@ SEE ALSO
     unicruft(1), Text::Unidecode(3pm), recode(1), iconv(1), ...
 
 AUTHOR
-    Bryan Jurish <jurish@bbaw.de>
+    Bryan Jurish <moocow@cpan.org>
 

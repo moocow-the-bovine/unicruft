@@ -2,6 +2,10 @@ Makefile.PL
 MANIFEST
 MANIFEST.SKIP
 
+Changes
+README.txt
+README.rpod
+
 Unicruft.pm
 Unicruft.xs
 

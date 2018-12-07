@@ -3,13 +3,42 @@ use ExtUtils::MakeMaker;
 ##----------------------------------------------------------------------
 ## Configuration
 ##----------------------------------------------------------------------
-if (system("pkg-config --atleast-version=0.03 unicruft") != 0) {
-  die("Required module unicruft >= v0.03 not found!\n");
+use Alien::Unicruft;
+my %prereq = (
+	      'ExtUtils::MakeMaker' => 6.52, ##-- for CONFIGURE_REQUIRES
+	      'Alien::Unicruft' => 0.001,
+	     );
+
+##-- ensure mininum libunicruft version
+use version;
+my $unicruft_min_version = "0.21";
+my ($UX_INC,$UX_LIBS);
+if (Alien::Unicruft->install_type ne 'system') {
+  my $unicruft_alien_version = (Alien::Unicruft->can('pkgconfig')
+				? Alien::Unicruft->pkgconfig('unicruft')->keyword('Version') ##-- RT bug #124235 with Alien::Base v0.41
+				: (Alien::Unicruft->can('config')
+				   ? Alien::Unicruft->config('version')			 ##-- Alien::Base >= v0.41
+				   : undef));
+  die("Failed to determine \$unicruft_alien_version") if (!defined($unicruft_alien_version));
+
+  (my $v_alien = $unicruft_alien_version) =~ s/\-/_/g;
+  die("Required library libunicruft >= v$unicruft_min_version not found; we have v$unicruft_alien_version\n")
+    if (version->parse($v_alien) < version->parse($unicruft_min_version));
+
+  $UX_INC  = Alien::Unicruft->cflags;
+  $UX_LIBS = Alien::Unicruft->libs;
+  #print STDERR "DEBUG: got v_alien=$v_alien; INC={$UX_INC} ; LIBS=${UX_LIBS}\n";
+}
+elsif (system("pkg-config --atleast-version=${unicruft_min_version} unicruft") != 0) {
+  die("Required library libunicruft >= v$unicruft_min_version not found; we have v", `pkg-config --modversion unicruft`);
+}
+else {
+  $UX_INC  = join(' ', map { $s=`pkg-config --cflags-only-I $_`; chomp($s); $s } qw(unicruft));
+  $UX_LIBS = join(' ', map { $s=`pkg-config --libs $_`; chomp($s); $s } qw(unicruft));
+
+  #print STDERR "DEBUG: got system pkg-config flags INC={$UX_INC}, LIBS={$UX_LIBS}\n";
 }
 
-$UX_IFLAGS = join(' ', map { $s=`pkg-config --cflags-only-I $_`; chomp($s); $s } qw(unicruft));
-$UX_LDFLAGS= join(' ', map { $s=`pkg-config --libs-only-L $_`; chomp($s); $s } qw(unicruft));
-$UX_LIBS   = join(' ', map { $s=`pkg-config --libs-only-l $_`; chomp($s); $s } qw(unicruft));
 
 ##----------------------------------------------------------------------
 ## MAIN
@@ -18,15 +47,20 @@ WriteMakefile
   (
    NAME		=> 'Unicruft',
    DISTNAME	=> 'unicruft-perl',
-   AUTHOR       => 'Bryan Jurish <moocow@ling.uni-potsdam.de>',
+   AUTHOR       => 'Bryan Jurish <moocow@cpan.org>',
    ABSTRACT	=> 'Perl interface to unicruft transliteration library',
    VERSION_FROM	=> 'Unicruft.pm',
+   LICENSE      => 'perl',
+
+   ##-- prerequisites
+   CONFIGURE_REQUIRES => \%prereq,
+   PREREQ_PM => \%prereq,
 
    ##-- user variables
    #CC           => 'c++',   ##-- your c++ compiler
-   LIBS         => "$UX_LDFLAGS $UX_LIBS",      ##-- additional libraries
+   LIBS         => $UX_LIBS,      ##-- additional librariese
+   INC          => $UX_INC,       ##-- additional includes
    DEFINE       => '-DHAVE_CONFIG_H',     ##-- additional defines
-   INC          => $UX_IFLAGS,      ##-- additional includes
    CCFLAGS      => '',          ##-- additional flags
    OPTIMIZE    => '-O2 -pipe', ##-- optimization flags
    #OBJECT      => 'Gfsm.o GfsmPerl.o',
@@ -45,11 +79,6 @@ WriteMakefile
    ##-- stuff that probably doesn't need to be changed
    #XSOPT        => '-C++',
    #TYPEMAPS     => ['perlobject.map', 'typemap'],
-
-   ##-- prerequisites
-   PREREQ_PM    => {
-		    #'Encode' => undef,
-		   },
   );
 
 
