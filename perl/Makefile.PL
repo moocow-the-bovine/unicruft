@@ -46,7 +46,8 @@ else {
 WriteMakefile
   (
    NAME		=> 'Unicruft',
-   DISTNAME	=> 'unicruft-perl',
+   #DISTNAME	=> 'unicruft-perl',
+   DISTNAME	=> 'Unicruft',
    AUTHOR       => 'Bryan Jurish <moocow@cpan.org>',
    ABSTRACT	=> 'Perl interface to unicruft transliteration library',
    VERSION_FROM	=> 'Unicruft.pm',
