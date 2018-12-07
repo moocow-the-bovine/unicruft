@@ -1,5 +1,10 @@
 ChangeLog for package unicruft
 
+v0.22 Fri, 07 Dec 2018 12:13:07 +0100 moocow
+	* added Alien::Unicruft in perl-alien/
+	* added Alien::Unicruft dependency to perl module
+	* published to CPAN
+
 v0.21 Thu, 05 Jan 2017 14:57:15 +0100 moocow
 	* added support for "⸗" : U+2E17 Supplemental Punctuation / DOUBLE OBLIQUE HYPHEN (from RIDGES data)
 
