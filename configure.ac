@@ -3,7 +3,7 @@ AC_PREREQ(2.5)
 
 dnl Some handy macros
 define([THE_PACKAGE_NAME],    [unicruft])
-define([THE_PACKAGE_VERSION], [0.22])
+define([THE_PACKAGE_VERSION], [0.23])
 define([THE_PACKAGE_MAINTAINER],  [jurish@bbaw.de])
 
 AC_INIT(THE_PACKAGE_NAME, THE_PACKAGE_VERSION, THE_PACKAGE_MAINTAINER)
@@ -88,6 +88,13 @@ AC_DEFINE_UNQUOTED(PACKAGE_SVNID,  "$SVNID",  [Subversion identifier for package
 ## getline
 AC_CHECK_FUNCS([getline getdelim])
 ## /getline
+##---------------------------------------------------------------
+
+##---------------------------------------------------------------
+## alloca
+dnl AC_CHECK_HEADERS([alloca.h malloc.h])
+AC_FUNC_ALLOCA
+## /alloca
 ##---------------------------------------------------------------
 
 

@@ -1,5 +1,8 @@
 ChangeLog for package unicruft
 
+v0.23 Tue, 11 Dec 2018 09:16:55 +0100 moocow
+	* added autoconf AC_FUNC_ALLOCA and boilerplate in uxUtf8.c: try to fix cpantesters errors on bsd
+
 v0.22 Fri, 07 Dec 2018 12:13:07 +0100 moocow
 	* added Alien::Unicruft in perl-alien/
 	* added Alien::Unicruft dependency to perl module
