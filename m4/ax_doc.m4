@@ -66,7 +66,10 @@ AC_ARG_WITH(doc-formats,
 	[ac_cv_doc_formats="$withval"])
 AC_ARG_ENABLE(doc,
 	AC_HELP_STRING([--disable-doc],[Synonym for --with-doc-formats="none"]),
-	[enable_doc="$enableval"],[enable_doc="yes"])
+	[ac_cv_doc_enabled="$enableval"],[ac_cv_doc_enabled="yes"])
+if test "$ac_cv_doc_enabled" != "yes" ; then
+   ac_cv_doc_formats="none";
+fi
 
 
 AC_MSG_CHECKING([which documentation formats to build])
@@ -116,6 +119,8 @@ AC_MSG_RESULT($doc_formats)
         CONFIG_DOC_WANT_LATEX="yes"
 	CONFIG_DOC_WANT_PDF="yes"
 	;;
+      none)
+	;;
       *)
 	AC_MSG_WARN(ignoring unknown documentation format: $fmt)
 	;;
@@ -125,6 +130,8 @@ AC_MSG_RESULT($doc_formats)
   ##--/docs: parse user request
 
   ##-- docs: requested: automake conditionals: indicator values
+  CONFIG_DOC_ENABLED="$ac_cv_doc_enabled"
+  AC_SUBST(CONFIG_DOC_ENABLED)
   AC_SUBST(CONFIG_DOC_WANT_TXT)
   AC_SUBST(CONFIG_DOC_WANT_MAN)
   AC_SUBST(CONFIG_DOC_WANT_HTML)
@@ -134,6 +141,7 @@ AC_MSG_RESULT($doc_formats)
   AC_SUBST(CONFIG_DOC_WANT_PDF)
 
   ##-- automake conditionals: doc_want_x
+  AM_CONDITIONAL(DOC_ENABELD,      [test -n "$CONFIG_DOC_ENABLED"    -a "$CONFIG_DOC_ENABLED"    != "no"])  
   AM_CONDITIONAL(DOC_WANT_TXT,     [test -n "$CONFIG_DOC_WANT_TXT"   -a "$CONFIG_DOC_WANT_TXT"   != "no"])
   AM_CONDITIONAL(DOC_WANT_MAN,     [test -n "$CONFIG_DOC_WANT_MAN"   -a "$CONFIG_DOC_WANT_MAN"   != "no"])
   AM_CONDITIONAL(DOC_WANT_HTML,    [test -n "$CONFIG_DOC_WANT_HTML"  -a "$CONFIG_DOC_WANT_HTML"  != "no"])

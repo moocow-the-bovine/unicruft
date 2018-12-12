@@ -3,7 +3,7 @@ AC_PREREQ(2.5)
 
 dnl Some handy macros
 define([THE_PACKAGE_NAME],    [unicruft])
-define([THE_PACKAGE_VERSION], [0.23])
+define([THE_PACKAGE_VERSION], [0.24])
 define([THE_PACKAGE_MAINTAINER],  [jurish@bbaw.de])
 
 AC_INIT(THE_PACKAGE_NAME, THE_PACKAGE_VERSION, THE_PACKAGE_MAINTAINER)
@@ -164,6 +164,11 @@ DOC_MAN1_GOGS="unicruft.gog"
 AX_DOC_GOG()
 AX_DOC_GOG_LINKS([src],[doc/programs])
 
+if test "$CONFIG_DOC_ENABLED" = "yes" ; then
+   DOC_BUILDDIR="doc"
+fi
+AC_SUBST(DOC_BUILDDIR)
+
 dnl AC_CONFIG_LINKS([doc/programs/dta-tokwrap.perl.pod:DTA-TokWrap/dta-tokwrap.perl])
 dnl AC_CONFIG_LINKS([doc/programs/dtatw-add-c.perl.pod:scripts/dtatw-add-c.perl])
 dnl AC_CONFIG_LINKS([doc/programs/dtatw-add-w.perl.pod:scripts/dtatw-add-w.perl])
@@ -177,9 +182,11 @@ dnl AC_CONFIG_LINKS([doc/README.pod:README.pod])
 ##----------------------------------------------------------------------
 ## output
 ##
-AC_CONFIG_FILES(doc/libunicruft/mainpage.dox doc/libunicruft/libunicruft.doxy doc/libunicruft/Makefile)
-AC_CONFIG_FILES(doc/programs/Makefile)
-AC_CONFIG_FILES(doc/Makefile)
+if test "$CONFIG_DOC_ENABLED" = "yes" ; then
+  AC_CONFIG_FILES(doc/libunicruft/mainpage.dox doc/libunicruft/libunicruft.doxy doc/libunicruft/Makefile)
+  AC_CONFIG_FILES(doc/programs/Makefile)
+  AC_CONFIG_FILES(doc/Makefile)
+fi
 AC_CONFIG_FILES(src/Makefile)
 AC_CONFIG_FILES(Makefile)
 AC_CONFIG_FILES(unicruft.pc)
