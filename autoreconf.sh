@@ -4,4 +4,4 @@
 #ar_args="--install --verbose --force"
 ar_args="--install --verbose"
 
-exec autoreconf $ar_args "."
+exec autoreconf $ar_args "$@" "."
