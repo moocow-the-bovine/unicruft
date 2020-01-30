@@ -14,6 +14,7 @@
 %option reentrant
 %option prefix="ux_de_yy"
 %option full
+
 /*%option fast*/
 /*%option debug*/
 /*%option perf-report*/
@@ -51,7 +52,8 @@ typedef struct {
  * User C-file definitions & prototypes
  */
 
-#undef yywrap
+#undef  yywrap
+#define yywrap ux_de_yywrap
 static int ux_de_yywrap(yyscan_t yyscanner);
 
 #define YY_EXTRA_TYPE uxDEyyData*
