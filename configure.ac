@@ -61,7 +61,7 @@ dnl AC_PROG_RANLIB
 AC_PATH_PROG([SVNVERSION],[svnversion],[no])
 
 AC_MSG_CHECKING([for SVN HeadURL])
-SVNURL=`echo '$HeadURL: svn+ssh://odo.dwds.de/home/svn/dev/dta-tokwrap/trunk/configure.ac $' \
+SVNURL=`echo '$HeadURL$' \
   | sed -e's/^\$HeadURL:[ ]*//1' -e's/\/configure.ac[ ]*\$$//1'`
 AC_MSG_RESULT([$SVNURL])
 
